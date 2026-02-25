@@ -1,0 +1,28 @@
+name: Metadata Audit
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  metadata-audit:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run metadata audit
+        shell: pwsh
+        run: |
+          powershell -ExecutionPolicy Bypass -File scripts/metadata-audit.ps1
+
+      - name: Run semantic ledger audit (Stage 2)
+        shell: pwsh
+        run: |
+          powershell -ExecutionPolicy Bypass -File scripts/semantic-ledger-audit.ps1 -GateStage2
+
+      - name: Run semantic ledger audit (Stage 3)
+        shell: pwsh
+        run: |
+          powershell -ExecutionPolicy Bypass -File scripts/semantic-ledger-audit.ps1 -GateStage3

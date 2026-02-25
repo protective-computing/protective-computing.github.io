@@ -1,0 +1,614 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Protective Computing Specification v1.0 — MUST Justifications</title>
+
+  <meta name="description" content="An auditable annex mapping each RFC 2119 MUST requirement in Protective Computing Specification v1.0 to threat alignment, failure consequences, verification method, and reference implementation status." />
+
+  <link rel="canonical" href="https://protective-computing.github.io/docs/spec/v1.0-must-justifications.html" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Protective Computing" />
+  <meta property="og:title" content="Protective Computing Specification v1.0 — MUST Justifications" />
+  <meta property="og:description" content="An auditable annex mapping each RFC 2119 MUST requirement in Protective Computing Specification v1.0 to threat alignment, failure consequences, verification method, and reference implementation status." />
+  <meta property="og:url" content="https://protective-computing.github.io/docs/spec/v1.0-must-justifications.html" />
+  <meta property="og:image" content="https://protective-computing.github.io/assets/logo.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Protective Computing Specification v1.0 — MUST Justifications" />
+  <meta name="twitter:description" content="An auditable annex mapping each RFC 2119 MUST requirement in Protective Computing Specification v1.0 to threat alignment, failure consequences, verification method, and reference implementation status." />
+  <meta name="twitter:image" content="https://protective-computing.github.io/assets/logo.png" />
+
+  <style>
+    body { max-width: 980px; margin: 0 auto; padding: 24px; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height: 1.5; }
+    header { margin-bottom: 18px; }
+    .note { padding: 12px 14px; border: 1px solid #ddd; border-radius: 10px; background: #fafafa; }
+    table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+    th, td { border: 1px solid #ddd; padding: 10px; vertical-align: top; }
+    th { background: #f5f5f5; text-align: left; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.95em; }
+    .small { font-size: 0.95em; color: #333; }
+    .tag { display: inline-block; padding: 2px 8px; border: 1px solid #ddd; border-radius: 999px; background: #fff; font-size: 0.85em; }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Protective Computing Specification v1.0 — MUST Justifications</h1>
+    <p class="small">
+      This annex exists to make every <code>MUST</code> in the v1.0 specification auditable under hostile review.
+      If a requirement cannot be defended with threat alignment and concrete failure consequences, it should not be a <code>MUST</code>.
+    </p>
+  </header>
+
+  <section class="note">
+    <strong>How to use this annex</strong>
+    <ul>
+      <li>Use it as the first stop when questioning whether a <code>MUST</code> should be downgraded to <code>SHOULD</code>.</li>
+      <li>Use the “Verification Method” column to convert disputes into testable claims.</li>
+      <li>Submit contradictions or gaps via the <a href="/docs/independent-review.html">Independent Review</a> channel.</li>
+    </ul>
+    <p class="small"><strong>Controlled vocabulary:</strong> Threat tags are restricted to State surveillance, Institutional control, Network tampering, Device seizure, and Coercion / forced disclosure. Status values are restricted to Met, Partial, Not Met, and N/A. Partial means some mitigation exists, but the failure mode remains plausible under the stated threat.</p>
+    <p class="small"><strong>Normative scope:</strong> This annex is non-normative rationale and evidence. The normative compliance surface remains the main specification at <a href="/docs/spec/v1.0.html">v1.0</a>.</p>
+  </section>
+
+  <h2>Annex Changelog</h2>
+  <ul>
+    <li><strong>Generated:</strong> 2026-02-25 (UTC)</li>
+    <li><strong>Ledger rows:</strong> 37</li>
+    <li><strong>Gating status:</strong> Stage 2 enabled (ThreatAlignment + FailureIfDowngraded required); metadata gate enabled.</li>
+    <li><strong>Method:</strong> Extracted from normative spans, deduped, and filled through deterministic scripts in <code>/scripts</code>.</li>
+    <li><strong>Artifact pattern:</strong> <code>scripts/audit-output/must-ledger-deduped-*.csv</code></li>
+  </ul>
+
+  <h2>MUST ledger</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Keyword</th>
+        <th>Spec Location</th>
+        <th>Normative Text</th>
+        <th>Threat Alignment</th>
+        <th>Failure If Downgraded</th>
+        <th>Why SHOULD Is Insufficient</th>
+        <th>Verification Method</th>
+        <th>Reference Impl Status</th>
+        <th>Evidence / Notes</th>
+        <th>Target Version</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>NORM-001</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.1 Reversibility (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>Principle: User actions and system changes MUST be undoable within documented recovery windows. Failures MUST NOT become irreversible harm.</td>
+        <td>Institutional control</td>
+        <td>Without bounded reversibility, accidental or coerced destructive actions become irreversible harm with no recovery path.</td>
+        <td>Reversibility is a safety invariant for vulnerable users; optional rollback guarantees fail under operational pressure.</td>
+        <td>Execute destructive-action suite and verify each action has documented recovery window, available undo path, and explicit irreversibility state after expiry.</td>
+        <td>Met</td>
+        <td>Reference implementation uses soft-delete and timed recovery windows for core entries, with documented expiry behavior.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-003</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.1 Reversibility (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST provide undo/undo mechanism for all destructive user actions (delete, modify, publish)</td>
+        <td>Institutional control</td>
+        <td>Users can lose critical records due to misclicks, stress, or interface confusion without practical restoration.</td>
+        <td>Undo for destructive operations cannot be advisory; absence creates immediate, irreversible consequence risk.</td>
+        <td>Test delete/modify/publish operations and confirm undo availability within the configured recovery window across online and offline states.</td>
+        <td>Met</td>
+        <td>Reference mapping includes undo recovery checkpoints for destructive operations and confirms restoration behavior during audits.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-004</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.1 Reversibility (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST display recovery window duration to user (e.g., &quot;Item will be permanently deleted in 30 days&quot;)</td>
+        <td>State surveillance</td>
+        <td>Users cannot evaluate risk of delay-period actions and may unintentionally trigger irreversible transitions.</td>
+        <td>Recovery timing transparency is required for informed user control; hidden windows undermine protective decision-making.</td>
+        <td>Inspect UI surfaces for each destructive action to verify explicit recovery-window display and countdown consistency with backend policy.</td>
+        <td>Met</td>
+        <td>Reference mapping reports visible deletion grace period (for example, 30-day remaining indicator) before permanent purge.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-005</code></td>
+        <td><code>MUST NOT</code></td>
+        <td>4. Core Principles (Normative) | 4.1 Reversibility (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST NOT permanently delete user data without explicit confirmation + mandatory delay (minimum 7 days)</td>
+        <td>Coercion / forced disclosure</td>
+        <td>Immediate hard-delete enables coercers or accidental actions to erase evidence/history before user can recover or contest.</td>
+        <td>Mandatory confirmation plus delay is the only reliable guard against high-impact destructive abuse under stress or coercion.</td>
+        <td>Attempt destructive delete flows and verify explicit confirmation plus enforced minimum delay before irreversible purge is possible.</td>
+        <td>Met</td>
+        <td>Reference behavior uses confirmation plus delayed permanent deletion with recovery period, preventing instant irreversible data loss.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-006</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.1 Reversibility (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST document which system actions are reversible and which are irreversible</td>
+        <td>Institutional control</td>
+        <td>Undocumented reversibility boundaries cause unsafe assumptions and prevent operators/reviewers from validating recovery guarantees.</td>
+        <td>Reversible/irreversible boundaries must be explicit and auditable; implicit behavior invites silent policy drift.</td>
+        <td>Environment: Latest release build. Access to state machine documentation (or equivalent state transition inventory), UI flows, API routes, and storage snapshot capability (IndexedDB/app data export). Action: (1) Generate a State Transition Inventory by enumerating all user-triggerable transitions (create, edit, delete, export, retention expiry, sync, reset, account change, device migration). (2) For each transition, classify as Reversible (explicit undo, restore, or rollback path exists) or Irreversible (no undo path). (3) For every Reversible transition: execute transition, execute documented recovery path, and capture before/after storage snapshot and UI state. (4) For every Irreversible transition: execute transition, attempt documented recovery path (if any), and confirm system communicates irreversibility clearly at time of action (UI capture required). (5) Compare observed reversibility behavior against documentation labels. Pass Criteria: Every documented state transition has an explicit reversibility classification. All Reversible transitions demonstrably restore prior state without residual data loss or hidden artifact persistence. All Irreversible transitions are clearly communicated before execution and behave irreversibly in practice. No transition behaves differently from its documented label. Fail Criteria: Any transition lacks classification. A labeled reversible action cannot be restored to its prior state. A labeled irreversible action can be partially undone without disclosure. Documentation and runtime behavior diverge.</td>
+        <td>Partial</td>
+        <td>Reference mapping demonstrates key reversible flows but does not publish a complete action-by-action reversibility matrix. To reach Met: publish a versioned reversibility boundary table for all destructive transitions.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-007</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.2 Exposure Minimization (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>Principle: Data MUST be collected only when essential. What is collected MUST be defended with cryptography. Data retention MUST be minimal and automatic.</td>
+        <td>State surveillance</td>
+        <td>Unbounded collection or weak protection increases breach blast radius and exposes longitudinal health patterns.</td>
+        <td>Minimization, crypto, and retention controls are baseline harm-reduction controls; optional adoption leaves predictable exploitation paths open.</td>
+        <td>Environment: Clean install. Network inspector available. Access to app storage directory (or IndexedDB dump if web). Action: (1) Enumerate all persisted fields (schema + runtime writes) by exporting a storage snapshot after exercising every essential use-case workflow once. (2) For each persisted field, map it to the essential-use-case inventory ledger entry (field -&gt; necessity). (3) Validate encryption by extracting storage artifacts and confirming no plaintext values for sensitive fields are present at rest (string search or structured decode). (4) Validate transport: if any network sync exists, capture outbound requests and confirm TLS-only transport and no sensitive fields appear in request bodies without encryption-at-application-layer where claimed. (5) Run retention test: set retention window to minimal value (test config), create records, wait past window, then snapshot storage and confirm records are absent or cryptographically unrecoverable within application access paths. Pass Criteria: Every persisted field has a necessity mapping; no plaintext sensitive values present at rest; no sensitive values transmitted in clear; records past retention window are not accessible and do not appear in storage snapshots. Fail Criteria: Any persisted field lacks necessity justification; any sensitive value appears in plaintext at rest or in transit; retention-expired records remain accessible or persist in storage.</td>
+        <td>Partial</td>
+        <td>PainTracker states essential-only collection, AES-256 at rest, TLS 1.3 in transit, and no sharing; local retention remains user-controlled and not fully automatic. To reach Met: enforce automatic local retention windows with documented override policy.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-010</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.2 Exposure Minimization (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST perform data minimization audit: justify every data field collected</td>
+        <td>State surveillance</td>
+        <td>Unjustified fields enable profiling, secondary inference, and coercive data requests beyond core care needs.</td>
+        <td>Without a mandatory per-field justification process, data scope drifts over time and reviewers cannot detect over-collection early.</td>
+        <td>Require a versioned field-justification ledger and verify each schema migration includes necessity, sensitivity class, and retention bound.</td>
+        <td>Partial</td>
+        <td>Reference implementation documents essential fields but does not publish a formal per-field minimization audit artifact. To reach Met: publish a versioned field-justification ledger tied to schema migrations.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-011</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.2 Exposure Minimization (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST encrypt sensitive data at rest (AES-256 minimum; ChaCha20 acceptable)</td>
+        <td>Device seizure</td>
+        <td>Lost or seized devices can reveal plaintext records, causing irreversible confidentiality loss.</td>
+        <td>At-rest encryption cannot be discretionary when threat model includes confiscation and endpoint compromise.</td>
+        <td>Attempt raw storage extraction from device backup, confirm absence of plaintext fragments via strings/grep scan, verify key-derivation method and parameters, and confirm keys are not persisted in plaintext config files or logs.</td>
+        <td>Met</td>
+        <td>PainTracker reports AES-256 GCM storage encryption and audit test confirms exported database is unreadable without decryption key.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-012</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.2 Exposure Minimization (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST use TLS 1.3+ for all data in transit; TLS 1.2 acceptable with strong ciphersuites only</td>
+        <td>Network tampering</td>
+        <td>Transport interception permits content disclosure, manipulation, or downgrade attacks during sync/backup.</td>
+        <td>Weak transport guarantees collapse confidentiality in transit even if local storage is encrypted.</td>
+        <td>Environment: A controlled test session with network visibility. Use at least one TLS scanner (e.g., testssl.sh or sslyze) plus a packet capture tool (e.g., Wireshark/tshark). If the system has no network endpoints by design, verification is a negative test (no outbound). Action: (1) Identify every network endpoint used by the product (sync, updates, telemetry, third-party APIs) by running essential workflows while capturing traffic. (2) For each endpoint, run a TLS posture scan and record: supported protocol versions, ciphers, key exchange, certificate chain, HSTS (if web), and renegotiation behavior. (3) Attempt downgrade: force TLS 1.2 and weak cipher negotiation from the client side (scanner-supported). (4) Attempt plaintext: confirm no HTTP (non-TLS) endpoints are reachable for the same host/path patterns. (5) Inspect captured traffic payloads for sensitive field names/values (string search or structured decode) to ensure no application-layer plaintext is sent where encryption-at-application-layer is claimed. Pass Criteria: All observed endpoints require TLS; no HTTP reachable equivalents. TLS 1.0/1.1 not supported; TLS 1.2 allowed only if explicitly justified; TLS 1.3 preferred. Weak ciphers/legacy key exchange rejected. Downgrade attempts fail (handshake refused or negotiation prevented). No sensitive values appear in captured request/response bodies in clear where app-layer encryption is claimed. Fail Criteria: Any endpoint allows plaintext HTTP. TLS downgrade succeeds or weak suites negotiate. Any sensitive values observed in clear contrary to the spec disclosure/crypto claims.</td>
+        <td>Met</td>
+        <td>Reference mapping states TLS 1.3 for all communication and includes an OpenSSL verification checkpoint for cipher and downgrade posture.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-013</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.2 Exposure Minimization (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST define explicit retention policy for every data field (max age before auto-delete)</td>
+        <td>Institutional control</td>
+        <td>Undefined retention increases subpoena/disclosure exposure windows and amplifies harm from delayed compromise.</td>
+        <td>Retention limits must be enforceable defaults; guidance-only policies do not constrain operational drift.</td>
+        <td>Inspect per-field retention table, verify expiry removes logical references and blocks application-level access, confirm no documented restore path after expiry, and treat physical media destruction as out-of-scope unless explicitly guaranteed.</td>
+        <td>Partial</td>
+        <td>PainTracker specifies one-year auto-delete for server backups but keeps local entries indefinitely by user control, so not all fields have automatic minimal retention. To reach Met: define and enforce per-field local retention defaults with auditable expiry behavior.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-014</code></td>
+        <td><code>MUST NOT</code></td>
+        <td>4. Core Principles (Normative) | 4.2 Exposure Minimization (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST NOT sell, share, or broker user data without explicit informed consent (opt-in, not opt-out)</td>
+        <td>Institutional control</td>
+        <td>Data sale or broker sharing enables exploitation, discrimination, and coercive profiling by third parties.</td>
+        <td>Consent and sharing boundaries are critical trust controls; optional compliance invites monetization pressure and abuse.</td>
+        <td>Environment: Instrumented build with network inspector enabled. Access to full endpoint list, third-party dependency inventory, consent state toggles, and test account with varied consent states. Action: (1) Enumerate all outbound network destinations via static endpoint list and runtime traffic capture while exercising all essential workflows once. (2) Generate a Data Egress Matrix including destination domain, data categories transmitted, triggering action, and consent prerequisite (if any). (3) Toggle all consent states (opt-in/opt-out combinations) and repeat full essential workflow run while capturing traffic. (4) Compare observed outbound data to documented processor list and privacy documentation. (5) Inspect request payloads for sensitive fields not explicitly documented as shared. Pass Criteria: Every outbound data transmission maps to a documented processor and declared purpose. No sensitive data is transmitted when consent state disallows it. No undocumented third-party endpoints receive user data. Network capture matches documented data-flow inventory. Fail Criteria: Any outbound transmission occurs without documented consent linkage. Undocumented processors receive user data. Sensitive fields appear in payloads outside declared purposes. Consent toggles do not alter data transmission behavior.</td>
+        <td>Met</td>
+        <td>Reference mapping asserts zero third-party access, no ad/analytics trackers, and no data sale pathway.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-015</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.3 Local Authority (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>Principle: Users MUST retain control and function locally. Systems MUST NOT require internet for essential operations.</td>
+        <td>Institutional control</td>
+        <td>Centralized dependency allows service operators or outages to block essential user workflows and deny access during crises.</td>
+        <td>Local control is a core safety property; advisory-only offline posture permits coercive lockout through platform or network control.</td>
+        <td>Environment: device in airplane mode with network inspection active (DevTools Network tab or proxy capture). Action: execute full CRUD cycle on a core record (create, read, update, delete), including app restart between operations. Observable result: zero outbound network requests, all changes persist across restart, and no sync-required/blocking prompts appear. Pass criteria: all essential workflows complete with zero network traffic and no blocking UI escalation. Fail criteria: any outbound request occurs, any operation blocks on connectivity, or dependency-escalation messaging appears.</td>
+        <td>Partial</td>
+        <td>PainTracker supports offline core workflows, but backup and some account-linked operations remain server-coupled. To reach Met: provide a fully documented no-server operating profile for all essential functions.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-017</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.3 Local Authority (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST support offline operation for all essential user workflows</td>
+        <td>Institutional control</td>
+        <td>Users lose ability to operate during censorship, outages, or deliberate account throttling at moments when records are most needed.</td>
+        <td>Essential workflow continuity must be guaranteed under degraded connectivity; optional compliance fails under predictable network denial conditions.</td>
+        <td>Disable network at OS level and execute full essential workflow test matrix; verify success criteria without deferred hard-blocks.</td>
+        <td>Met</td>
+        <td>Reference implementation claims full offline-first behavior for create/edit/delete core entries and validates operation in airplane mode.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-018</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.3 Local Authority (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST cache essential data on user&#39;s device; users maintain local copy</td>
+        <td>Device seizure</td>
+        <td>Without a complete local copy, users become dependent on remote availability and may lose critical access during account or network disruption.</td>
+        <td>Local possession of essential data is a resilience boundary; discretionary caching creates silent gaps at time-of-need.</td>
+        <td>Environment: app connected and synced, then network severed mid-session with forced reload in offline state. Action: create/modify records, interrupt sync mid-write, and reload the application while offline. Observable result: pre-existing records remain readable, partially synced edits remain locally visible, no silent rollback or data loss occurs, and no forced re-authentication is required. Pass criteria: local dataset remains fully accessible and internally consistent without server reachability. Fail criteria: records disappear, revert silently, or require reconnection to render.</td>
+        <td>Met</td>
+        <td>Reference implementation states full local journal copy persists on device and remains available without server contact.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-019</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.3 Local Authority (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST sync gracefully without blocking user workflow (asynchronous, eventual consistency)</td>
+        <td>Network tampering</td>
+        <td>Blocking UX on sync creates denial-of-service by unstable or adversarial networks and prevents timely user actions.</td>
+        <td>Non-blocking sync is required to preserve agency under unreliable links; optional behavior reintroduces network-coupled lockout.</td>
+        <td>Environment: throttle connection to high latency (&gt;=2000ms) and &gt;=30% packet loss using DevTools or network proxy. Action: perform multiple write operations during instability, then close and reopen app before reconnection. Observable result: writes persist locally immediately, UI remains interactive (no blocking spinner longer than 3 seconds), queued writes sync after reconnection without duplication/corruption, and no hard error requires manual reset. Pass criteria: all edits survive instability and reconcile cleanly on reconnection. Fail criteria: write loss, duplication, UI lockup, or manual recovery required.</td>
+        <td>Met</td>
+        <td>Reference mapping describes asynchronous queue-based sync and conflict resolution without blocking core workflows.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-020</code></td>
+        <td><code>MUST NOT</code></td>
+        <td>4. Core Principles (Normative) | 4.3 Local Authority (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST NOT require authentication for offline access to cached user data</td>
+        <td>Institutional control</td>
+        <td>Forced online authentication for offline cache enables lockout by identity provider failure, censorship, or account coercion.</td>
+        <td>Offline access under disruption is a hard requirement; optional support permits predictable control chokepoints.</td>
+        <td>Expire server tokens, disable connectivity, and verify cached essential data remains accessible without network re-authentication.</td>
+        <td>Met</td>
+        <td>Reference implementation states offline access to cached data does not require live server authentication.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-021</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.3 Local Authority (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST document offline vs. online feature parity and sync behavior</td>
+        <td>State surveillance</td>
+        <td>Undocumented parity/sync behavior causes users to misjudge exposure and data consistency risks across offline/online transitions.</td>
+        <td>Transparency on parity and sync semantics is necessary for informed risk decisions; vague behavior increases accidental disclosure and data loss.</td>
+        <td>Environment: Device capable of toggling network (airplane mode). Network inspector enabled. Access to documented offline/online feature matrix and sync specification. Action: (1) Extract documented Offline/Online Feature Matrix from public docs. (2) Execute each essential workflow under fully offline state, intermittent connectivity (toggle mid-action), and fully online state. (3) Record feature availability, data visibility differences, sync trigger timing, and conflict resolution outcome (create/edit same record offline and online). (4) Capture storage snapshot before/after sync. (5) Compare observed behavior to documented sync triggers, conflict rules, and exposure differences. Pass Criteria: All documented offline features operate without server dependency. Observed sync triggers and conflict resolution behavior match documentation. No additional data exposure occurs when transitioning from offline to online beyond documented scope. Feature availability aligns with published matrix. Fail Criteria: Any offline-capable feature requires server reachability. Conflict resolution diverges from documented rules. Sync transmits undocumented data classes. Offline/online exposure differences are undocumented.</td>
+        <td>Partial</td>
+        <td>Core behavior is described in reference mapping, but a formal parity matrix and sync-state disclosure contract are not published. To reach Met: publish and version a parity/sync behavior specification.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-022</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.4 Coercion Resistance (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>Principle: Users MUST be able to maintain confidentiality and integrity even under physical or legal coercion.</td>
+        <td>Coercion / forced disclosure</td>
+        <td>Under detention or legal compulsion, users can be forced into plaintext disclosure with no protective operating mode, causing immediate irreversible exposure.</td>
+        <td>Coercion events are catastrophic and time-critical; optional controls leave users unprotected in the exact scenario this principle targets.</td>
+        <td>Run coercion tabletop: assume unlocked-device demand, legal demand, and account-seizure scenarios; verify available protections, what remains hidden, and what is exposed.</td>
+        <td>Not Met</td>
+        <td>Attack scenario: forced unlock and compelled disclosure. Non-coercive fallback: offline local-only mode can reduce future synchronization exposure but does not protect already visible unlocked-session content. Disclosure minimization: at-rest encryption helps only before unlock; once compelled unlock occurs, core content is exposed. To reach Met: add deniability controls and a coercion-safe operating mode that limits plaintext exposure under forced disclosure.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-023</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.4 Coercion Resistance (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST use encryption where users hold keys; system cannot decrypt user data</td>
+        <td>Institutional control</td>
+        <td>If system operators can decrypt user data, subpoenas, insider abuse, or platform capture yield bulk plaintext disclosure.</td>
+        <td>User-held keys are a hard boundary; making it optional collapses zero-knowledge guarantees under legal or administrative pressure.</td>
+        <td>Attempt decryption from server-side backup/database using admin credentials only; verify inability to recover plaintext without user key material.</td>
+        <td>Met</td>
+        <td>Attack scenario: compelled server-side disclosure request. Non-coercive fallback: user can withhold passphrase and keep local encrypted copy. Disclosure minimization: server can provide ciphertext only.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-024</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.4 Coercion Resistance (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST support strong passphrases (minimum 128 bits entropy; 6+ words recommended)</td>
+        <td>Device seizure</td>
+        <td>Weak passphrases allow rapid brute-force recovery after confiscation, exposing complete historical records.</td>
+        <td>Passphrase strength is not recoverable post-breach; weak defaults create permanent retrospective exposure.</td>
+        <td>Validate passphrase policy and entropy estimator enforcement; run controlled cracking tests against policy-minimum examples.</td>
+        <td>Met</td>
+        <td>Attack scenario: seized encrypted backup attacked offline. Non-coercive fallback: user can rotate to stronger passphrase and re-encrypt. Disclosure minimization: high-entropy passphrases slow extraction window.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-025</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.4 Coercion Resistance (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST use slow key derivation (Argon2id, Scrypt; never MD5/SHA-1)</td>
+        <td>Device seizure</td>
+        <td>Fast or obsolete KDFs make offline guessing feasible, turning encrypted stores into recoverable plaintext archives.</td>
+        <td>KDF hardness is a mandatory control against commodity cracking rigs; advisory guidance is routinely bypassed for convenience.</td>
+        <td>Inspect KDF parameters in runtime configuration, benchmark derivation cost, and reject builds that permit MD5/SHA-1 credential derivation.</td>
+        <td>Met</td>
+        <td>Attack scenario: attacker runs GPU/ASIC dictionary attacks on captured ciphertext. Non-coercive fallback: increase Argon2id cost factors for high-risk profiles. Disclosure minimization: slow KDF materially limits guesses per second.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-026</code></td>
+        <td><code>MUST NOT</code></td>
+        <td>4. Core Principles (Normative) | 4.4 Coercion Resistance (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST NOT provide administrative backdoors or master keys</td>
+        <td>Institutional control</td>
+        <td>Any admin backdoor enables unilateral mass disclosure and nullifies user security expectations.</td>
+        <td>Backdoor existence is binary; if present at all, coercive capture and insider abuse paths remain open.</td>
+        <td>Environment: Access to source code (or compiled artifact plus symbol inspection), configuration files, key-derivation routines, and privileged API definitions. Test device with sample encrypted records. Action: (1) Identify all cryptographic key material generation paths (derive, import, rotate, store). (2) Search codebase and configuration for hard-coded keys, embedded private keys, environment-based master secrets, and server-returned decryption keys. (3) Attempt extraction tests: retrieve encrypted record from storage and attempt decryption using only server-accessible secrets (if any); attempt decryption via privileged API endpoint without user-held credential material. (4) Enumerate recovery flows and confirm recovery does not introduce a universal decrypt-capable credential. (5) Confirm decryption requires user-bound key material and cannot be performed solely by backend infrastructure. Pass Criteria: No hard-coded, environment-level, or server-held master key capable of decrypting user records exists. No API endpoint allows record decryption without user-held key material. Recovery flows preserve user-bound key derivation constraints. Encrypted artifacts cannot be decrypted without user credential material. Fail Criteria: Presence of hard-coded or centrally stored master key. Backend infrastructure alone can decrypt user records. Recovery flow introduces universal decrypt capability. Encrypted records decryptable without user-bound secret.</td>
+        <td>Met</td>
+        <td>Attack scenario: operator compelled to decrypt at scale. Non-coercive fallback: user-held key model blocks operator-only decryption. Disclosure minimization: operator can expose metadata or ciphertext but not plaintext.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-027</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.4 Coercion Resistance (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST document threat model clearly: what adversaries can and cannot extract</td>
+        <td>State surveillance</td>
+        <td>Ambiguous threat boundaries produce false safety assumptions and high-risk deployment in contexts the system cannot defend.</td>
+        <td>Threat-model clarity is prerequisite for informed consent; non-mandatory disclosure leads to misuse under adversarial conditions.</td>
+        <td>Environment: Latest release build. Default logging enabled. Test device and test account (if any). Screen recording enabled. Access to app logs, local crash reports, export artifacts, network inspector, and local storage snapshot (IndexedDB dump or app data directory). Action: (1) Identify the spec coercion boundary claims for this requirement (what the system explicitly resists vs does not resist). (2) Execute a Coercion Scenario Matrix (minimum 6 runs) and record outcomes: S1 shoulder-surf/screen-share while navigating privacy controls, exports, and history views; S2 forced show-me-your-data prompt to display historical records quickly; S3 forced export of full history and clinician summary; S4 device seizure with device powered on and app open, attempting retrieval via UI, OS share sheet, and cached previews; S5 device seizure with device powered on and app closed, attempting retrieval via relaunch without network, then filesystem/IndexedDB inspection; S6 network pressure by repeating S3 under packet capture to confirm no telemetry or backup side-channel leakage. (3) For each scenario, capture screenshots/video, exported files, log output, crash artifacts, and storage snapshot before/after. (4) Verify disclosure minimization by enumerating data classes revealed in each scenario (record content, identifiers, metadata, timestamps, derived summaries), whether disclosure required explicit user action, and whether disclosure occurred via logs, exports, cached previews, or storage artifacts. Pass Criteria: Documented coercion boundary matches observed behavior in all scenarios with no surprise disclosures beyond boundary. No sensitive record content is revealed through logs, crash dumps, cached previews, exports, or storage artifacts unless explicitly allowed by boundary and triggered by deliberate user action. Any allowed disclosures are bounded/minimal and auditable in captured artifacts. Fail Criteria: Any scenario reveals sensitive data through unintended channel (logs/exports/caches/storage/network). Observed behavior contradicts documented coercion boundary. Disclosure expands under pressure (e.g., export reveals more than UI, crash logs leak content, caches store plaintext previews).</td>
+        <td>Met</td>
+        <td>Attack scenario: user deploys in active coercion context based on incomplete claims. Non-coercive fallback: documentation directs high-risk users to avoid unsupported threat contexts. Disclosure minimization: explicit limits prevent over-claiming and reduce unsafe reliance.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-028</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.5 Degraded Functionality (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>Principle: Systems MUST remain usable when bandwidth, power, compute, or cognition are severely constrained.</td>
+        <td>Institutional control</td>
+        <td>Essential workflows fail under constrained resources, forcing users to rely on institutional systems (cloud sync, third-party portals, connectivity) that expand surveillance and control surface.</td>
+        <td>Graceful degradation is a safety baseline in hostile conditions; optional support causes predictable service exclusion.</td>
+        <td>Execute constrained-resource test matrix (2G, low-memory, high-latency, reduced-input), confirm essential workflows remain usable, verify no hidden telemetry activation in degraded mode, and confirm no sync-required-to-continue prompts are emitted.</td>
+        <td>Partial</td>
+        <td>PainTracker meets core low-bandwidth/mobile behavior but has progressive enhancement and accessibility gaps under degraded contexts. To reach Met: ship full degraded-mode baseline including non-JS and accessibility-complete operation.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-029</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.5 Degraded Functionality (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST test baseline path on 2G networks (&lt;100KB initial HTML load)</td>
+        <td>Network tampering</td>
+        <td>Heavy initial payloads fail under weak links, preventing timely access to critical workflows.</td>
+        <td>Low-bandwidth users cannot choose better network conditions; baseline payload budget must be enforced, not aspirational.</td>
+        <td>Throttle to simulated 2G, measure initial HTML payload and first-interaction completion time, and verify budget conformance in CI performance checks.</td>
+        <td>Met</td>
+        <td>Reference mapping reports successful 2G core-path execution under simulated constrained network conditions.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-030</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.5 Degraded Functionality (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST function on devices with &lt;512MB RAM</td>
+        <td>Institutional control</td>
+        <td>Users on older or constrained devices are excluded from core access during high-need periods.</td>
+        <td>Device-floor compatibility is an inclusion boundary; non-mandatory support creates structural denial of service for vulnerable users.</td>
+        <td>Run memory-constrained device tests and profile runtime memory footprint during core workflows; verify stability at specified RAM floor.</td>
+        <td>Partial</td>
+        <td>Reference mapping claims low-memory support but evidence cites iPhone 6s (1GB RAM), which does not conclusively prove operation below 512MB. To reach Met: publish reproducible test evidence on &lt;512MB target hardware/emulation.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-031</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.5 Degraded Functionality (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST support complete keyboard-only navigation (no mouse required)</td>
+        <td>Institutional control</td>
+        <td>Users who cannot use pointer/touch input are blocked from complete task execution.</td>
+        <td>Complete keyboard operability is binary for affected users; partial compliance leaves inaccessible critical controls.</td>
+        <td>Run end-to-end keyboard-only audits across all interactive elements, including date pickers/charts, with tab order and activation checks, and confirm no UI controls are mouse-only event handlers without keyboard equivalents.</td>
+        <td>Not Met</td>
+        <td>Reference mapping reports keyboard access for core forms but not complete coverage; date picker/chart interactions still require pointer input. To reach Met: implement full keyboard parity for all controls and validate with automated/manual accessibility tests.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-032</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.5 Degraded Functionality (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST gracefully degrade features under resource constraints</td>
+        <td>Network tampering</td>
+        <td>Resource shocks cause hard failures instead of reduced-mode continuity, interrupting critical user tasks.</td>
+        <td>Degradation behavior must be deterministic; optional fallback logic leads to brittle failures in exactly the conditions this principle targets.</td>
+        <td>Inject CPU, memory, and bandwidth constraints and verify non-critical features degrade first while essential create/read/update paths remain operational.</td>
+        <td>Partial</td>
+        <td>Reference mapping indicates partial progressive enhancement and JS dependency, so degradation behavior is not complete across all contexts. To reach Met: provide robust no-JS baseline and explicit feature-priority degradation policy.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-033</code></td>
+        <td><code>MUST NOT</code></td>
+        <td>4. Core Principles (Normative) | 4.5 Degraded Functionality (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST NOT auto-load media (user must explicitly request video/audio)</td>
+        <td>Network tampering</td>
+        <td>Automatic media fetch increases data exhaustion risk and covertly exposes users to bandwidth and tracking harms.</td>
+        <td>User-controlled media loading is a direct harm-prevention control for constrained or monitored connections.</td>
+        <td>Inspect network traces on first load and workflow navigation to confirm no media requests occur until explicit user action.</td>
+        <td>Met</td>
+        <td>Reference mapping states media/attachments are never auto-loaded and require explicit user request.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-034</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.5 Degraded Functionality (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST meet WCAG 2.1 Level AA accessibility standards (color contrast, screen reader support)</td>
+        <td>Institutional control</td>
+        <td>Accessibility gaps systematically exclude users with assistive needs from essential functions.</td>
+        <td>WCAG AA is a minimum interoperability floor; partial accessibility leaves predictable functional denial for disabled users.</td>
+        <td>Run WCAG 2.1 AA audits (contrast, keyboard, semantics, ARIA, screen-reader flows), verify passing results on critical workflows, and confirm core workflow completion time stays within defined tolerance under screen-reader mode.</td>
+        <td>Not Met</td>
+        <td>Reference mapping explicitly reports WCAG AA gaps (chart contrast and incomplete screen-reader/date-picker support). To reach Met: remediate failing elements and publish passing WCAG audit results.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-035</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.6 Essential Utility (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>Principle: Systems MUST optimize for user survival and autonomy. Features MUST serve essential needs, not engagement metrics or extraction.</td>
+        <td>Institutional control</td>
+        <td>If engagement/extraction priorities displace essential utility, users lose survival-critical outcomes and become subject to manipulative product incentives.</td>
+        <td>Utility-first design is the principle boundary; optional adherence permits business pressure to reintroduce harmful engagement optimization.</td>
+        <td>Perform feature-subtraction audit against declared essential use cases and verify removal of any non-essential feature does not improve survival-critical task completion while preserving anti-manipulation constraints.</td>
+        <td>Partial</td>
+        <td>Reference mapping states utility-first goals and no engagement optimization, but does not yet publish a formal subtraction-test artifact proving essential-only surface. To reach Met: publish versioned essential-capability subtraction test results.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-037</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.6 Essential Utility (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST document essential use cases explicitly; justify every feature</td>
+        <td>Institutional control</td>
+        <td>Undocumented feature intent enables scope creep, increasing cognitive burden and exploitable non-essential pathways.</td>
+        <td>Feature justification must be mandatory to constrain drift toward non-essential complexity.</td>
+        <td>Environment: A versioned Feature Inventory document (machine-readable preferred) plus a versioned Essential Workflows List and Essential Use-Case Ledger (source of truth). Action: (1) Enumerate all user-facing features and all background behaviors (telemetry, recommendations, nudges, engagement loops, dark patterns) present in the build. (2) For each feature, require a binding link to exactly one of: an Essential Workflow, a Protective Requirement (explicit spec clause), or an Accessibility/Safety obligation. (3) For each feature, record a removal test: what breaks if the feature is removed or disabled? (4) Execute a feature subtraction drill: disable/remove the top 3 non-essential candidates (or simulate via feature flags) and confirm all essential workflows remain intact and user data integrity is preserved. Pass Criteria: 100% of features have a documented linkage to an essential workflow or protective requirement. At least one subtraction drill is executed per release cycle with evidence captured. No feature exists solely for engagement extraction or upsell pressure on essential workflows. Fail Criteria: Any feature lacks linkage. Any essential workflow fails under subtraction drill. Any feature is justified only by engagement, retention, or monetization.</td>
+        <td>Partial</td>
+        <td>Reference mapping documents core use case but lacks a fully versioned feature-justification matrix covering every shipped feature. To reach Met: publish and maintain complete feature-to-need mapping with removal impact notes.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-038</code></td>
+        <td><code>MUST NOT</code></td>
+        <td>4. Core Principles (Normative) | 4.6 Essential Utility (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST NOT use dark patterns (hidden friction-to-exit, manipulative notifications, deceptive confirmations)</td>
+        <td>Institutional control</td>
+        <td>Dark patterns coerce behavior, impair informed consent, and can force unsafe actions under stress.</td>
+        <td>Dark-pattern prevention is binary in high-risk contexts; partial tolerance enables predictable manipulation.</td>
+        <td>Run dark-pattern audit checklist across onboarding, retention, cancellation, and destructive flows; verify absence of hidden friction, deceptive defaults, and manipulative prompts.</td>
+        <td>Met</td>
+        <td>Reference mapping reports no hidden friction, no manipulative notifications, and no surprise paywalls in audited flows.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-039</code></td>
+        <td><code>MUST NOT</code></td>
+        <td>4. Core Principles (Normative) | 4.6 Essential Utility (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST NOT include addictive mechanics (streaks, variable rewards, leaderboards, FOMO notifications)</td>
+        <td>State surveillance</td>
+        <td>Addictive mechanics increase exposure time, generate excess behavioral data, and create exploitable dependence loops.</td>
+        <td>Engagement addiction mechanics are directly counter to user autonomy; they cannot be optionally restricted.</td>
+        <td>Inspect product behavior for streaks, variable rewards, leaderboards, and FOMO notifications; verify none are present in code/config and runtime UI.</td>
+        <td>Met</td>
+        <td>Reference mapping indicates no gamification loops, no pull-back notifications, and no engagement-maximization mechanisms.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-040</code></td>
+        <td><code>MUST</code></td>
+        <td>4. Core Principles (Normative) | 4.6 Essential Utility (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST measure success by user goal completion, not engagement time or feature adoption</td>
+        <td>Institutional control</td>
+        <td>If success metrics prioritize engagement, roadmap incentives drift toward extraction rather than user outcomes.</td>
+        <td>Metric choice governs system behavior; optional outcome metrics are routinely displaced by growth KPIs.</td>
+        <td>Environment: Access to product planning artifacts for last 2 release cycles (roadmap/PRDs), analytics/KPI definitions, and at least one shipped experiment write-up (A/B test or feature flag). Action: (1) Build a Metric Inventory from dashboards and PRDs listing every primary and secondary success metric with name, definition, and data source. (2) Classify each metric as Outcome/Goal Completion, Engagement/Extraction, or Mixed (requires justification). (3) For each essential workflow (from annex list), verify at least one Outcome/Goal Completion metric is tied directly to it with defined acceptable threshold (pass/fail or target range). (4) Run a Dark-Metric Probe by inspecting shipped UI/flows for engagement mechanics inside essential workflows (nudges, streaks, upsells, nags, continue traps) and confirm whether those mechanics are tracked as success signals. (5) Verify decision precedence: from last 2 cycles, pick 2 roadmap decisions and trace justification metrics, confirming outcome-based justification rather than engagement-based justification. Pass Criteria: Primary success metrics are dominated by Outcome/Goal Completion measures, and each essential workflow has at least one outcome metric with explicit threshold. Engagement metrics, if present, are non-primary, explicitly labeled non-goal, and not used to justify shipping that affects essential workflows. No engagement/extraction mechanics are embedded in essential workflows as measured success drivers. Fail Criteria: Any primary metric is engagement/extraction without outcome linkage. Essential workflows lack outcome metrics or thresholds. Roadmap decisions are justified primarily by engagement metrics or feature adoption without outcome evidence.</td>
+        <td>Met</td>
+        <td>Reference mapping states outcome-oriented success measures and explicitly rejects DAU/time-in-app as primary targets.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-041</code></td>
+        <td><code>MUST NOT</code></td>
+        <td>4. Core Principles (Normative) | 4.6 Essential Utility (<a href="/docs/spec/v1.0.html#sec4">link</a>)</td>
+        <td>MUST NOT require payment for essential features (accessibility tiers acceptable; never paywall core utility)</td>
+        <td>Institutional control</td>
+        <td>Paywalling essential functions creates coercive access barriers for vulnerable users and undermines protective utility.</td>
+        <td>Essential capability access must remain non-discretionary; optional anti-paywall policy invites monetization harm.</td>
+        <td>Environment: Fresh user profile in Free tier state. No paid entitlements. Network inspector and feature flag visibility if applicable. Action: (1) Define the canonical Essential Workflows List (from spec/annex) as the test plan. (2) Execute each essential workflow end-to-end under Free tier: create/read/update/delete core records, review history, export minimal clinician-ready summary (if defined essential), and access safety-critical settings (privacy controls, deletion, retention). (3) During execution, capture UI state (screenshots/log), network calls (to detect paywall checks), and runtime errors or blocked routes. (4) Attempt deep-link navigation directly to essential workflow endpoints/routes to detect soft gating (paywall only on entry path). (5) Confirm pricing/entitlement matrix matches observed runtime behavior (no mismatch between documented free and actual blocked features). Pass Criteria: Every essential workflow completes in Free tier without paywall, degraded lockout, or hidden gating; no essential endpoint is blocked by entitlement checks (UI or API); entitlement matrix matches observed runtime behavior. Fail Criteria: Any essential workflow is blocked, paywalled, rate-limited to unusability, or requires payment to complete; any essential route is blocked via entitlement enforcement; documented pricing differs from runtime gating.</td>
+        <td>Met</td>
+        <td>Reference mapping indicates no premium paywall on core utility and transparent funding model without data-harvest monetization.</td>
+        <td>v1.0</td>
+      </tr>
+      <tr>
+        <td><code>NORM-042</code></td>
+        <td><code>MUST</code></td>
+        <td>6. Compliance Levels (<a href="/docs/spec/v1.0.html#sec6">link</a>)</td>
+        <td>All systems claiming Protective Computing compliance MUST declare a compliance level (1–4) for each principle. A system&#39;s overall compliance is determined by its weakest principle.</td>
+        <td>Institutional control</td>
+        <td>Without explicit per-principle compliance declaration, weak-area concealment enables misleading claims and unsafe deployment decisions.</td>
+        <td>Compliance-level declaration is the auditability backbone; optional disclosure permits selective reporting and trust erosion.</td>
+        <td>Verify published compliance matrix includes all principles with explicit level assignment and that overall rating resolves to weakest-principle rule.</td>
+        <td>Met</td>
+        <td>Reference implementation publishes principle-by-principle levels and reports overall stance transparently against weakest-principle constraints.</td>
+        <td>v1.0</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Change discipline</h2>
+  <ul>
+    <li>New <code>MUST</code> requirements should be rare and must include a ledger entry at introduction.</li>
+    <li>If a <code>MUST</code> is downgraded to <code>SHOULD</code>, the ledger must record the reason and the version boundary.</li>
+  </ul>
+
+  <h2>Reviewer submission</h2>
+  <p class="small">
+    Submit contradictions, downgrade proposals, and missing threat alignments through
+    <a href="/docs/independent-review.html">Independent Review</a>. Include the ledger <code>ID</code>,
+    the disputed threat alignment, and a concrete proposed revision.
+  </p>
+
+  <p class="small">
+    See also: <a href="/docs/spec/v1.0.html">Specification v1.0</a> ·
+    <a href="/docs/reference-implementation/paintracker-mapping.html">Reference Implementation Mapping</a> ·
+    <a href="/docs/independent-review.html">Independent Review</a>
+  </p>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

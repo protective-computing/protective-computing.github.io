@@ -1,0 +1,24 @@
+﻿GroupIndex: 1
+IDs: NORM-001, NORM-002
+Action: DELETE
+CanonicalID: NORM-001
+Rationale: Exact duplicate text group; kept lowest numeric ID as deterministic canonical row and removed redundant duplicates.
+
+GroupIndex: 6
+IDs: NORM-007, NORM-008, NORM-009
+Action: DELETE
+CanonicalID: NORM-007
+Rationale: Exact duplicate text group; kept lowest numeric ID as deterministic canonical row and removed redundant duplicates.
+
+GroupIndex: 12
+IDs: NORM-015, NORM-016
+Action: DELETE
+CanonicalID: NORM-015
+Rationale: Exact duplicate text group; kept lowest numeric ID as deterministic canonical row and removed redundant duplicates.
+
+GroupIndex: 31
+IDs: NORM-035, NORM-036
+Action: DELETE
+CanonicalID: NORM-035
+Rationale: Exact duplicate text group; kept lowest numeric ID as deterministic canonical row and removed redundant duplicates.
+

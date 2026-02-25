@@ -1,0 +1,31 @@
+﻿FULL TABLE:
+
+File                                                                                                                             DESC_MATCH TITLE_MATCH CANONICAL OG_URL_MATCH IMG_ABSOLUTE TW_CARD BROKEN_META
+----                                                                                                                             ---------- ----------- --------- ------------ ------------ ------- -----------
+C:\Users\kay\Documents\Projects\protective\protective-computing.github.io\docs\getting-started.html                                    True        True      True         True         True    True       False
+C:\Users\kay\Documents\Projects\protective\protective-computing.github.io\docs\independent-review.html                                 True        True      True         True         True    True       False
+C:\Users\kay\Documents\Projects\protective\protective-computing.github.io\docs\principles\coercion-resistance.html                     True        True      True         True         True    True       False
+C:\Users\kay\Documents\Projects\protective\protective-computing.github.io\docs\principles\degraded-functionality.html                  True        True      True         True         True    True       False
+C:\Users\kay\Documents\Projects\protective\protective-computing.github.io\docs\principles\essential-utility.html                       True        True      True         True         True    True       False
+C:\Users\kay\Documents\Projects\protective\protective-computing.github.io\docs\principles\exposure-minimization.html                   True        True      True         True         True    True       False
+C:\Users\kay\Documents\Projects\protective\protective-computing.github.io\docs\principles\local-authority.html                         True        True      True         True         True    True       False
+C:\Users\kay\Documents\Projects\protective\protective-computing.github.io\docs\principles\reversibility.html                           True        True      True         True         True    True       False
+C:\Users\kay\Documents\Projects\protective\protective-computing.github.io\docs\reference-implementation\paintracker-mapping.html       True        True      True         True         True    True       False
+C:\Users\kay\Documents\Projects\protective\protective-computing.github.io\docs\spec\v1.0.html                                          True        True      True         True         True    True       False
+C:\Users\kay\Documents\Projects\protective\protective-computing.github.io\index.html                                                   True        True      True         True         True    True       False
+
+FAILURES ONLY:
+(none)
+
+SITEMAP PARITY CHECK:
+OG_URL values missing from sitemap.xml:
+(none)
+
+sitemap.xml URLs without local file mapping:
+(none)
+
+ROBOTS CHECK:
+Disallow /assets/logo.png present: False
+
+TOTAL PAGES: 11
+FAILURE COUNT: 0

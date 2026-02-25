@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /assets/logo.png
 
 Sitemap: https://protective-computing.github.io/sitemap.xml
