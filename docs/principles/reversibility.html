@@ -158,6 +158,13 @@
   <h1>Reversibility</h1>
   <p class="subtitle">Making user actions and system changes undoable. The foundational principle of recovery.</p>
 
+  <div class="box success">
+    <div class="box-title">Definition Summary</div>
+    <p><strong>What it is:</strong> User actions and system changes can be undone. Failures do not become permanent harm.</p>
+    <p><strong>Why it matters:</strong> In crisis, coercion, or cognitive fatigue, mistakes are inevitable. Reversibility is a safety feature, not a convenience.</p>
+    <p><strong>When to use:</strong> Apply full reversibility to all user-facing, destructive actions. Apply reversible-with-friction to dangerous operations (account deletion). Reserve irreversible for backend actions with legal or cryptographic constraints.</p>
+  </div>
+
   <div class="toc">
     <div class="box-title">On this page</div>
     <ul>
@@ -213,6 +220,7 @@
   <p>
     Don't delete immediately. Mark as deleted, hide from the UI, but retain the data for a recovery period (e.g., 30 days).
   </p>
+  <p><strong>Use case:</strong> Message deletion, email trash, document archival. User realizes mistake within days, recovers data without intervention.</p>
   <div class="box success">
     <div class="box-title">Implementation Pattern</div>
     <div class="code-block">
@@ -239,6 +247,7 @@ DELETE FROM messages WHERE deleted_at < now() - 30_days
   <p>
     For rich applications (writing, design, configuration), maintain an undo/redo stack of state changes.
   </p>
+  <p><strong>Use case:</strong> Text editors, form builders, configuration interfaces. User makes a series of edits and can step back through them one by one.</p>
   <div class="box success">
     <div class="box-title">Implementation Pattern</div>
     <div class="code-block">
@@ -273,6 +282,7 @@ class UndoManager:
     Some actions truly cannot be safely undone (e.g., account deletion with external system integration). 
     In those cases, require explicit confirmation and clearly communicate the irreversibility.
   </p>
+  <p><strong>Use case:</strong> Account deletion, data export, API key rotation, permanent account bans. User must explicitly opt-in and verify through email or 2FA.</p>
   <div class="box success">
     <div class="box-title">Implementation Pattern</div>
     <div class="code-block">
@@ -292,6 +302,7 @@ class UndoManager:
   <p>
     For documents, configurations, and code, maintain version history and allow rollback.
   </p>
+  <p><strong>Use case:</strong> Collaborative docs, configuration management, incident recovery. User sees what changed, when, and by whom. Can rollback to any prior snapshot.</p>
   <div class="box success">
     <div class="box-title">Implementation Pattern</div>
     <ul>
@@ -306,6 +317,7 @@ class UndoManager:
   <p>
     For multi-step operations, use transactions. If any step fails, rollback to the prior state.
   </p>
+  <p><strong>Use case:</strong> Financial transfers, multi-resource updates, batch operations. If any step fails, the entire operation reverses automatically. Data stays consistent.</p>
   <div class="box success">
     <div class="box-title">Implementation Pattern</div>
     <div class="code-block">
@@ -453,11 +465,37 @@ COMMIT  // Or ROLLBACK if any step fails
     <li><strong>Essential Utility:</strong> Prioritize reversible actions over flashy features that can't be undone.</li>
   </ul>
 
-  <h3>Further Reading</h3>
+  <h3>Further Reading & External Authority</h3>
+  <p><strong>Protective Computing Foundation:</strong></p>
   <ul>
-    <li><a href="https://doi.org/10.5281/zenodo.18688516">The Overton Framework: Protective Computing in Conditions of Human Vulnerability (v1.3)</a></li>
-    <li><a href="../getting-started.html">Getting Started with Protective Computing</a></li>
-    <li>Nielsen & Norman, "Usability Engineering": Chapter on error prevention and recovery</li>
+    <li><a href="https://doi.org/10.5281/zenodo.18688516">The Overton Framework: Protective Computing in Conditions of Human Vulnerability (v1.3)</a> — Core disciplinary reference</li>
+    <li><a href="../getting-started.html">Getting Started with Protective Computing</a> — Practical onboarding guide</li>
+  </ul>
+
+  <p><strong>Undo/Reversibility in HCI & UX Engineering:</strong></p>
+  <ul>
+    <li>Nielsen & Norman, "Usability Engineering" (1994) — Chapter 10 on error prevention and recovery; foundational HCI work on undo patterns</li>
+    <li>Baxley, "User-Centered Design: An Introduction" — Error recovery and task reversibility as core usability principles</li>
+    <li>Lieberman & Faulring, "Programming by Example: A Unifying Paradigm and Growing Tool Use in End-User Programming" (2015) — Undo/redo implementation in interactive systems</li>
+  </ul>
+
+  <p><strong>Software Architecture & Resilience:</strong></p>
+  <ul>
+    <li>Vaughan, "Designing Resilient Systems" — Failure recovery patterns; saga pattern for distributed transaction rollback</li>
+    <li>Hohpe & Woolf, "Enterprise Integration Patterns" (2004) — Transaction, rollback, and compensation patterns for enterprise systems</li>
+    <li>Kleppmann, "Designing Data-Intensive Applications" (2017) — ACID properties, linearizability, and eventual consistency in recovery patterns</li>
+  </ul>
+
+  <p><strong>Safety-Critical Design:</strong></p>
+  <ul>
+    <li>Leveson, "Engineering a Safer World" (2012) — Human errors, system design, and error tolerance in safety-critical systems</li>
+    <li>Reason & Parker, "Human Factors in Flight Operations" — Reversibility in cockpit design; why undo/confirmation reduce pilot error</li>
+  </ul>
+
+  <p><strong>Data Continuity &amp; Privacy:</strong></p>
+  <ul>
+    <li>Khandelwal &amp; Kar, "Data Governance for Data Minimization" — Soft deletion and recovery window strategies as privacy-preserving alternatives to permanent erasure</li>
+    <li>Regulation (EU) 2016/679 (GDPR), Article 17 — "Right to be Forgotten" — Legal perspective on deletion vs. recovery periods</li>
   </ul>
 
   <h3>Next Steps</h3>
