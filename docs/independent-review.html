@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Independent Review & Critique — Protective Computing</title>
+    <meta name="description" content="Invitation for independent auditors and practitioners to review Protective Computing Specification v1.0 and reference implementations.">
+    <link rel="icon" href="/assets/logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+            color: #e0e0e0;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 50%, #0f1628 100%);
+            min-height: 100vh;
+        }
+        header {
+            background: rgba(0, 0, 0, 0.5);
+            border-bottom: 2px solid rgba(0, 255, 200, 0.3);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #00ffc8 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        nav a {
+            color: #00ffc8;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #7c3aed;
+        }
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        h1 {
+            font-size: 2.6rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #00ffc8 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            border-bottom: 2px solid rgba(0, 255, 200, 0.2);
+            padding-bottom: 1rem;
+        }
+        .breadcrumb {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        .breadcrumb a {
+            color: #00ffc8;
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            color: #00ffc8;
+            border-left: 4px solid #7c3aed;
+            padding-left: 1rem;
+        }
+        h3 {
+            font-size: 1.2rem;
+            margin-top: 1.8rem;
+            margin-bottom: 1rem;
+            color: #7c3aed;
+        }
+        h4 {
+            font-size: 1rem;
+            margin-top: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: #00ffc8;
+            font-weight: 600;
+        }
+        p {
+            margin-bottom: 1.2rem;
+            color: #c0c0c0;
+        }
+        .box {
+            border-left: 4px solid;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+        .box.invitation {
+            border-left-color: #00ffc8;
+            background: rgba(0, 255, 200, 0.08);
+        }
+        .box.criteria {
+            border-left-color: #7c3aed;
+            background: rgba(124, 58, 237, 0.08);
+        }
+        .box.process {
+            border-left-color: #34d3ff;
+            background: rgba(52, 211, 255, 0.08);
+        }
+        .box.roles {
+            border-left-color: #ffc800;
+            background: rgba(255, 200, 0, 0.08);
+        }
+        .box-title {
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        ul, ol {
+            margin: 1rem 0 1.5rem 2rem;
+            color: #c0c0c0;
+        }
+        li {
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 18px;
+            background: linear-gradient(135deg, rgba(0, 255, 200, 0.15), rgba(124, 58, 237, 0.15));
+            border: 1px solid rgba(0, 255, 200, 0.3);
+            border-radius: 6px;
+            color: #00ffc8;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .button:hover {
+            background: linear-gradient(135deg, rgba(0, 255, 200, 0.25), rgba(124, 58, 237, 0.25));
+            border-color: rgba(0, 255, 200, 0.5);
+            text-decoration: none;
+        }
+        code {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-family: "Courier New", monospace;
+            color: #00ffc8;
+            font-size: 14px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(0, 255, 200, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 255, 200, 0.1);
+            color: #c0c0c0;
+        }
+        th {
+            background: rgba(124, 58, 237, 0.15);
+            color: #00ffc8;
+            font-weight: bold;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .review-path {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(0, 255, 200, 0.15);
+            padding: 1.2rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            border-left: 3px solid #00ffc8;
+        }
+        .review-path-title {
+            color: #00ffc8;
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+        }
+        .contact {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(52, 211, 255, 0.2);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 4px;
+            border-left: 4px solid #34d3ff;
+        }
+        .contact-item {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        .contact-item:last-child {
+            margin-bottom: 0;
+        }
+        .contact-label {
+            color: #34d3ff;
+            font-weight: bold;
+            min-width: 80px;
+        }
+        .contact-detail {
+            flex: 1;
+        }
+        footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 255, 200, 0.1);
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+        }
+        footer a {
+            color: #00ffc8;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">◊ Protective Computing</a>
+            <div>
+                <a href="/docs/spec/v1.0.html">Specification v1.0</a>
+                <a href="/docs/reference-implementation/paintracker-mapping.html">Reference Implementation</a>
+                <a href="https://github.com/protective-computing/protective-computing.github.io" target="_blank">GitHub</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="breadcrumb">
+            <a href="/">Home</a> / <strong>Independent Review & Critique</strong>
+        </div>
+
+        <h1>Independent Review & Critique</h1>
+        <p style="font-size: 16px; color: #aaa; margin-bottom: 2rem;">
+            We invite auditors, security researchers, accessibility experts, and field practitioners to review Protective Computing Specification v1.0 and our reference implementations. Your feedback is critical for credibility and institutional integrity.
+        </p>
+
+        <!-- THE ASK -->
+        <div class="box invitation">
+            <div class="box-title">What We're Asking For</div>
+            <p>Protective Computing transitioned from thought leadership to a normative standard with RFC 2119 language, formal threat model, and compliance levels. This is a significant institutional claim.</p>
+            <p><strong>We need independent critique to validate that claim.</strong> We are explicitly NOT seeking confidence — we are seeking honest assessment of:</p>
+            <ul>
+                <li>Are the principles internally consistent and non-redundant?</li>
+                <li>Is the threat model baseline realistic and well-scoped?</li>
+                <li>Are compliance levels achievable and meaningfully differentiated?</li>
+                <li>Does the reference implementation methodology demonstrate honest assessment (not marketing)?</li>
+                <li>Are there gaps in the specification that future versions must address?</li>
+                <li>Where does Protective Computing conflict with other standards (privacy law, security standards, accessibility)?</li>
+            </ul>
+        </div>
+
+        <!-- WHO WE'RE ASKING -->
+        <h2>Who We're Looking For</h2>
+
+        <div class="box roles">
+            <div class="box-title">Different Expertise, Same Goal: Credibility Through External Validation</div>
+
+            <h3>Security Researchers & Cryptographers</h3>
+            <ul>
+                <li>Review threat model: Are baseline adversaries well-chosen? Any glaring omissions?</li>
+                <li>Review cryptography assumptions: Do compliance levels match actual security properties?</li>
+                <li>Test reference implementation: Does PainTracker actually provide claimed protections?</li>
+            </ul>
+
+            <h3>Practitioners (Healthtech, Civic Tech, Nonprofit Tech)</h3>
+            <ul>
+                <li>Apply principles to your own systems: Are they implementable?</li>
+                <li>Document your compliance: Submit your own reference implementations</li>
+                <li>Report blockers: Where does Protective Computing conflict with your constraints?</li>
+            </ul>
+
+            <h3>Accessibility Experts (Universal Design)</h3>
+            <ul>
+                <li>Review Degraded Functionality principle: Does it align with WCAG, disability justice, universal design principles?</li>
+                <li>Audit reference implementation: Where does PainTracker fall short on accessibility?</li>
+                <li>Propose improvements: How should the spec address accessibility gaps?</li>
+            </ul>
+
+            <h3>Privacy Engineers & Legal Experts</h3>
+            <ul>
+                <li>Consider data protection law: How does Protective Computing align with GDPR, CCPA, other frameworks?</li>
+                <li>Identify regulatory gaps: Where does the spec need legal grounding?</li>
+                <li>Review threat model: Is it consistent with privacy law's assumptions about harm?</li>
+            </ul>
+
+            <h3>Institutional Review Boards / Research Ethics</h3>
+            <ul>
+                <li>Evaluate research integrity: Is the specification suitable as a reference for human-centered design research?</li>
+                <li>Review design claims: Do principles make testable, falsifiable claims suitable for evidence-based design?</li>
+            </ul>
+        </div>
+
+        <!-- REVIEW PATHWAYS -->
+        <h2>How to Contribute Your Review</h2>
+
+        <div class="review-path">
+            <div class="review-path-title">🔗 GitHub Issues (Preferred for structured feedback)</div>
+            <p>
+                Open an issue on the <a href="https://github.com/protective-computing/protective-computing.github.io/issues" target="_blank">GitHub repository</a> with:
+            </p>
+            <ul>
+                <li><strong>Title:</strong> Clear description of the critique (e.g., "Threat Model: Missing State-Sponsored Insider Threats")</li>
+                <li><strong>Type:</strong> Label as <code>review</code>, <code>spec-feedback</code>, <code>reference-impl-feedback</code>, or <code>gap</code></li>
+                <li><strong>Body:</strong> Your assessment, evidence, and recommended change (if applicable)</li>
+                <li><strong>Attribution:</strong> Your name/affiliation (can be anonymous if preferred)</li>
+            </ul>
+            <p style="color: #aaa; font-size: 14px; margin-top: 1rem;"><strong>Response time:</strong> We commit to reviewing and responding to issues within 14 days.</p>
+        </div>
+
+        <div class="review-path">
+            <div class="review-path-title">📧 Email (For sensitive or detailed feedback)</div>
+            <p>
+                For issues that require confidentiality (e.g., security vulnerabilities in reference implementation), email:
+            </p>
+            <p style="word-break: break-all; color: #00ffc8; font-weight: bold;">
+                review @ protective-computing . org
+            </p>
+            <p style="color: #aaa; font-size: 14px; margin-top: 1rem;"><strong>Response time:</strong> We will respond within 7 days and discuss publication timeline for urgent feedback.</p>
+        </div>
+
+        <div class="review-path">
+            <div class="review-path-title">🔄 Submit Your Own Reference Implementation</div>
+            <p>
+                Build a compliance mapping for your own system (following the <a href="/docs/reference-implementation/paintracker-mapping.html">PainTracker template</a>). We will:
+            </p>
+            <ul>
+                <li>Review your assessment for methodology integrity</li>
+                <li>Link it from this site and in the sitemap (with your consent)</li>
+                <li>Use your feedback to improve the specification</li>
+            </ul>
+            <p>Start by opening a GitHub issue titled "Reference Implementation: [Your System]" and we'll coordinate.</p>
+        </div>
+
+        <!-- WHAT FEEDBACK IS MOST VALUABLE -->
+        <h2>What Feedback Is Most Valuable</h2>
+
+        <table>
+            <tr>
+                <th>Type</th>
+                <th>Example</th>
+                <th>Impact</th>
+            </tr>
+            <tr>
+                <td><strong>Internal contradictions</strong></td>
+                <td>"Coercion Resistance (Level 3) requires deniability, but Reversibility principle doesn't allow hidden deletion—these conflict."</td>
+                <td>Highest — directly affects spec validity</td>
+            </tr>
+            <tr>
+                <td><strong>Evidence-based gap</strong></td>
+                <td>"Specification assumes devices are not compromised (malware). But in [context], app-level encryption is useless without OS security. This should be explicit in threat model."</td>
+                <td>Highest — improves scope clarity</td>
+            </tr>
+            <tr>
+                <td><strong>Implementation evidence</strong></td>
+                <td>"I tried to build Level 4 compliance for X principle and found [specific blocker]. This may need a roadmap adjustment."</td>
+                <td>High — grounds spec in practice</td>
+            </tr>
+            <tr>
+                <td><strong>Comparative analysis</strong></td>
+                <td>"Protective Computing's Degraded Functionality is similar to ISO 27001's 'availability' but with different priorities. How do you want this relationship documented?"</td>
+                <td>High — positions spec in landscape</td>
+            </tr>
+            <tr>
+                <td><strong>Concern about phrasing</strong></td>
+                <td>"The definition of 'essential utility' in the spec could be misinterpreted to justify [harmful situation]. Suggest tightening language."</td>
+                <td>Medium — improves clarity</td>
+            </tr>
+            <tr>
+                <td><strong>Feature requests</strong></td>
+                <td>"Would you ever add a principle for [new thing]?"</td>
+                <td>Lower priority — v2.0 discussion</td>
+            </tr>
+        </table>
+
+        <!-- WHAT HAPPENS WITH FEEDBACK -->
+        <h2>How We Handle Your Feedback</h2>
+
+        <div class="box process">
+            <ul>
+                <li><strong>Acknowledgment:</strong> All feedback receives a response within 7–14 days</li>
+                <li><strong>Triage:</strong> We categorize feedback as:
+                    <ul style="margin-top: 0.5rem;">
+                        <li><code>spec-change-required</code> — affects v1.1 or v2.0 roadmap</li>
+                        <li><code>clarification-needed</code> — docs expansion without version change</li>
+                        <li><code>disagree</code> — we'll explain why and provide rationale</li>
+                        <li><code>acknowledged-future</code> — valuable but deferred (version TBD)</li>
+                    </ul>
+                </li>
+                <li><strong>Transparency:</strong> All feedback and responses are public (unless marked confidential) and published in a public review log</li>
+                <li><strong>Attribution:</strong> Feedback credited to you (with your consent) in acknowledgments section and release notes</li>
+                <li><strong>Versioning:</strong> Feedback that triggers spec changes is tied to version history (e.g., "v1.1 incorporates feedback from [names]")</li>
+            </ul>
+        </div>
+
+        <!-- REVIEW CRITERIA FOR OUR PROCESSES -->
+        <h2>Criteria for Reference Implementation Review</h2>
+
+        <p>If you're submitting your own reference implementation, we'll use this framework to evaluate methodology integrity:</p>
+
+        <div class="box criteria">
+            <table>
+                <tr>
+                    <th>Criterion</th>
+                    <th>What We're Looking For</th>
+                </tr>
+                <tr>
+                    <td><strong>Honesty about gaps</strong></td>
+                    <td>Clear documentation of where compliance is partial or missing; no cherry-picking examples</td>
+                </tr>
+                <tr>
+                    <td><strong>Reproducible verification</strong></td>
+                    <td>Audit checkpoints are specific, technical, and could be run by an independent auditor</td>
+                </tr>
+                <tr>
+                    <td><strong>Threat model alignment</strong></td>
+                    <td>Clearly states which baseline threats are resisted vs. not; doesn't overstate protection</td>
+                </tr>
+                <tr>
+                    <td><strong>Trade-offs documented</strong></td>
+                    <td>Explains design choices (e.g., "We prioritized availability over full Coercion Resistance because...")</td>
+                </tr>
+                <tr>
+                    <td><strong>Roadmap clarity</strong></td>
+                    <td>Future versions and missing features are explicit; no vague promises</td>
+                </tr>
+                <tr>
+                    <td><strong>Scope declaration</strong></td>
+                    <td>Clear about who should and shouldn't use the system</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- TIMELINE & ROADMAP -->
+        <h2>Review Timeline & Specification Roadmap</h2>
+
+        <p>We're currently accepting feedback for the following roadmap:</p>
+
+        <ul>
+            <li><strong>v1.0 (Current):</strong> Formal specification with RFC 2119 language, threat model, compliance levels</li>
+            <li><strong>v1.1 (Q2 2026):</strong> Incorporates critical feedback from this review period; documentation improvements</li>
+            <li><strong>v2.0 (2027):</strong> Major revision; new principle(s) if evidence suggests necessary; possible new threat model categories</li>
+        </ul>
+
+        <p style="color: #aaa; margin-top: 1.5rem;">Feedback received by <strong>June 30, 2026</strong> will be considered for v1.1. Feedback after that date will inform v2.0 planning.</p>
+
+        <!-- QUESTIONS & CONTACT -->
+        <h2>Questions About the Review Process?</h2>
+
+        <div class="contact">
+            <div class="contact-item">
+                <div class="contact-label">GitHub</div>
+                <div class="contact-detail">
+                    <a href="https://github.com/protective-computing/protective-computing.github.io" target="_blank">protective-computing/protective-computing.github.io</a><br>
+                    <span style="color: #aaa; font-size: 14px;">Use GitHub Discussions for process questions or <a href="https://github.com/protective-computing/protective-computing.github.io/issues" target="_blank">Issues</a> for specific feedback</span>
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-label">Email</div>
+                <div class="contact-detail">
+                    review @ protective-computing . org<br>
+                    <span style="color: #aaa; font-size: 14px;">For questions about the review process or confidential feedback</span>
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-label">Community</div>
+                <div class="contact-detail">
+                    <a href="https://zenodo.org/communities/protective-computing/" target="_blank">Zenodo Community</a><br>
+                    <span style="color: #aaa; font-size: 14px;">Join the conversation with other practitioners and researchers</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMMITMENT TO TRANSPARENCY -->
+        <h2>Our Commitment to Transparency</h2>
+
+        <ul>
+            <li><strong>We will not:</strong> Dismiss or ignore critical feedback because it challenges our design. We will respond with evidence and rationale.</li>
+            <li><strong>We will:</strong> Publish a quarterly review log showing feedback, our responses, and status of incorporated changes</li>
+            <li><strong>We will:</strong> Credit all contributors by name (unless anonymous request) in spec versions and release notes</li>
+            <li><strong>We will:</strong> Maintain a "Rejected Feedback & Rationale" section to document where we deliberately chose not to incorporate suggestions and why</li>
+            <li><strong>We will NOT:</strong> Consider feedback proprietary; all reviews are part of public record (unless confidentiality requested)</li>
+        </ul>
+
+        <!-- NEXT STEPS -->
+        <h2>Ready to Review?</h2>
+
+        <div class="button-group">
+            <a href="/docs/spec/v1.0.html" class="button">Read Specification v1.0</a>
+            <a href="/docs/reference-implementation/paintracker-mapping.html" class="button">Review Reference Implementation</a>
+            <a href="https://github.com/protective-computing/protective-computing.github.io/issues/new" class="button" target="_blank">Submit Feedback (GitHub)</a>
+        </div>
+
+    </main>
+
+    <footer>
+        <p><strong>Protective Computing — Independent Review & Critique</strong></p>
+        <p style="margin-top: 1rem; font-size: 12px;"><a href="/">← Back to home</a></p>
+    </footer>
+</body>
+</html>

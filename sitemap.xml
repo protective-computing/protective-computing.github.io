@@ -25,6 +25,12 @@
     <priority>0.92</priority>
   </url>
   <url>
+    <loc>https://protective-computing.github.io/docs/independent-review.html</loc>
+    <lastmod>2026-02-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.93</priority>
+  </url>
+  <url>
     <loc>https://protective-computing.github.io/docs/principles/reversibility.html</loc>
     <lastmod>2026-02-25</lastmod>
     <changefreq>monthly</changefreq>
