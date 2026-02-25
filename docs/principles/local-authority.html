@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Authority — Protective Computing</title>
+    <meta name="description" content="Users maintain decision authority locally. Systems prioritize offline operation and don't centralize control over user data or actions.">
+    <link rel="icon" href="/assets/logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 50%, #0f1628 100%);
+            min-height: 100vh;
+        }
+        header {
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(0, 255, 200, 0.2);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #00ffc8 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        nav a {
+            color: #00ffc8;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #7c3aed;
+        }
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #00ffc8 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: #888;
+            font-size: 16px;
+            margin-bottom: 2rem;
+        }
+        .breadcrumb {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        .breadcrumb a {
+            color: #00ffc8;
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #00ffc8;
+            border-left: 3px solid #7c3aed;
+            padding-left: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: #c0c0c0;
+        }
+        .box {
+            border-left: 4px solid;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+        .box.success {
+            border-left-color: #00ffc8;
+            background: rgba(0, 255, 200, 0.08);
+        }
+        .box.warning {
+            border-left-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.08);
+        }
+        .box.info {
+            border-left-color: #7c3aed;
+            background: rgba(124, 58, 237, 0.08);
+        }
+        .box-title {
+            font-weight: bold;
+            color: #00ffc8;
+            margin-bottom: 0.5rem;
+        }
+        .box p {
+            margin-bottom: 0.5rem;
+        }
+        .box p:last-child {
+            margin-bottom: 0;
+        }
+        strong {
+            color: #fff;
+        }
+        code {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: "Courier New", monospace;
+            color: #00ffc8;
+        }
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+            color: #c0c0c0;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .related {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .related-item {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            padding: 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #00ffc8;
+            transition: all 0.3s;
+        }
+        .related-item:hover {
+            background: rgba(124, 58, 237, 0.2);
+            border-color: #7c3aed;
+        }
+        footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 255, 200, 0.1);
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+        footer a {
+            color: #00ffc8;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">⬇ Protective Computing</a>
+            <div>
+                <a href="/docs/getting-started.html">Getting Started</a>
+                <a href="https://zenodo.org/communities/protective-computing/" target="_blank">Zenodo</a>
+                <a href="https://github.com/protective-computing/protective-computing.github.io" target="_blank">GitHub</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/docs/getting-started.html">Getting Started</a> / <strong>Local Authority</strong>
+        </div>
+
+        <h1>Local Authority</h1>
+        <p class="subtitle">Users maintain decision authority locally. Systems prioritize offline operation and don't centralize control.</p>
+
+        <div class="box success">
+            <div class="box-title">Definition Summary</div>
+            <p><strong>What it is:</strong> Local Authority means users decide and act locally first, without requiring permission from remote servers. Systems work offline and sync changes eventually, not demand authorization.</p>
+            <p><strong>Why it matters:</strong> Centralized authority is a vulnerability. Networks fail. Servers are compromised. Users in low-connectivity or hostile environments need to remain productive and in control. Local-first design eliminates remote dependency and cascading failures.</p>
+            <p><strong>When to use:</strong> Every system capable of offline operation should. Local authority applies to mobile apps, collaborative tools, sensitive data, and resilience-critical systems. If your system requires internet to function, you're accepting unnecessary risk.</p>
+        </div>
+
+        <h2>Why Local Authority Matters</h2>
+        <p>Centralized architectures create single points of failure. When servers are unreachable—due to network outage, DDoS, geopolitical censorship, or intentional coercion—the entire system freezes. Users lose both data and autonomy.</p>
+        <p>Local Authority flips this: users maintain a complete, functional copy of their data locally. They can read, write, encrypt, and act without waiting for server permission. Changes sync when connectivity returns.</p>
+        <p>This has profound consequences:</p>
+        <ul>
+            <li><strong>Resilience:</strong> Network outages don't mean work stoppage. Systems continue functioning.</li>
+            <li><strong>Autonomy:</strong> Users control their data and decisions, not remote servers.</li>
+            <li><strong>Offline capability:</strong> Mobile users, travelers, and those in low-connectivity regions remain productive.</li>
+            <li><strong>Anti-censorship:</strong> Authoritarian control over central servers cannot retroactively revoke user access.</li>
+            <li><strong>Performance:</strong> No latency waiting for round-trips to distant servers.</li>
+            <li><strong>Privacy:</strong> Sensitive decisions can be made entirely on-device; servers see only what users publish.</li>
+        </ul>
+
+        <h2>Implementation Patterns</h2>
+
+        <h3>Offline-First Architecture</h3>
+        <p>Start with local state. All reads and writes happen to local storage first (browser IndexedDB, mobile SQLite, desktop JSON files). Sync to server is secondary—an optimization, not a requirement.</p>
+        <p><strong>Code sketch:</strong></p>
+        <ul>
+            <li><code>user.toggleTask(id)</code> → writes to local database immediately</li>
+            <li>UI updates instantly</li>
+            <li>In background, diff is computed and sent to server</li>
+            <li>If send fails, retry later; meantime user continues working</li>
+        </ul>
+
+        <h3>Conflict-Free Replicated Data Types (CRDTs)</h3>
+        <p>When multiple copies of data exist locally (across devices or sessions), conflicts are inevitable. CRDTs resolve these conflicts deterministically without coordinator:</p>
+        <ul>
+            <li><strong>Last-writer-wins:</strong> Timestamps decide (works if time trust is okay)</li>
+            <li><strong>Operational Transform:</strong> Record edits as operations; replay them in consistent order</li>
+            <li><strong>CRDTs:</strong> Data structures designed so merging always produces consistent result</li>
+            <li><strong>Explicit merging:</strong> User chooses outcome when conflicts arise (transparent and empowering)</li>
+        </ul>
+        <p><strong>Example:</strong> Git is a CRDT. Multiple users edit locally, commit, and merge. Conflicts surface as diffs users resolve.</p>
+
+        <h3>Eventual Consistency</h3>
+        <p>Stop demanding immediate global consistency. Accept that:</p>
+        <ul>
+            <li>User A on laptop sees change before User B on phone</li>
+            <li>This is okay; eventual consistency is reached when sync completes</li>
+            <li>Show users what is synced vs. pending (transparent state)</li>
+            <li>Design UI to handle "my copy might be outdated" scenarios gracefully</li>
+        </ul>
+        <p><strong>Anti-pattern:</strong> Blocking on server round-trip before showing result to user.</p>
+
+        <h3>No Forced Cloud Reliance</h3>
+        <p>If your system can degrade gracefully, it should. Never architecturally require:</p>
+        <ul>
+            <li>Cloud backup as the only storage</li>
+            <li>Authentication server contact to use local features</li>
+            <li>Cloud processing for basic operations</li>
+            <li>Real-time sync as a hard requirement</li>
+        </ul>
+        <p><strong>Better:</strong> "Auto-save to cloud if available; work offline if not."</p>
+
+        <h3>Peer-to-Peer Sync (Optional)</h3>
+        <p>For maximum resilience, enable users to sync directly without central server:</p>
+        <ul>
+            <li>Two devices on same WiFi share changes directly</li>
+            <li>Server is optional—nice to have, not essential</li>
+            <li>Works in censored regions where central server is blocked</li>
+            <li>Requires investment but dramatically increases resilience</li>
+        </ul>
+
+        <h2>Anti-Patterns (What to Avoid)</h2>
+
+        <div class="box warning">
+            <div class="box-title">❌ Cloud-Only Architecture</div>
+            <p>System requires internet to function. User clicks "New Document" and gets "No Network" error. Work is impossible offline.</p>
+            <p><strong>Consequence:</strong> Every outage is a productivity crisis. Users in tunnel, airplane, or low-signal area are stuck.</p>
+        </div>
+
+        <div class="box warning">
+            <div class="box-title">❌ Optimistic Lock Without Offline Support</div>
+            <p>System allows offline edits but requires server contact to "finalize" them. If server rejects changes (due to newer version), user loses work or is asked to manually merge.</p>
+            <p><strong>Consequence:</strong> Rage. Users feel powerless when system reverts their offline work.</p>
+        </div>
+
+        <div class="box warning">
+            <div class="box-title">❌ Sync Failures Cascade</div>
+            <p>One failed sync makes entire app unusable. User can't read new messages, write new notes, or access local data.</p>
+            <p><strong>Consequence:</strong> App feels fragile. Users lose trust in system reliability.</p>
+        </div>
+
+        <div class="box warning">
+            <div class="box-title">❌ No Transparency on Sync State</div>
+            <p>User doesn't know if their data has synced. Is this version saved? Is that change backed up? Ambiguity causes anxiety.</p>
+            <p><strong>Consequence:</strong> Users manually export/backup excessively. Friction increases.</p>
+        </div>
+
+        <div class="box warning">
+            <div class="box-title">❌ Forced Incremental Cloud Features</div>
+            <p>Release 1.0: Works offline. Release 2.0 adds "Cloud Sync" as paid feature. Release 3.0 makes cloud sync mandatory for new users.</p>
+            <p><strong>Consequence:</strong> Lock-in. Users who want to leave are stranded (their data is only on servers).</p>
+        </div>
+
+        <h2>Real-World Examples</h2>
+
+        <h3>CouchDB / PouchDB — The Gold Standard</h3>
+        <p><strong>What it is:</strong> CouchDB is a document database designed around local-first sync. PouchDB brings this to browsers.</p>
+        <p><strong>How it works:</strong></p>
+        <ul>
+            <li>Each user's data lives in a local copy (on their device)</li>
+            <li>They read/write locally with no server latency</li>
+            <li>When network permits, changes replicate bidirectionally</li>
+            <li>Conflicts resolved via deterministic merge (last-writer-wins with timestamps)</li>
+            <li>Server is a passive replica, not a gatekeeper</li>
+        </ul>
+        <p><strong>Why it works:</strong> Designed explicitly for offline-first. No surprises, no cloud-only creep.</p>
+
+        <h3>Figma — Offline Multiplayer</h3>
+        <p><strong>What it is:</strong> Collaborative design tool that let teams edit simultaneously, even without internet.</p>
+        <p><strong>How it works:</strong></p>
+        <ul>
+            <li>Each user's edits are applied to local canvas immediately</li>
+            <li>Changes are broadcast to other connected users in real-time</li>
+            <li>If connection drops, users keep working; sync resumes when online</li>
+            <li>Uses operational transforms to merge concurrent edits</li>
+        </ul>
+        <p><strong>Why it matters:</strong> Showed that real-time collaboration doesn't require perfect connectivity. Local authority + smart merging = resilience.</p>
+
+        <h3>Obsidian — Local Vault First</h3>
+        <p><strong>What it is:</strong> Note-taking app where your vault is a folder on your device.</p>
+        <p><strong>How it works:</strong></p>
+        <ul>
+            <li>All notes live in a local folder (you can access them without Obsidian)</li>
+            <li>You decide if/how to sync (Obsidian Sync is optional paid service)</li>
+            <li>You can use any sync service (iCloud, Dropbox, Syncthing, Git)</li>
+            <li>App works perfectly offline; sync is a convenience, not a requirement</li>
+        </ul>
+        <p><strong>Why it works:</strong> Users own their data. They're not locked into vendor sync infrastructure.</p>
+
+        <h3>Git — Distributed Authority</h3>
+        <p><strong>What it is:</strong> Version control where every developer has a local, complete copy of history.</p>
+        <p><strong>How it works:</strong></p>
+        <ul>
+            <li>You commit locally without contacting any server</li>
+            <li>You can work offline indefinitely</li>
+            <li>When you're ready, you push to shared server (GitHub, GitLab)</li>
+            <li>Conflicts are surfaced explicitly; you merge them locally</li>
+            <li>Central server is optional; developers can sync peer-to-peer</li>
+        </ul>
+        <p><strong>Why it works:</strong> Core design philosophy: "Local authority is normal." No surprises.</p>
+
+        <h3>Signal Messenger — End-to-End with Local Auth</h3>
+        <p><strong>What it is:</strong> Messaging app where encryption keys are generated and stored locally.</p>
+        <p><strong>How it works:</strong></p>
+        <ul>
+            <li>Signal server never sees message plaintext; it's encrypted before leaving device</li>
+            <li>User's keys are stored locally (not on Signal's servers)</li>
+            <li>User can verify safety numbers in-person, proving they control their keys</li>
+            <li>Server stores encrypted messages temporarily; user fetches them offline then deletes</li>
+        </ul>
+        <p><strong>Why it matters:</strong> Even though messaging is network-dependent, authority over keys is local. User controls crypto.</p>
+
+        <h3>Anti-Example: Microsoft Office Online</h3>
+        <p><strong>What it is:</strong> Cloud-only office suite (historically).</p>
+        <p><strong>The problem:</strong></p>
+        <ul>
+            <li>Internet required. No offline editing (until very recently)</li>
+            <li>User on airplane cannot work</li>
+            <li>Outages block productivity</li>
+            <li>Server is gatekeeper to your own data</li>
+        </ul>
+        <p><strong>Lesson:</strong> Cloud-first is a business model, not a security model. It concentrates authority in the vendor's hands.</p>
+
+        <h2>Scope and Applicability</h2>
+        <p><strong>When to prioritize Local Authority:</strong></p>
+        <ul>
+            <li>Mobility-critical apps (mobile, laptop, offline work)</li>
+            <li>Resilience-critical systems (medical, emergency response, survival tools)</li>
+            <li>Privacy-sensitive tools (crypto, dissent, personal finance)</li>
+            <li>Censorship-prone regions (system must work if server is blocked)</li>
+            <li>Low-bandwidth environments (sync must be optional, not blocking)</li>
+            <li>Collaborative tools (multiple users, multiple devices)</li>
+        </ul>
+
+        <p><strong>When you might defer Local Authority:</strong></p>
+        <ul>
+            <li>Real-time competitive systems where global consensus is essential (stock markets, auctions)</li>
+            <li>Highly regulated systems where central audit trail is non-negotiable (banking, healthcare)</li>
+            <li>Prototype/MVP stage (can add later; architectural debt is acceptable short-term)</li>
+        </ul>
+
+        <p><strong>Never defer for convenience.</strong> "Cloud-first is easier" is true for the first 12 months. By month 24, offline users have abandoned you for competitors.</p>
+
+        <h2>Synthesis Lineage: Disciplinary Roots</h2>
+
+        <p>Local Authority formalizes patterns observed across multiple established fields:</p>
+
+        <h3>Local-First Software Movement</h3>
+        <p>The contemporary local-first revolution (Kleppmann, Wiggins, 2019) articulated seven ideals for software:</p>
+        <ol>
+            <li>No requirement for high-bandwidth server</li>
+            <li>Offline operation by default</li>
+            <li>Seamless collaboration</li>
+            <li>Multi-device sync</li>
+            <li>User data ownership</li>
+            <li>Encrypted by default (user controls keys)</li>
+            <li>Long data lifespan (software can be archived/reconstructed)</li>
+        </ol>
+        <p><strong>Protective Computing refines:</strong> These ideals describe how to structure *authority*. Local Authority is the architectural expression of "users own their data and decisions locally; servers support but don't control."</p>
+
+        <h3>Distributed Systems Resilience</h3>
+        <p>Distributed systems theory (Lamport, Fischer et al.) teaches:</p>
+        <ul>
+            <li>You cannot distinguish network partition from server failure (both look like silence to client)</li>
+            <li>Requiring consensus before proceeding is expensive and fragile</li>
+            <li>Eventual consistency with offline-capable clients is more resilient than strong consistency</li>
+            <li>Quorum-based systems still fail when coordination is impossible</li>
+        </ul>
+        <p><strong>Protective Computing applies:</strong> Users should never be blocked by unavailable central servers. Local-first design acknowledges network partition as normal and designs around it.</p>
+
+        <h3>Digital Sovereignty & User Autonomy</h3>
+        <p>Political philosophy of digital sovereignty (Zuboff, Morozov) emphasizes:</p>
+        <ul>
+            <li>Centralized datums enable surveillance and control (whether by state or commercial actor)</li>
+            <li>User autonomy requires control over their own data and decisions</li>
+            <li>Decentralized architecture is harder to suppress than centralized</li>
+            <li>Users should be able to leave a system without losing their data</li>
+        </ul>
+        <p><strong>Protective Computing operationalizes:</strong> Local Authority is the technical instantiation of digital sovereignty. Your data on your device, by default.</p>
+
+        <h3>Offline-First Mobile Architecture</h3>
+        <p>Mobile app design (Fowler, 2009+) established:</p>
+        <ul>
+            <li>Networks are unreliable; apps can't count on connectivity</li>
+            <li>Users expect mobile apps to work in elevators, tunnels, airplanes</li>
+            <li>Sync is essential for multi-device scenarios (but must be eventual, not blocking)</li>
+            <li>Local persistence is non-negotiable</li>
+        </ul>
+        <p><strong>Protective Computing generalizes:</strong> These aren't mobile-specific constraints; they're universal truths. All systems should architect as if the network is unreliable.</p>
+
+        <h3>Security Through Reduction of Authority</h3>
+        <p>Cryptographic and systems security (Saltzer & Schroeder, principle of least privilege) teaches:</p>
+        <ul>
+            <li>Centralize authority → centralize risk</li>
+            <li>Single server compromise exposes all users</li>
+            <li>Decentralized decision-making reduces blast radius</li>
+            <li>Users should be able to make critical decisions without trusting server</li>
+        </ul>
+        <p><strong>Protective Computing applies:</strong> Local Authority isn't just convenient; it's a security principle. Distribute authority to reduce attack surface.</p>
+
+        <h2>Relationship to Other Principles</h2>
+
+        <p><strong>Local Authority works with:</strong></p>
+        <ul>
+            <li><strong>Reversibility:</strong> Offline-first systems can implement better undo/redo (all state is local; rollback is trivial).</li>
+            <li><strong>Exposure Minimization:</strong> Local decision-making keeps sensitive data off servers. Decisions are made on-device without unnecessary transmission.</li>
+            <li><strong>Coercion Resistance:</strong> Having local authority makes you harder to coerce. Attacker cannot demand server surrender your data if server doesn't have it.</li>
+            <li><strong>Degraded Functionality:</strong> Local authority enables graceful degradation. Offline mode is just "degraded connectivity" mode.</li>
+            <li><strong>Essential Utility:</strong> Local authority supports essential function. You can still access critical data and make critical decisions without network.</li>
+        </ul>
+
+        <h2>Next Steps</h2>
+
+        <p><strong>For system designers:</strong></p>
+        <ol>
+            <li>Audit your architecture: What requires internet? Can offline-first replace it?</li>
+            <li>Identify "must work offline" features (read, write, sync, crypto)</li>
+            <li>Choose CRDT or eventual-consistency strategy (operational transforms, last-writer-wins, CRDTs, explicit merge)</li>
+            <li>Implement local storage first; server sync second</li>
+            <li>Test offline thoroughly (disable network, kill server, long taxi times)</li>
+            <li>Make sync state visible to users (showing "synced" vs. "pending")</li>
+        </ol>
+
+        <p><strong>Next principle to explore:</strong></p>
+        <div class="related">
+            <a href="/docs/principles/reversibility.html" class="related-item">⟲ Reversibility</a>
+            <a href="/docs/principles/exposure-minimization.html" class="related-item">◐ Exposure Minimization</a>
+            <a href="/docs/principles/coercion-resistance.html" class="related-item">🛡️ Coercion Resistance</a>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>Protective Computing | <a href="https://doi.org/10.5281/zenodo.18688516" target="_blank">DOI: 10.5281/zenodo.18688516</a></p>
+        <p style="margin-top: 0.5rem; font-size: 12px;">Local Authority principle • <a href="/docs/getting-started.html">Back to Getting Started</a></p>
+    </footer>
+</body>
+</html>
