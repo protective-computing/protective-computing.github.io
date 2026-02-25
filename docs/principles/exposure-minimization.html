@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Exposure Minimization — Protective Computing</title>
+<meta name="description" content="Deep reference on Exposure Minimization: collect only what's essential, defend what you keep." />
+<link rel="icon" href="../../assets/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #070A10;
+    --panel: rgba(255,255,255,0.06);
+    --text: rgba(255,255,255,0.92);
+    --muted: rgba(255,255,255,0.68);
+    --faint: rgba(255,255,255,0.52);
+    --line: rgba(255,255,255,0.10);
+    --accent: #34d3ff;
+    --warning: #ff9d3d;
+    --shadow: 0 18px 55px rgba(0,0,0,.55);
+  }
+  *{ box-sizing: border-box; }
+  html, body{ height: 100%; }
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(124,92,255,.18), transparent 60%),
+                radial-gradient(1100px 650px at 90% 15%, rgba(52,211,255,.14), transparent 55%),
+                var(--bg);
+    color: var(--text);
+    letter-spacing: -0.015em;
+  }
+  a{ color: var(--accent); text-decoration: none; }
+  a:hover{ text-decoration: underline; text-underline-offset: 3px; }
+  .wrap{
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 22px 60px;
+  }
+  .breadcrumb{
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .breadcrumb a{ color: var(--accent); }
+  h1{
+    font-size: 2.2rem;
+    line-height: 1.1;
+    margin: 0 0 10px;
+    font-weight: 850;
+  }
+  .subtitle{
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+  h2{
+    font-size: 1.5rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    font-weight: 800;
+  }
+  h3{
+    font-size: 1.05rem;
+    margin-top: 24px;
+    margin-bottom: 10px;
+    font-weight: 750;
+    color: var(--text);
+  }
+  p, li{
+    color: var(--muted);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+  ul, ol{
+    margin: 14px 0;
+    padding-left: 20px;
+  }
+  li{ margin: 8px 0; }
+  code{
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--line);
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--accent);
+  }
+  .box{
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: 14px;
+    padding: 18px;
+    margin: 20px 0;
+  }
+  .box.warning{
+    border-color: rgba(255, 157, 61, 0.3);
+    background: rgba(255, 157, 61, 0.05);
+  }
+  .box.success{
+    border-color: rgba(52, 211, 255, 0.3);
+    background: rgba(52, 211, 255, 0.05);
+  }
+  .box-title{
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  .do-list{ list-style: none; padding-left: 0; }
+  .do-list li{ padding-left: 24px; margin: 10px 0; position: relative; }
+  .do-list li:before{ content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: bold; }
+  .dont-list{ list-style: none; padding-left: 0; }
+  .dont-list li{ padding-left: 24px; margin: 10px 0; position: relative; }
+  .dont-list li:before{ content: "✗"; position: absolute; left: 0; color: var(--warning); font-weight: bold; }
+  .code-block{
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px;
+    margin: 16px 0;
+    overflow-x: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    line-height: 1.5;
+  }
+  hr{
+    border: none;
+    height: 1px;
+    background: var(--line);
+    margin: 30px 0;
+  }
+  .footnote{
+    color: var(--faint);
+    font-size: 13px;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+  .toc{
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px;
+    margin: 20px 0;
+  }
+  .toc ul{ margin: 10px 0; }
+  .toc li{ margin: 6px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="breadcrumb">
+    <a href="../../">Home</a> → <a href="../getting-started.html">Getting Started</a> → Exposure Minimization
+  </div>
+
+  <h1>Exposure Minimization</h1>
+  <p class="subtitle">Collect only what's essential. Defend what you keep. Reduce the data surface by design.</p>
+
+  <div class="box success">
+    <div class="box-title">Definition Summary</div>
+    <p><strong>What it is:</strong> Reduce data surface by default. Collect only what is essential, locally, with documented intent.</p>
+    <p><strong>Why it matters:</strong> Data is liability. The most secure data is data you don't have. In contexts of threat, coercion, or surveillance, a smaller footprint means smaller attack surface, fewer targets for confiscation, and less exposure if systems are compromised.</p>
+    <p><strong>When to use:</strong> Apply to every data collection decision. Audit existing data stores. Delete what you don't actively need. Encrypt and compartmentalize what you keep.</p>
+  </div>
+
+  <div class="toc">
+    <div class="box-title">On this page</div>
+    <ul>
+      <li><a href="#definition">Definition & Core Idea</a></li>
+      <li><a href="#why">Why It Matters</a></li>
+      <li><a href="#implementation">Implementation Patterns</a></li>
+      <li><a href="#antipatterns">Anti-patterns</a></li>
+      <li><a href="#examples">Real-World Examples</a></li>
+      <li><a href="#scope">Scope & Applicability</a></li>
+      <li><a href="#reference">Lineage & References</a></li>
+    </ul>
+  </div>
+
+  <h2 id="definition">Definition & Core Idea</h2>
+  <p>
+    <strong>Exposure Minimization:</strong> Reduce the data surface of your system by default. 
+    Collect only what is necessary; store it locally when possible; encrypt what you retain; delete what you no longer need.
+  </p>
+  <p>
+    The principle assumes:
+  </p>
+  <ul>
+    <li>All data is at risk (theft, confiscation, breach, subpoena).</li>
+    <li>The safest data is data that doesn't exist.</li>
+    <li>Collection decisions made under stability assumptions break under threat.</li>
+    <li>Users deserve clarity about what data is collected and why.</li>
+    <li>Aggregated data (even "anonymized") creates systemic risk.</li>
+  </ul>
+
+  <h2 id="why">Why It Matters in Protective Computing</h2>
+  
+  <h3>Scenario: Refugee Documentation</h3>
+  <p>
+    A refugee assistance app collects detailed biometric data, location history, family relationships, and medical records "for better service." 
+    If the app is later used in a conflict zone or by hostile authorities, all of that data becomes evidence of identity and loyalty.
+  </p>
+  <p>
+    <strong>The question:</strong> Did you need to collect it? If the app can verify eligibility with a phone number alone, biometrics add risk, not utility.
+  </p>
+
+  <h3>Scenario: Dissident Communication</h3>
+  <p>
+    A messaging app stores:
+  </p>
+  <ul>
+    <li>Messages (encrypted, locally stored) ✓ Essential</li>
+    <li>Contact list metadata (timestamps, who messaged whom) ✗ Optional</li>
+    <li>IP logs (location inference) ✗ Dangerous</li>
+    <li>Delivery receipts (proves presence) ✗ Dangerous</li>
+  </ul>
+  <p>
+    The metadata alone reveals networks and timing. If stored, it's discoverable under coercion or subpoena.
+  </p>
+
+  <h3>Scenario: Surveillance Misuse</h3>
+  <p>
+    An organization collects health data for research. Years later, a government agency demands access. 
+    If the data includes identifiable health records, people's medical histories are exposed.
+    If the data was never linked to identity in the first place, exposure is limited.
+  </p>
+
+  <h2 id="implementation">Implementation Patterns</h2>
+
+  <h3>1. Data Minimization Audit</h3>
+  <p>
+    Before building or maintaining a system, enumerate all data you collect and ask: <strong>Do we actually need this?</strong>
+  </p>
+  <div class="box success">
+    <div class="box-title">Audit Checklist</div>
+    <div class="code-block">
+For each data field:
+  [ ] Is this field actively used by the application?
+  [ ] Is it used by more than one feature?
+  [ ] Could we achieve the same goal with less granular data?
+  [ ] Could we compute this on-the-fly instead of storing it?
+  [ ] What's the retention window? When can we delete it?
+  [ ] Who has access to this field? Is that access necessary?
+  [ ] What happens if this field is breached or disclosed?
+    </div>
+  </div>
+  <p><strong>Use case:</strong> Reduce data footprint before deployment. Audit quarterly in production.</p>
+
+  <h3>2. Local-First Storage</h3>
+  <p>
+    Store sensitive data on the user's device, not on your servers. 
+    This gives users control and reduces central point of vulnerability.
+  </p>
+  <div class="code-block">
+Bad:  User types password → sent to server → stored in database
+Good: User types password → hashed locally → only hash sent to server
+
+Bad:  Location logged on server → server breached → all locations exposed
+Good: Location stored locally → synced to server only if user chooses
+  </div>
+  <p><strong>Use case:</strong> Passwords, location history, medical records, financial data. Compute on device; sync selectively.</p>
+
+  <h3>3. Data Deletion & Retention Policies</h3>
+  <p>
+    Define when data can be safely deleted. Implement automatic deletion if possible.
+  </p>
+  <div class="box success">
+    <div class="box-title">Implementation Pattern</div>
+    <div class="code-block">
+// Define retention windows
+messages: delete after 30 days (unless starred)
+logs: delete after 7 days
+analytics: aggregate only, never store individual events
+device IDs: rotate every 30 days
+IP addresses: don't store; use VPN for upstream calls
+    </div>
+  </div>
+  <p><strong>Use case:</strong> Reduce surface area over time. Automatic cleanup reduces manual burden and risk.</p>
+
+  <h3>4. Encryption at Rest & In Transit</h3>
+  <p>
+    If you must store sensitive data, encrypt it. If you must transmit it, use TLS.
+  </p>
+  <div class="box success">
+    <div class="box-title">Encryption Patterns</div>
+    <ul class="do-list">
+      <li>Use AES-256 for data at rest</li>
+      <li>Use TLS 1.3+ for all network traffic</li>
+      <li>Never store keys alongside encrypted data</li>
+      <li>Use user-controlled keys when possible (zero-knowledge architecture)</li>
+      <li>Encrypt backups with the same key as production</li>
+    </ul>
+  </div>
+
+  <h3>5. Zero-Knowledge Architecture</h3>
+  <p>
+    The strongest defense: don't be able to decrypt user data even if requested.
+    User holds the key; server stores encrypted blob.
+  </p>
+  <div class="code-block">
+User's device:
+  password → PBKDF2 → encryption key
+  plaintext data → AES-256(key) → ciphertext
+  
+Server stores:
+  ciphertext only (server cannot decrypt)
+  
+Access control:
+  user provides plaintext to decrypt locally
+  server never sees plaintext
+  </div>
+  <p><strong>Use case:</strong> Messenger apps, password managers, health records. If government subpoenas the server, you have nothing to give them.</p>
+
+  <h3>6. Data Anonymization & Aggregation</h3>
+  <p>
+    If you need analytics or insights, aggregate and anonymize before storage.
+  </p>
+  <div class="code-block">
+Bad:  Store every user action with timestamp, location, user ID
+Good: Aggregate "5 users performed action X between 3-5pm" without individuals
+  </div>
+  <p><strong>Use case:</strong> Usage analytics, performance monitoring, research data.</p>
+
+  <h2 id="antipatterns">Anti-patterns: What NOT to Do</h2>
+
+  <div class="box warning">
+    <div class="box-title">❌ Don't: Collect "Just in Case"</div>
+    <div class="dont-list">
+      <li>Collect location data for the future (vague benefit)</li>
+      <li>Store user's full history indefinitely</li>
+      <li>Track "everything" and filter later</li>
+    </div>
+    <p><strong>Why it's bad:</strong> Unused data becomes liability. If breached, you have no excuse for collecting it.</p>
+  </div>
+
+  <div class="box warning">
+    <div class="box-title">❌ Don't: "Anonymize" by Removing Names</div>
+    <div class="dont-list">
+      <li>Collect age + location + medical condition → "anonymous" but deanonymizable</li>
+      <li>Remove identifiers but keep behavioral patterns</li>
+      <li>Mix "anonymous" data with other sources and re-identify</li>
+    </div>
+    <p><strong>Why it's bad:</strong> Anonymization is hard. Quasi-identifiers leak. Treat aggregated data as sensitive too.</p>
+  </div>
+
+  <div class="box warning">
+    <div class="box-title">❌ Don't: "Secure" Bloat</div>
+    <div class="dont-list">
+      <li>Collect massive datasets then encrypt (still exposes volume)</li>
+      <li>Encrypt data but leave metadata cleartext</li>
+      <li>Store encrypted data indefinitely (no deletion policy)</li>
+    </div>
+    <p><strong>Why it's bad:</strong> Encryption is table stakes. Exposure minimization is the real defense.</p>
+  </div>
+
+  <div class="box warning">
+    <div class="box-title">❌ Don't: Unclear Retention</div>
+    <div class="dont-list">
+      <li>Store data with no documented retention policy</li>
+      <li>Keep backups of sensitive data indefinitely</li>
+      <li>Promise deletion but retain for "legal holds" or "debugging"</li>
+    </div>
+    <p><strong>Why it's bad:</strong> Vague retention becomes permanent retention. Users can't trust you.</p>
+  </div>
+
+  <h2 id="examples">Real-World Examples</h2>
+
+  <h3>Good: Signal (Messenger)</h3>
+  <p>
+    Signal stores:
+  </p>
+  <ul class="do-list">
+    <li>Encrypted messages (user has key)</li>
+    <li>Identity verification (public keys)</li>
+  </ul>
+  <p>
+    Signal does NOT store:
+  </p>
+  <ul class="dont-list">
+    <li>IP addresses / metadata</li>
+    <li>Timestamps (except on device)</li>
+    <li>Message content (server cannot decrypt)</li>
+    <li>Location data</li>
+  </ul>
+  <p><strong>Why it works:</strong> Even under government compulsion, Signal has nothing to give.</p>
+
+  <h3>Good: Password Manager (Bitwarden)</h3>
+  <p>
+    Zero-knowledge design: server stores vault encrypted with user's master password. 
+    Server cannot decrypt. Even Bitwarden employees cannot access user data.
+  </p>
+  <p><strong>Why it works:</strong> User controls the key. Exposure minimization at architecture level.</p>
+
+  <h3>Bad: Location-Tracking Apps</h3>
+  <p>
+    Many fitness/health apps collect precise location, timestamp, duration of every activity. 
+    Server stores for "better analysis." Data becomes:
+  </p>
+  <ul class="dont-list">
+    <li>Discoverable in business acquisition</li>
+    <li>Subpoena-able by law enforcement</li>
+    <li>Findable in data breaches</li>
+  </ul>
+  <p><strong>Why it fails:</strong> Data collected without clear necessity.</p>
+
+  <h3>Bad: "Anonymized" Medical Data Breaches</h3>
+  <p>
+    Multiple cases of "anonymized" datasets that were re-identified by cross-referencing with public data. 
+    Lesson: true anonymization is rare. Treat all health data as sensitive.
+  </p>
+
+  <h2 id="scope">Scope & Applicability</h2>
+
+  <h3>Always Minimize</h3>
+  <ul>
+    <li>Biometric data (fingerprints, iris, face)</li>
+    <li>Health records</li>
+    <li>Financial data</li>
+    <li>Location history</li>
+    <li>Communication metadata (who, when, where)</li>
+    <li>Device identifiers (IP, IMEI, MAC address)</li>
+    <li>Behavioral patterns</li>
+  </ul>
+
+  <h3>Minimize Carefully</h3>
+  <ul>
+    <li>Contact information (minimize to what's necessary for service)</li>
+    <li>Timestamps (aggregate where possible)</li>
+    <li>User preferences (store locally if possible)</li>
+  </ul>
+
+  <h3>Fine to Collect (With Policy)</h3>
+  <ul>
+    <li>Service usage metrics (aggregate only, never individual)</li>
+    <li>System logs (with automatic deletion policy)</li>
+    <li>Feedback data (with explicit user consent and retention window)</li>
+  </ul>
+
+  <h2 id="reference">Synthesis Lineage: Where This Principle Comes From</h2>
+
+  <p>
+    <strong>Exposure Minimization is not new.</strong> It appears across multiple established domains. 
+    Protective Computing formalizes and unifies these patterns for systems serving vulnerable populations.
+  </p>
+
+  <p><strong>From Privacy Engineering & GDPR:</strong></p>
+  <p>
+    Data minimization is a legal principle (GDPR Article 5). The regulatory insight: less data = less risk to individuals. 
+    <em>Protective Computing elevates this from compliance checklist to design principle.</em>
+  </p>
+  <ul>
+    <li>Article 29 Working Party, "Opinion on Data Protection Impact Assessments" — Legal framework for data minimization</li>
+    <li>Cavoukian, "Privacy by Design: The 7 Foundational Principles" (2011) — Privacy minimization as core design principle</li>
+    <li>IEEE Standard 1220 — Data Management and Transparency Requirements</li>
+  </ul>
+
+  <p><strong>From Information Security & Threat Modeling:</strong></p>
+  <p>
+    The principle of "attack surface reduction" is foundational in security engineering (Shostack, Schneier, Microsoft SDL). 
+    The insight: fewer systems, fewer data stores, fewer keys = fewer attack vectors.
+    <em>Protective Computing applies this to data collection itself.</em>
+  </p>
+  <ul>
+    <li>Shostack, "Threat Modeling: Designing for Security" (2014) — Attack surface as primary control vector</li>
+    <li>Schneier, "Secrets and Lies" (2000) — Data minimization as foundational security practice</li>
+    <li>Microsoft SDL, "Minimize Privileges and Use Standard User Accounts" — Principle of least privilege</li>
+  </ul>
+
+  <p><strong>From Cryptography & Key Management:</strong></p>
+  <p>
+    Cryptographic best practices emphasize "don't store what you don't need." The engineering insight: every key, every plaintext copy, every backup is a potential leak point. 
+    <em>Protective Computing extends this to all data, not just keys.</em>
+  </p>
+  <ul>
+    <li>Krawczyk, "HKDF: A Simple and Efficient Key Derivation Function and its Applications" (2010) — Key minimization in cryptographic design</li>
+    <li>Rogaway & Shrimpton, "A Cryptographic Model for Authenticated Encryption" (2002) — Security assumptions for data at rest</li>
+    <li>NIST SP 800-175B — Guidelines for Media Sanitization and Secure Deletion</li>
+  </ul>
+
+  <p><strong>From Safe Harbor & Data Protection Frameworks:</strong></p>
+  <p>
+    Decades of data breach litigation (Target, Equifax, Yahoo) demonstrate the cost of unnecessary data storage. 
+    The legal/business insight: data you collect but don't use becomes liability.
+    <em>Protective Computing treats this as a core design requirement, not a risk to manage.</em>
+  </p>
+  <ul>
+    <li>Article 32, GDPR — Security of Processing and Proportionality Doctrine</li>
+    <li>Solove, "Nothing to Hide: The False Tradeoff Between Privacy and Security" (2011) — Privacy as damage prevention</li>
+  </ul>
+
+  <p><strong>Protective Computing Foundation:</strong></p>
+  <ul>
+    <li><a href="https://doi.org/10.5281/zenodo.18688516">The Overton Framework: Protective Computing in Conditions of Human Vulnerability (v1.3)</a> — Formal disciplinary specification</li>
+    <li><a href="reversibility.html">Reversibility Reference</a> — Complementary principle for recovery</li>
+    <li><a href="../getting-started.html">Getting Started with Protective Computing</a> — Practical onboarding</li>
+  </ul>
+
+  <h2>Next Steps</h2>
+  <p>
+    1. <strong>Audit your data:</strong> List every data field. Justify each one. Delete what you can't justify.<br>
+    2. <strong>Define retention:</strong> For every field you keep, define when it can be deleted. Implement automatic cleanup.<br>
+    3. <strong>Encrypt sensitive data:</strong> At minimum, TLS for transit and AES-256 for rest. Consider zero-knowledge architecture for high-sensitivity.<br>
+    4. <strong>Explore the next principle:</strong> <a href="local-authority.html">Local Authority</a> — Enabling user control even offline.
+  </p>
+
+  <div class="footnote">
+    <strong>Protective Computing — Exposure Minimization Reference</strong><br>
+    Part of the Protective Computing discipline. For citation, reference <a href="https://doi.org/10.5281/zenodo.18688516">10.5281/zenodo.18688516</a>.
+  </div>
+
+</div>
+</body>
+</html>

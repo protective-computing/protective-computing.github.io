@@ -460,42 +460,68 @@ COMMIT  // Or ROLLBACK if any step fails
 
   <h3>Related Principles</h3>
   <ul>
+    <li><strong><a href="exposure-minimization.html">Exposure Minimization:</a></strong> Reversibility depends on data you keep. Minimize what you store to minimize what can be lost or recovered.</li>
     <li><strong>Local Authority:</strong> Reversibility depends on retaining data locally. If all data is on a server you don't control, reversibility is limited.</li>
-    <li><strong>Exposure Minimization:</strong> Minimize undo history storage by limiting what you store in the first place.</li>
     <li><strong>Essential Utility:</strong> Prioritize reversible actions over flashy features that can't be undone.</li>
   </ul>
 
-  <h3>Further Reading & External Authority</h3>
-  <p><strong>Protective Computing Foundation:</strong></p>
-  <ul>
-    <li><a href="https://doi.org/10.5281/zenodo.18688516">The Overton Framework: Protective Computing in Conditions of Human Vulnerability (v1.3)</a> — Core disciplinary reference</li>
-    <li><a href="../getting-started.html">Getting Started with Protective Computing</a> — Practical onboarding guide</li>
-  </ul>
+  <h3>Synthesis Lineage: Where This Principle Comes From</h3>
+  
+  <p>
+    <strong>Reversibility as a principle is not novel.</strong> It appears across multiple established engineering and design disciplines. 
+    Protective Computing formalizes and unifies these patterns specifically for systems designed under conditions of human vulnerability.
+  </p>
 
-  <p><strong>Undo/Reversibility in HCI & UX Engineering:</strong></p>
+  <p><strong>From HCI & Usability Engineering:</strong></p>
+  <p>
+    Error recovery and undo/redo have been core usability principles since the 1980s (Nielsen & Norman, "Usability Engineering"). 
+    The ergonomic insight: users make mistakes. Systems that allow recovery are more usable and safer.
+    <em>Protective Computing synthesizes this into a core discipline principle.</em>
+  </p>
   <ul>
     <li>Nielsen & Norman, "Usability Engineering" (1994) — Chapter 10 on error prevention and recovery; foundational HCI work on undo patterns</li>
     <li>Baxley, "User-Centered Design: An Introduction" — Error recovery and task reversibility as core usability principles</li>
     <li>Lieberman & Faulring, "Programming by Example: A Unifying Paradigm and Growing Tool Use in End-User Programming" (2015) — Undo/redo implementation in interactive systems</li>
   </ul>
 
-  <p><strong>Software Architecture & Resilience:</strong></p>
+  <p><strong>From Software Architecture & Resilience:</strong></p>
+  <p>
+    Transactions, rollback, and compensation patterns are foundational to distributed systems (Hohpe & Woolf, Vaughan). 
+    The engineering insight: multi-step operations must be atomic or recoverable.
+    <em>Protective Computing applies this pattern to user-facing operations and data management.</em>
+  </p>
   <ul>
-    <li>Vaughan, "Designing Resilient Systems" — Failure recovery patterns; saga pattern for distributed transaction rollback</li>
     <li>Hohpe & Woolf, "Enterprise Integration Patterns" (2004) — Transaction, rollback, and compensation patterns for enterprise systems</li>
+    <li>Vaughan, "Designing Resilient Systems" — Failure recovery patterns; saga pattern for distributed transaction rollback</li>
     <li>Kleppmann, "Designing Data-Intensive Applications" (2017) — ACID properties, linearizability, and eventual consistency in recovery patterns</li>
   </ul>
 
-  <p><strong>Safety-Critical Design:</strong></p>
+  <p><strong>From Safety-Critical Systems:</strong></p>
+  <p>
+    In aviation, medical devices, and process control, reversibility is non-negotiable (Leveson, Reason & Parker). 
+    The safety insight: irreversible errors in high-stakes contexts kill people.
+    <em>Protective Computing brings this safety perspective to systems serving vulnerable populations.</em>
+  </p>
   <ul>
     <li>Leveson, "Engineering a Safer World" (2012) — Human errors, system design, and error tolerance in safety-critical systems</li>
     <li>Reason & Parker, "Human Factors in Flight Operations" — Reversibility in cockpit design; why undo/confirmation reduce pilot error</li>
   </ul>
 
-  <p><strong>Data Continuity &amp; Privacy:</strong></p>
+  <p><strong>From Privacy & Data Governance:</strong></p>
+  <p>
+    Soft deletion and recovery windows are emerging best practices in privacy engineering (GDPR, data governance). 
+    The legal and ethical insight: permanent deletion creates asymmetry; recovery windows preserve user rights while respecting deletion requests.
+    <em>Protective Computing formalizes this as a structural principle.</em>
+  </p>
   <ul>
-    <li>Khandelwal &amp; Kar, "Data Governance for Data Minimization" — Soft deletion and recovery window strategies as privacy-preserving alternatives to permanent erasure</li>
+    <li>Khandelwal & Kar, "Data Governance for Data Minimization" — Soft deletion and recovery window strategies as privacy-preserving alternatives to permanent erasure</li>
     <li>Regulation (EU) 2016/679 (GDPR), Article 17 — "Right to be Forgotten" — Legal perspective on deletion vs. recovery periods</li>
+  </ul>
+
+  <p><strong>Protective Computing Foundation:</strong></p>
+  <ul>
+    <li><a href="https://doi.org/10.5281/zenodo.18688516">The Overton Framework: Protective Computing in Conditions of Human Vulnerability (v1.3)</a> — Formal disciplinary specification</li>
+    <li><a href="../getting-started.html">Getting Started with Protective Computing</a> — Practical onboarding guide</li>
   </ul>
 
   <h3>Next Steps</h3>
