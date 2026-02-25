@@ -1,92 +1,384 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Protective Computing</title>
+<meta name="description" content="Protective Computing: systems design under conditions of human vulnerability." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-body {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-    max-width: 900px;
-    margin: 60px auto;
-    padding: 0 20px;
-    line-height: 1.7;
-    color: #111;
-}
+  :root{
+    --bg: #070A10;
+    --panel: rgba(255,255,255,0.06);
+    --panel2: rgba(255,255,255,0.04);
+    --text: rgba(255,255,255,0.92);
+    --muted: rgba(255,255,255,0.68);
+    --faint: rgba(255,255,255,0.52);
+    --line: rgba(255,255,255,0.10);
+    --brand: #34d3ff;    /* cool cyan */
+    --brand2:#7c5cff;    /* violet */
+    --shadow: 0 18px 55px rgba(0,0,0,.55);
+    --radius: 18px;
+  }
 
-h1 {
-    font-size: 2.4rem;
-    margin-bottom: 10px;
-}
+  *{ box-sizing: border-box; }
+  html, body{ height: 100%; }
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(124,92,255,.18), transparent 60%),
+                radial-gradient(1100px 650px at 90% 15%, rgba(52,211,255,.14), transparent 55%),
+                radial-gradient(900px 500px at 50% 90%, rgba(52,211,255,.10), transparent 60%),
+                var(--bg);
+    color: var(--text);
+    letter-spacing: -0.015em;
+  }
 
-h2 {
-    margin-top: 40px;
-}
+  a{ color: inherit; text-decoration: none; }
+  a:hover{ text-decoration: underline; text-underline-offset: 3px; }
 
-a {
-    color: #0a5bd7;
-    text-decoration: none;
-}
+  .wrap{
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 28px 22px 80px;
+  }
 
-a:hover {
-    text-decoration: underline;
-}
+  /* Top bar */
+  .top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding: 10px 0 24px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:12px;
+  }
+  .mark{
+    width: 42px; height: 42px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(52,211,255,.22), rgba(124,92,255,.22));
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    display:grid; place-items:center;
+    overflow:hidden;
+  }
+  .mark img{
+    width: 42px; height: 42px;
+    object-fit: cover;
+    display:block;
+  }
+  .titleblock{ line-height: 1.05; }
+  .titleblock .name{
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.01em;
+  }
+  .titleblock .sub{
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
 
-.section {
-    margin-top: 30px;
-}
+  .nav{
+    display:flex; gap:10px; flex-wrap: wrap;
+    justify-content:flex-end;
+  }
+  .pill{
+    padding: 9px 12px;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,0.03);
+    border-radius: 999px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .pill:hover{
+    color: var(--text);
+    background: rgba(255,255,255,0.06);
+    text-decoration:none;
+  }
+
+  /* Hero */
+  .hero{
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+    border-radius: 28px;
+    padding: 34px 28px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:-1px;
+    background: radial-gradient(700px 280px at 15% 20%, rgba(52,211,255,.18), transparent 60%),
+                radial-gradient(680px 260px at 85% 15%, rgba(124,92,255,.18), transparent 60%);
+    opacity: .9;
+    pointer-events:none;
+  }
+  .hero > *{ position: relative; }
+
+  h1{
+    margin: 0 0 10px;
+    font-size: clamp(34px, 4.3vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    font-weight: 850;
+  }
+  .tagline{
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--muted);
+    max-width: 70ch;
+    margin: 0;
+  }
+  .accent{
+    color: var(--text);
+    font-weight: 650;
+  }
+
+  .cta{
+    display:flex; gap:10px; flex-wrap:wrap;
+    margin-top: 18px;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding: 11px 14px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,0.04);
+    color: var(--text);
+    font-size: 13.5px;
+    text-decoration:none;
+  }
+  .btn:hover{ background: rgba(255,255,255,0.07); text-decoration:none; }
+  .btn.primary{
+    border-color: rgba(52,211,255,.35);
+    background: linear-gradient(135deg, rgba(52,211,255,.14), rgba(124,92,255,.12));
+  }
+  .meta{
+    margin-top: 16px;
+    display:flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    color: var(--faint);
+    font-size: 12.5px;
+  }
+  .dot{ opacity:.6; }
+
+  /* Sections */
+  .grid{
+    display:grid;
+    grid-template-columns: 1.2fr .8fr;
+    gap: 18px;
+    margin-top: 18px;
+  }
+  @media (max-width: 900px){
+    .grid{ grid-template-columns: 1fr; }
+  }
+
+  .card{
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: var(--radius);
+    padding: 18px 18px;
+  }
+  .card.soft{ background: var(--panel2); }
+
+  h2{
+    margin: 0 0 10px;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--faint);
+    font-weight: 800;
+  }
+
+  .list{
+    margin: 0;
+    padding-left: 18px;
+    color: var(--muted);
+    line-height: 1.75;
+    font-size: 14px;
+  }
+  .list li{ margin: 6px 0; }
+  .list a{ color: var(--text); }
+  .list a:hover{ color: white; }
+
+  .principles{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  @media (max-width: 560px){
+    .principles{ grid-template-columns: 1fr; }
+  }
+  .chip{
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,0.03);
+    border-radius: 14px;
+    padding: 12px 12px;
+  }
+  .chip .pname{
+    font-weight: 750;
+    font-size: 13.5px;
+    margin-bottom: 4px;
+  }
+  .chip .pdesc{
+    color: var(--muted);
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+
+  /* Footer */
+  footer{
+    margin-top: 22px;
+    color: var(--faint);
+    font-size: 12.5px;
+    display:flex;
+    justify-content:space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .line{
+    height:1px;
+    background: var(--line);
+    margin: 22px 0 16px;
+  }
+  code{
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--line);
+    padding: 2px 6px;
+    border-radius: 8px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.85);
+  }
 </style>
 </head>
 
 <body>
+<div class="wrap">
 
-<h1>Protective Computing</h1>
+  <div class="top">
+    <div class="brand">
+      <div class="mark" title="Protective Computing">
+        <!-- Put your logo at /assets/logo.png (optional). If it doesn't exist, this box just stays as a gradient. -->
+        <img src="assets/logo.png" alt="" onerror="this.remove();">
+      </div>
+      <div class="titleblock">
+        <div class="name">Protective Computing</div>
+        <div class="sub">Systems design under human vulnerability</div>
+      </div>
+    </div>
 
-<p>
-Protective Computing is a systems-engineering discipline focused on software designed for conditions of human vulnerability, including crisis, displacement, illness, coercion, and institutional instability.
-</p>
+    <div class="nav">
+      <a class="pill" href="https://doi.org/10.5281/zenodo.18688516">DOI</a>
+      <a class="pill" href="https://zenodo.org/communities/protective-computing">Zenodo Community</a>
+      <a class="pill" href="https://github.com/protective-computing">GitHub</a>
+    </div>
+  </div>
 
-<div class="section">
-<h2>Foundational Work</h2>
-<ul>
-<li>
-<a href="https://doi.org/10.5281/zenodo.18688516">
-The Overton Framework: Protective Computing in Conditions of Human Vulnerability (v1.3)
-</a>
-</li>
-<li>
-<a href="https://zenodo.org/communities/protective-computing">
-Zenodo Community — Protective Computing
-</a>
-</li>
-</ul>
+  <section class="hero">
+    <h1>Protective Computing</h1>
+    <p class="tagline">
+      A systems-engineering discipline focused on software designed for conditions of
+      <span class="accent">human vulnerability</span>—crisis, displacement, illness, coercion, and institutional instability.
+      It rejects the Stability Assumption and prioritizes containment, reversibility, and essential utility under degradation.
+    </p>
+
+    <div class="cta">
+      <a class="btn primary" href="https://doi.org/10.5281/zenodo.18688516">Read the Canon (v1.3)</a>
+      <a class="btn" href="https://zenodo.org/communities/protective-computing">Browse the Community</a>
+      <a class="btn" href="https://github.com/protective-computing/protective-computing.github.io">Edit this site</a>
+    </div>
+
+    <div class="meta">
+      <span><span class="dot">●</span> License: <code>CC-BY 4.0 (Canon)</code></span>
+      <span><span class="dot">●</span> Scope: safety-critical HCI, privacy engineering, resilience</span>
+      <span><span class="dot">●</span> Anchor: <code>10.5281/zenodo.18688516</code></span>
+    </div>
+  </section>
+
+  <div class="grid">
+    <section class="card">
+      <h2>Foundational Work</h2>
+      <ul class="list">
+        <li><a href="https://doi.org/10.5281/zenodo.18688516">The Overton Framework: Protective Computing in Conditions of Human Vulnerability (v1.3)</a></li>
+        <li><a href="https://zenodo.org/communities/protective-computing">Zenodo Community — Protective Computing</a></li>
+      </ul>
+
+      <div class="line"></div>
+
+      <h2>Core Principles</h2>
+      <div class="principles">
+        <div class="chip">
+          <div class="pname">Reversibility</div>
+          <div class="pdesc">User actions and system changes remain undoable; failures don’t become permanent harm.</div>
+        </div>
+        <div class="chip">
+          <div class="pname">Exposure Minimization</div>
+          <div class="pdesc">Reduce data surface by default; collect only what is essential, locally, with intent.</div>
+        </div>
+        <div class="chip">
+          <div class="pname">Local Authority</div>
+          <div class="pdesc">The user retains control even offline; autonomy survives institutional delay.</div>
+        </div>
+        <div class="chip">
+          <div class="pname">Coercion Resistance</div>
+          <div class="pdesc">Design for hostile contexts: pressure, surveillance, forced disclosure, compromised devices.</div>
+        </div>
+        <div class="chip">
+          <div class="pname">Degraded Functionality</div>
+          <div class="pdesc">Operate under battery scarcity, network collapse, cognitive fatigue, and time pressure.</div>
+        </div>
+        <div class="chip">
+          <div class="pname">Essential Utility</div>
+          <div class="pdesc">Optimize for survival tasks, not engagement metrics; prioritize the critical path.</div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="card soft">
+      <h2>Scope</h2>
+      <ul class="list">
+        <li>Safety-critical human–computer interaction</li>
+        <li>Privacy-first & local-first architectures</li>
+        <li>Resilience engineering & crisis-aware systems</li>
+        <li>Ethical computing under institutional instability</li>
+      </ul>
+
+      <div class="line"></div>
+
+      <h2>Use</h2>
+      <ul class="list">
+        <li>Reference: design reviews and risk audits</li>
+        <li>Specification: constraints for protective UX</li>
+        <li>Implementation: local-first, offline-capable systems</li>
+      </ul>
+
+      <div class="line"></div>
+
+      <h2>How to cite</h2>
+      <p style="margin:0;color:var(--muted);font-size:13px;line-height:1.6;">
+        Cite the Canon DOI:
+        <a href="https://doi.org/10.5281/zenodo.18688516">10.5281/zenodo.18688516</a>
+      </p>
+    </aside>
+  </div>
+
+  <footer>
+    <div>Protective Computing — topic community & engineering surface.</div>
+    <div>Hosted on GitHub Pages.</div>
+  </footer>
+
 </div>
-
-<div class="section">
-<h2>Core Principles</h2>
-<ul>
-<li>Reversibility</li>
-<li>Exposure Minimization</li>
-<li>Local Authority</li>
-<li>Coercion Resistance</li>
-<li>Degraded-Infrastructure Functionality</li>
-</ul>
-</div>
-
-<div class="section">
-<h2>Scope</h2>
-<p>
-Protective Computing intersects with crisis informatics, resilience engineering, safety-critical human–computer interaction, privacy engineering, and digital sovereignty research.
-</p>
-</div>
-
-<div class="section">
-<h2>Purpose</h2>
-<p>
-Modern software architecture assumes stability. Protective Computing rejects this assumption and advances design principles oriented toward containment, essential utility, and human safety under adverse conditions.
-</p>
-</div>
-
 </body>
 </html>
