@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Protective Computing</title>
 <meta name="description" content="Protective Computing: systems design under conditions of human vulnerability." />
+<meta property="og:title" content="Protective Computing">
+<meta property="og:description" content="A systems-engineering discipline focused on software designed for human vulnerability conditions.">
+<meta property="og:image" content="https://protective-computing.github.io/assets/logo.png">
+<meta property="og:url" content="https://protective-computing.github.io/">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/logo.png" type="image/png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -227,10 +233,22 @@
     border-radius: 14px;
     padding: 12px 12px;
   }
+  .chip .chip-icon{
+    font-size: 22px;
+    margin-bottom: 8px;
+    display: inline-block;
+    opacity: 0.8;
+  }
   .chip .pname{
     font-weight: 750;
     font-size: 13.5px;
     margin-bottom: 4px;
+  }
+  .chip .chip-icon{
+    font-size: 22px;
+    margin-bottom: 8px;
+    display: inline-block;
+    opacity: 0.8;
   }
   .chip .pdesc{
     color: var(--muted);
@@ -319,27 +337,31 @@
 
       <h2>Core Principles</h2>
       <div class="principles">
-        <div class="chip">
-          <div class="pname">Reversibility</div>
+        <div class="chip">          <div class="chip-icon">⟲</div>          <div class="pname">Reversibility</div>
           <div class="pdesc">User actions and system changes remain undoable; failures don’t become permanent harm.</div>
         </div>
         <div class="chip">
+          <div class="chip-icon">◐</div>
           <div class="pname">Exposure Minimization</div>
           <div class="pdesc">Reduce data surface by default; collect only what is essential, locally, with intent.</div>
         </div>
         <div class="chip">
+          <div class="chip-icon">⬇</div>
           <div class="pname">Local Authority</div>
           <div class="pdesc">The user retains control even offline; autonomy survives institutional delay.</div>
         </div>
         <div class="chip">
+          <div class="chip-icon">🛡️</div>
           <div class="pname">Coercion Resistance</div>
           <div class="pdesc">Design for hostile contexts: pressure, surveillance, forced disclosure, compromised devices.</div>
         </div>
         <div class="chip">
+          <div class="chip-icon">⚡</div>
           <div class="pname">Degraded Functionality</div>
           <div class="pdesc">Operate under battery scarcity, network collapse, cognitive fatigue, and time pressure.</div>
         </div>
         <div class="chip">
+          <div class="chip-icon">◆</div>
           <div class="pname">Essential Utility</div>
           <div class="pdesc">Optimize for survival tasks, not engagement metrics; prioritize the critical path.</div>
         </div>
