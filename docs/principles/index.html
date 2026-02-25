@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Principle Deep-Dives — Protective Computing</title>
+<meta name="description" content="Navigate all Protective Computing principle deep-dive references from one page." />
+<link rel="canonical" href="https://protective-computing.github.io/docs/principles/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Protective Computing" />
+<meta property="og:title" content="Principle Deep-Dives — Protective Computing" />
+<meta property="og:description" content="Navigate all Protective Computing principle deep-dive references from one page." />
+<meta property="og:url" content="https://protective-computing.github.io/docs/principles/" />
+<meta property="og:image" content="https://protective-computing.github.io/assets/logo.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Principle Deep-Dives — Protective Computing" />
+<meta name="twitter:description" content="Navigate all Protective Computing principle deep-dive references from one page." />
+<meta name="twitter:image" content="https://protective-computing.github.io/assets/logo.png" />
+<link rel="icon" href="../../assets/logo.png" type="image/png">
+<style>
+  :root{
+    --bg: #070A10;
+    --panel: rgba(255,255,255,0.06);
+    --text: rgba(255,255,255,0.92);
+    --muted: rgba(255,255,255,0.68);
+    --line: rgba(255,255,255,0.10);
+  }
+  *{ box-sizing: border-box; }
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(124,92,255,.18), transparent 60%),
+                radial-gradient(1100px 650px at 90% 15%, rgba(52,211,255,.14), transparent 55%),
+                var(--bg);
+    color: var(--text);
+  }
+  a{ color: #34d3ff; text-decoration: none; }
+  a:hover{ text-decoration: underline; text-underline-offset: 3px; }
+  .wrap{ max-width: 940px; margin: 0 auto; padding: 28px 22px 60px; }
+  .back{
+    display:inline-block;
+    padding:8px 12px;
+    margin-bottom: 16px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .back:hover{ background: rgba(255,255,255,0.04); text-decoration:none; }
+  h1{ margin: 0 0 10px; font-size: 2.2rem; line-height: 1.1; }
+  .subtitle{ color: var(--muted); margin-bottom: 22px; }
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+  }
+  .card{
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: 12px;
+    padding: 14px;
+  }
+  .card h2{ margin: 0 0 6px; font-size: 1.05rem; }
+  .card p{ margin: 0; color: var(--muted); line-height: 1.5; font-size: 14px; }
+  .footer{ margin-top: 26px; color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <a href="../getting-started.html" class="back">← Back to Getting Started</a>
+    <h1>Principle Deep-Dives</h1>
+    <p class="subtitle">Direct links to full reference pages for all six core principles.</p>
+
+    <div class="grid">
+      <a class="card" href="reversibility.html">
+        <h2>Reversibility</h2>
+        <p>Undoability, bounded destructive operations, and recovery under stress.</p>
+      </a>
+      <a class="card" href="exposure-minimization.html">
+        <h2>Exposure Minimization</h2>
+        <p>Essential-only data collection, cryptographic defense, and retention bounds.</p>
+      </a>
+      <a class="card" href="local-authority.html">
+        <h2>Local Authority</h2>
+        <p>User agency under disconnection, sync instability, and hostile infrastructure.</p>
+      </a>
+      <a class="card" href="coercion-resistance.html">
+        <h2>Coercion Resistance</h2>
+        <p>Operating boundaries and disclosure minimization under forced access pressure.</p>
+      </a>
+      <a class="card" href="degraded-functionality.html">
+        <h2>Degraded Functionality</h2>
+        <p>Essential-path usability under low bandwidth, weak devices, and partial failure.</p>
+      </a>
+      <a class="card" href="essential-utility.html">
+        <h2>Essential Utility</h2>
+        <p>Keep essential capabilities primary; prevent extractive drift and coercive gating.</p>
+      </a>
+    </div>
+
+    <p class="footer">Protective Computing — <a href="../../">Home</a> · <a href="../spec/v1.0.html">Specification v1.0</a></p>
+  </div>
+</body>
+</html>
