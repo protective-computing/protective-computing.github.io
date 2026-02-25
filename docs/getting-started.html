@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Getting Started — Protective Computing</title>
+<meta name="description" content="Practical guide to adopting Protective Computing principles in systems design." />
+<link rel="icon" href="../assets/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #070A10;
+    --panel: rgba(255,255,255,0.06);
+    --text: rgba(255,255,255,0.92);
+    --muted: rgba(255,255,255,0.68);
+    --faint: rgba(255,255,255,0.52);
+    --line: rgba(255,255,255,0.10);
+    --shadow: 0 18px 55px rgba(0,0,0,.55);
+  }
+  *{ box-sizing: border-box; }
+  html, body{ height: 100%; }
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(124,92,255,.18), transparent 60%),
+                radial-gradient(1100px 650px at 90% 15%, rgba(52,211,255,.14), transparent 55%),
+                var(--bg);
+    color: var(--text);
+    letter-spacing: -0.015em;
+  }
+  a{ color: #34d3ff; text-decoration: none; }
+  a:hover{ text-decoration: underline; text-underline-offset: 3px; }
+  .wrap{
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 22px 60px;
+  }
+  .back{
+    display: inline-block;
+    padding: 8px 12px;
+    margin-bottom: 20px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .back:hover{ background: rgba(255,255,255,0.04); }
+  h1{
+    font-size: 2.2rem;
+    line-height: 1.1;
+    margin: 0 0 10px;
+    font-weight: 850;
+  }
+  .subtitle{
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+  h2{
+    font-size: 1.6rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    font-weight: 800;
+  }
+  h3{
+    font-size: 1.05rem;
+    margin-top: 24px;
+    margin-bottom: 10px;
+    font-weight: 750;
+    color: var(--text);
+  }
+  p, li{
+    color: var(--muted);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+  ul{
+    margin: 14px 0;
+    padding-left: 20px;
+  }
+  li{ margin: 8px 0; }
+  code{
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--line);
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #34d3ff;
+  }
+  .box{
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: 14px;
+    padding: 18px;
+    margin: 20px 0;
+  }
+  .box-title{
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  .checklist{
+    list-style: none;
+    padding-left: 0;
+  }
+  .checklist li{ padding-left: 24px; margin: 10px 0; position: relative; }
+  .checklist li:before{ content: "✓"; position: absolute; left: 0; color: #34d3ff; font-weight: bold; }
+  hr{
+    border: none;
+    height: 1px;
+    background: var(--line);
+    margin: 30px 0;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="../" class="back">← Back to Home</a>
+
+  <h1>Getting Started</h1>
+  <p class="subtitle">A practical guide to adopting Protective Computing in your systems and organization.</p>
+
+  <h2>What You're Adopting</h2>
+  <p>
+    Protective Computing is not a framework you impose. It's a discipline you practice.
+    It asks: <strong>What changes when you design for human vulnerability instead of assuming stability?</strong>
+  </p>
+  <p>
+    This guide walks you through the mindset shift and gives you concrete steps to apply Protective Computing principles.
+  </p>
+
+  <h2>1. Understand the Core Assumption</h2>
+  <p>
+    Most software assumes infrastructure, connectivity, power, and cognitive bandwidth are abundant.
+  </p>
+  <p>
+    Protective Computing rejects this. It assumes:
+  </p>
+  <ul>
+    <li><strong>Networks will fail</strong> (or be hostile, or censored)</li>
+    <li><strong>Devices will be compromised</strong> (stolen, coerced, confiscated)</li>
+    <li><strong>Users will face pressure</strong> (coercion, surveillance, institutional threat)</li>
+    <li><strong>Time and cognitive resources are scarce</strong> (crisis, displacement, illness)</li>
+    <li><strong>Data is liability</strong> (minimize it; defend what remains)</li>
+  </ul>
+  <p>
+    Once you internalize this, the principles follow naturally.
+  </p>
+
+  <h2>2. Audit Your Current System</h2>
+  <p>
+    Before applying Protective Computing, understand where your system is vulnerable:
+  </p>
+  <div class="box">
+    <div class="box-title">Questions to ask</div>
+    <ul class="checklist">
+      <li>Does the system require internet to perform critical functions?</li>
+      <li>What data do we collect and store? Could we collect less?</li>
+      <li>If a device is lost or stolen, what is exposed?</li>
+      <li>Can a user undo actions, or are changes permanent?</li>
+      <li>What happens if power fails mid-operation?</li>
+      <li>Can users access their data if they need to verify or export it?</li>
+      <li>Can institutional pressure (law enforcement, authoritarian actors) force disclosure of user data?</li>
+    </ul>
+  </div>
+
+  <h2>3. Apply the Principles — In Order</h2>
+
+  <h3>✓ Start with Reversibility</h3>
+  <p>
+    Make destructive actions undo-able. This is the easiest win and has broad impact.
+  </p>
+  <ul>
+    <li>Implement <code>undo</code> / <code>redo</code> for user-facing changes</li>
+    <li>Keep deletion logs; allow recovery within a reasonable window</li>
+    <li>Design workflows so users can pause, verify, and proceed</li>
+    <li>Avoid cascading destructive operations</li>
+  </ul>
+
+  <h3>✓ Add Exposure Minimization</h3>
+  <p>
+    Collect, store, and transmit only what is essential.
+  </p>
+  <ul>
+    <li>Document what data you currently hold and why</li>
+    <li>Delete data that is no longer needed</li>
+    <li>Process sensitive data locally when possible; avoid cloud storage for non-essential details</li>
+    <li>Encrypt data at rest; use TLS for transit</li>
+    <li>Consider zero-knowledge architectures (user holds the key, not you)</li>
+  </ul>
+
+  <h3>✓ Implement Local Authority</h3>
+  <p>
+    Users should retain control even when disconnected from your infrastructure.
+  </p>
+  <ul>
+    <li>Build offline-capable features where mission-critical</li>
+    <li>Cache essential data locally on the user's device</li>
+    <li>Allow users to use the system even if your servers are down</li>
+    <li>Sync gracefully when connectivity returns</li>
+    <li>Don't require authentication for every action; support local-first workflows</li>
+  </ul>
+
+  <h3>✓ Add Coercion Resistance</h3>
+  <p>
+    Make it hard for attackers (or authorities) to extract information forcibly.
+  </p>
+  <ul>
+    <li>Support strong authentication (e.g., passphrase-based encryption)</li>
+    <li>Implement option to wipe sensitive data remotely or via dead-man's switch</li>
+    <li>Don't store cleartext backups of sensitive information</li>
+    <li>Consider plausible deniability features (decoy accounts, obfuscation)</li>
+    <li>Document security assumptions clearly; don't claim perfect security</li>
+  </ul>
+
+  <h3>✓ Design for Degraded-Infrastructure Functionality</h3>
+  <p>
+    The system must work when resources are scarce.
+  </p>
+  <ul>
+    <li>Test on low-bandwidth connections (2G, satellite, mesh networks)</li>
+    <li>Minimize power consumption; support low-power modes</li>
+    <li>Design for small screens and limited RAM</li>
+    <li>Gracefully degrade feature-rich UX when resources are constrained</li>
+    <li>Include keyboard-only navigation; don't depend on mouse, touchscreen, or animations</li>
+  </ul>
+
+  <h3>✓ Prioritize Essential Utility</h3>
+  <p>
+    When resources are limited, optimize for survival tasks — not engagement or monetization.
+  </p>
+  <ul>
+    <li>Identify your critical path: what does the user *need* this system to do?</li>
+    <li>Strip away secondary features that compete for resources</li>
+    <li>Make the critical path faster and more reliable than convenience features</li>
+    <li>Avoid dark patterns, attention capture, or incentive misalignment</li>
+  </ul>
+
+  <hr>
+
+  <h2>4. Adopt a Design Review Lens</h2>
+  <p>
+    For each new feature or system change, ask:
+  </p>
+  <div class="box">
+    <div class="box-title">Pre-launch checklist</div>
+    <ul class="checklist">
+      <li>Can this action be undone?</li>
+      <li>Are we collecting data we could avoid?</li>
+      <li>Does this feature work offline?</li>
+      <li>Is there a hostile use-case we haven't defended against?</li>
+      <li>What happens when the network is slow (or hostile)?</li>
+      <li>Does this require resources we can't assume users have?</li>
+      <li>Is this feature essential, or luxury functionality?</li>
+    </ul>
+  </div>
+
+  <h2>5. Engage with the Community</h2>
+  <p>
+    Protective Computing is a growing discipline. Share your work:
+  </p>
+  <ul>
+    <li><a href="https://zenodo.org/communities/protective-computing">Submit research or implementations to the Zenodo Community</a></li>
+    <li><a href="https://github.com/protective-computing">Contribute code, design docs, or case studies to the GitHub organization</a></li>
+    <li>Reference <a href="https://doi.org/10.5281/zenodo.18688516">the foundational Canon (DOI)</a> in your work</li>
+    <li>Help refine the discipline by sharing what you learn</li>
+  </ul>
+
+  <h2>6. Measure Impact</h2>
+  <p>
+    Success in Protective Computing means:
+  </p>
+  <ul>
+    <li><strong>Resilience:</strong> How does the system behave under stress (low power, no network, compromised device)?</li>
+    <li><strong>User agency:</strong> Can users understand and control their data?</li>
+    <li><strong>Recovery:</strong> How quickly can users undo errors or recover from incidents?</li>
+    <li><strong>Minimal data footprint:</strong> What's the smallest dataset you can retain and still deliver utility?</li>
+  </ul>
+  <p>
+    These metrics matter more than performance benchmarks or feature count.
+  </p>
+
+  <hr>
+
+  <h2>Common Patterns to Avoid</h2>
+  <ul>
+    <li><strong>Cloud-first architecture:</strong> When all data lives on your servers, you're not practicing Protective Computing</li>
+    <li><strong>Mandatory internet:</strong> If the app can't run offline, it can't serve vulnerable users</li>
+    <li><strong>Maximal data collection:</strong> Don't collect first, ask permission later</li>
+    <li><strong>Single point of failure:</strong> If one server outage breaks the whole system, you've failed under degradation</li>
+    <li><strong>Attention capture:</strong> Dark UX patterns are hostile in crisis contexts</li>
+  </ul>
+
+  <hr>
+
+  <h2>Next Steps</h2>
+  <p>
+    1. <strong>Read the Canon:</strong> <a href="https://doi.org/10.5281/zenodo.18688516">The Overton Framework (v1.3)</a><br>
+    2. <strong>Audit one system:</strong> Apply the questions above to a project you own<br>
+    3. <strong>Share your findings:</strong> Document what you learn and contribute to the community<br>
+  </p>
+
+  <hr>
+  <p style="color: var(--faint); font-size: 13px; margin-top: 40px;">
+    Protective Computing — <a href="../">back to home</a>
+  </p>
+
+</div>
+</body>
+</html>
