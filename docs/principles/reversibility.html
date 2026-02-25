@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Reversibility — Protective Computing</title>
+<meta name="description" content="Deep reference on the Reversibility principle: making user actions undoable." />
+<link rel="icon" href="../../assets/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #070A10;
+    --panel: rgba(255,255,255,0.06);
+    --text: rgba(255,255,255,0.92);
+    --muted: rgba(255,255,255,0.68);
+    --faint: rgba(255,255,255,0.52);
+    --line: rgba(255,255,255,0.10);
+    --accent: #34d3ff;
+    --warning: #ff9d3d;
+    --shadow: 0 18px 55px rgba(0,0,0,.55);
+  }
+  *{ box-sizing: border-box; }
+  html, body{ height: 100%; }
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(124,92,255,.18), transparent 60%),
+                radial-gradient(1100px 650px at 90% 15%, rgba(52,211,255,.14), transparent 55%),
+                var(--bg);
+    color: var(--text);
+    letter-spacing: -0.015em;
+  }
+  a{ color: var(--accent); text-decoration: none; }
+  a:hover{ text-decoration: underline; text-underline-offset: 3px; }
+  .wrap{
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 22px 60px;
+  }
+  .breadcrumb{
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .breadcrumb a{ color: var(--accent); }
+  h1{
+    font-size: 2.2rem;
+    line-height: 1.1;
+    margin: 0 0 10px;
+    font-weight: 850;
+  }
+  .subtitle{
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+  h2{
+    font-size: 1.5rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    font-weight: 800;
+  }
+  h3{
+    font-size: 1.05rem;
+    margin-top: 24px;
+    margin-bottom: 10px;
+    font-weight: 750;
+    color: var(--text);
+  }
+  p, li{
+    color: var(--muted);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+  ul, ol{
+    margin: 14px 0;
+    padding-left: 20px;
+  }
+  li{ margin: 8px 0; }
+  code{
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--line);
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--accent);
+  }
+  .box{
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: 14px;
+    padding: 18px;
+    margin: 20px 0;
+  }
+  .box.warning{
+    border-color: rgba(255, 157, 61, 0.3);
+    background: rgba(255, 157, 61, 0.05);
+  }
+  .box.success{
+    border-color: rgba(52, 211, 255, 0.3);
+    background: rgba(52, 211, 255, 0.05);
+  }
+  .box-title{
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  .do-list{ list-style: none; padding-left: 0; }
+  .do-list li{ padding-left: 24px; margin: 10px 0; position: relative; }
+  .do-list li:before{ content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: bold; }
+  .dont-list{ list-style: none; padding-left: 0; }
+  .dont-list li{ padding-left: 24px; margin: 10px 0; position: relative; }
+  .dont-list li:before{ content: "✗"; position: absolute; left: 0; color: var(--warning); font-weight: bold; }
+  .code-block{
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px;
+    margin: 16px 0;
+    overflow-x: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    line-height: 1.5;
+  }
+  hr{
+    border: none;
+    height: 1px;
+    background: var(--line);
+    margin: 30px 0;
+  }
+  .footnote{
+    color: var(--faint);
+    font-size: 13px;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+  .toc{
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px;
+    margin: 20px 0;
+  }
+  .toc ul{ margin: 10px 0; }
+  .toc li{ margin: 6px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="breadcrumb">
+    <a href="../../">Home</a> → <a href="../getting-started.html">Getting Started</a> → Reversibility
+  </div>
+
+  <h1>Reversibility</h1>
+  <p class="subtitle">Making user actions and system changes undoable. The foundational principle of recovery.</p>
+
+  <div class="toc">
+    <div class="box-title">On this page</div>
+    <ul>
+      <li><a href="#definition">Definition & Core Idea</a></li>
+      <li><a href="#why">Why It Matters</a></li>
+      <li><a href="#implementation">Implementation Patterns</a></li>
+      <li><a href="#antipatterns">Anti-patterns</a></li>
+      <li><a href="#examples">Real-World Examples</a></li>
+      <li><a href="#scope">When to Apply It</a></li>
+      <li><a href="#reference">Reference & Next Steps</a></li>
+    </ul>
+  </div>
+
+  <h2 id="definition">Definition & Core Idea</h2>
+  <p>
+    <strong>Reversibility:</strong> User actions and system changes remain undoable. Failures do not become permanent harm.
+  </p>
+  <p>
+    The principle assumes:
+  </p>
+  <ul>
+    <li>Users make mistakes. Mistakes under pressure (crisis, displacement, threat) are *inevitable*.</li>
+    <li>Given a choice between a permanent mistake and a temporary one, the system should enable recovery.</li>
+    <li>Undo is not a convenience feature—it's a <strong>safety feature</strong>.</li>
+    <li>If an action cannot be undone, it should require explicit confirmation and clear understanding of consequences.</li>
+  </ul>
+
+  <h2 id="why">Why It Matters in Protective Computing</h2>
+  <p>
+    In contexts of human vulnerability—crisis, coercion, cognitive fatigue—mistakes are more likely and their consequences more severe. Reversibility adds a margin of safety.
+  </p>
+
+  <h3>Scenario: Displacement Crisis</h3>
+  <p>
+    A refugee using a messaging app during rapid evacuation accidentally deletes a conversation containing family contact information. 
+    If deletion is permanent, that data is lost forever. 
+    If the app implements reversible deletion (soft delete with recovery window), the refugee can recover the information later.
+  </p>
+  <p>
+    <strong>The difference:</strong> Temporary confusion vs. permanent loss of life-critical information.
+  </p>
+
+  <h3>Scenario: Coercion</h3>
+  <p>
+    A person in a coercive environment (surveillance, control) is forced to delete sensitive data or accounts. 
+    If deletion is reversible within a window (e.g., 30 days), and they can access recovery, they retain agency.
+    If deletion is permanent, the coercion is irreversible.
+  </p>
+
+  <h2 id="implementation">Implementation Patterns</h2>
+
+  <h3>1. Soft Deletion (Recovery Window)</h3>
+  <p>
+    Don't delete immediately. Mark as deleted, hide from the UI, but retain the data for a recovery period (e.g., 30 days).
+  </p>
+  <div class="box success">
+    <div class="box-title">Implementation Pattern</div>
+    <div class="code-block">
+// User deletes a message
+message.deleted_at = now()
+message.is_visible = false  // Hidden from UI
+message.recovery_until = now() + 30_days
+
+// Periodically clean up truly old deletions
+DELETE FROM messages WHERE deleted_at < now() - 30_days
+    </div>
+  </div>
+  <p>
+    <strong>Benefits:</strong>
+  </p>
+  <ul class="do-list">
+    <li>User can recover within window</li>
+    <li>Data is still hidden from normal use</li>
+    <li>Permanent deletion happens automatically after recovery window</li>
+    <li>Minimal storage overhead</li>
+  </ul>
+
+  <h3>2. Undo/Redo Stacks</h3>
+  <p>
+    For rich applications (writing, design, configuration), maintain an undo/redo stack of state changes.
+  </p>
+  <div class="box success">
+    <div class="box-title">Implementation Pattern</div>
+    <div class="code-block">
+class UndoManager:
+    def __init__(self):
+        self.past = []      // Previous states
+        self.present = {}   // Current state
+        self.future = []    // Undo'd states
+    
+    def do_action(self, action):
+        self.past.append(self.present.copy())
+        self.present = action.apply(self.present)
+        self.future = []    // Clear redo on new action
+    
+    def undo(self):
+        if self.past:
+            self.future.append(self.present)
+            self.present = self.past.pop()
+    
+    def redo(self):
+        if self.future:
+            self.past.append(self.present)
+            self.present = self.future.pop()
+    </div>
+  </div>
+  <p>
+    <strong>Limitations:</strong> Undo stacks work for local state. For distributed systems, use soft deletion + sync.
+  </p>
+
+  <h3>3. Explicit Confirmation + Clear Consequences</h3>
+  <p>
+    Some actions truly cannot be safely undone (e.g., account deletion with external system integration). 
+    In those cases, require explicit confirmation and clearly communicate the irreversibility.
+  </p>
+  <div class="box success">
+    <div class="box-title">Implementation Pattern</div>
+    <div class="code-block">
+// Bad: One-click delete
+&lt;button onclick="deleteAccount()"&gt;Delete&lt;/button&gt;
+
+// Good: Multi-step confirmation with clear consequences
+1. Show confirmation dialog with exact consequences
+2. Require user to type account email to confirm
+3. Send confirmation email; require email verification
+4. Only after verification, begin deletion process
+5. Provide recovery option for 7 days
+    </div>
+  </div>
+
+  <h3>4. Version History & Rollback</h3>
+  <p>
+    For documents, configurations, and code, maintain version history and allow rollback.
+  </p>
+  <div class="box success">
+    <div class="box-title">Implementation Pattern</div>
+    <ul>
+      <li>Store snapshots at key moments (e.g., before major edits)</li>
+      <li>Show version diff before rollback</li>
+      <li>Rollback becomes a new entry in history (auditable)</li>
+      <li>Never truly delete old versions; archive them</li>
+    </ul>
+  </div>
+
+  <h3>5. Transaction Rollback (Backend)</h3>
+  <p>
+    For multi-step operations, use transactions. If any step fails, rollback to the prior state.
+  </p>
+  <div class="box success">
+    <div class="box-title">Implementation Pattern</div>
+    <div class="code-block">
+BEGIN TRANSACTION
+  UPDATE account SET balance = balance - 100
+  UPDATE ledger ADD transaction
+  UPDATE budget ADD expense
+COMMIT  // Or ROLLBACK if any step fails
+    </div>
+  </div>
+
+  <h2 id="antipatterns">Anti-patterns: What NOT to Do</h2>
+
+  <div class="box warning">
+    <div class="box-title">❌ Don't: Permanent Deletion Without Recovery Window</div>
+    <div class="dont-list">
+      <li>User deletes a file → immediately and permanently removed</li>
+      <li>User deletes account → no recovery option</li>
+      <li>User submits form → edits lock immediately</li>
+    </div>
+    <p>
+      <strong>Why it's bad:</strong> Mistakes are permanent. In crisis contexts, this is unacceptable.
+    </p>
+  </div>
+
+  <div class="box warning">
+    <div class="box-title">❌ Don't: Hidden Consequences</div>
+    <div class="dont-list">
+      <li>"Delete" actually means "archive in hidden folder" (confuses users)</li>
+      <li>Action has side effects not disclosed in UI</li>
+      <li>Confirmation dialog hides true consequences</li>
+    </div>
+    <p>
+      <strong>Why it's bad:</strong> User cannot make an informed decision. They think they can undo, but they can't.
+    </p>
+  </div>
+
+  <div class="box warning">
+    <div class="box-title">❌ Don't: Undo That Changes Semantics</div>
+    <div class="dont-list">
+      <li>Undo restores data, but in a different state than before</li>
+      <li>Undo works for some data but not related data</li>
+      <li>Undo history is not persisted (lost on logout or crash)</li>
+    </div>
+    <p>
+      <strong>Why it's bad:</strong> Undo becomes unreliable. Users lose trust in recovery.
+    </p>
+  </div>
+
+  <div class="box warning">
+    <div class="box-title">❌ Don't: Undo That Leaks Data</div>
+    <div class="dont-list">
+      <li>Undo stack includes sensitive values in plaintext logs</li>
+      <li>Undo history is sent to cloud backup unencrypted</li>
+      <li>Undo states are visible in application cache</li>
+    </div>
+    <p>
+      <strong>Why it's bad:</strong> Reversibility becomes a security liability. Use encryption for undo state.
+    </p>
+  </div>
+
+  <h2 id="examples">Real-World Examples</h2>
+
+  <h3>Gmail: Undo Send (5s Window)</h3>
+  <p>
+    Gmail offers a 5-second window to undo an email send. It doesn't truly send immediately; it queues the message and allows cancellation within the window.
+  </p>
+  <p>
+    <strong>Why it works:</strong>
+  </p>
+  <ul class="do-list">
+    <li>5 seconds is enough for a user to notice a mistake</li>
+    <li>Window is short enough to be fast in normal use</li>
+    <li>UI clearly shows the countdown and undo button</li>
+  </ul>
+
+  <h3>Google Docs: Version History</h3>
+  <p>
+    Google Docs stores every significant change and allows rollback to any prior version. Users can see who made each change and when.
+  </p>
+  <p>
+    <strong>Why it works:</strong>
+  </p>
+  <ul class="do-list">
+    <li>Users can recover from accidental deletes</li>
+    <li>Disputes over changes can be resolved by reviewing history</li>
+    <li>Rollback is a first-class feature, not buried in menus</li>
+  </ul>
+
+  <h3>Trash Folders</h3>
+  <p>
+    Most operating systems and file managers use trash/recycle bin: deleted files aren't gone, they're hidden and can be restored.
+  </p>
+  <p>
+    <strong>Why it works:</strong>
+  </p>
+  <ul class="do-list">
+    <li>Recovery is straightforward</li>
+    <li>Trash auto-empties after 30 days (cleanup without user action)</li>
+    <li>Users understand the pattern from prior experience</li>
+  </ul>
+
+  <h3>Anti-example: Permanent Post Deletion (Some Platforms)</h3>
+  <p>
+    Some social media platforms immediately and permanently delete posts. There is no recovery. 
+    If a user regrets a post seconds later, it's gone forever.
+  </p>
+  <p>
+    <strong>Why it fails:</strong> No recovery window for human error.
+  </p>
+
+  <h2 id="scope">When to Apply Reversibility</h2>
+
+  <h3>Always Reversible (User Actions)</h3>
+  <ul>
+    <li>Text input, document edits → undo/redo</li>
+    <li>Deletion of content → soft delete with recovery window</li>
+    <li>Configuration changes → version history + rollback</li>
+    <li>File uploads, form submissions → allow modification within window</li>
+  </ul>
+
+  <h3>Reversible With Friction (Dangerous Actions)</h3>
+  <ul>
+    <li>Account deletion → multi-step confirmation + recovery window</li>
+    <li>Data export → confirm recipients, allow cancellation</li>
+    <li>Sharing settings → show preview of changes before apply</li>
+  </ul>
+
+  <h3>Irreversible (Backend/System Actions)</h3>
+  <ul>
+    <li>Cryptographic key generation (can't recover a lost key)</li>
+    <li>Integration with third-party services (API calls may have side effects)</li>
+    <li>Regulatory deletion (if required by law, retention is not legal)</li>
+  </ul>
+  <p>
+    <strong>For irreversible actions:</strong> Use strong confirmation, clear communication, and logging for audit.
+  </p>
+
+  <h2 id="reference">Reference & Next Steps</h2>
+
+  <h3>Related Principles</h3>
+  <ul>
+    <li><strong>Local Authority:</strong> Reversibility depends on retaining data locally. If all data is on a server you don't control, reversibility is limited.</li>
+    <li><strong>Exposure Minimization:</strong> Minimize undo history storage by limiting what you store in the first place.</li>
+    <li><strong>Essential Utility:</strong> Prioritize reversible actions over flashy features that can't be undone.</li>
+  </ul>
+
+  <h3>Further Reading</h3>
+  <ul>
+    <li><a href="https://doi.org/10.5281/zenodo.18688516">The Overton Framework: Protective Computing in Conditions of Human Vulnerability (v1.3)</a></li>
+    <li><a href="../getting-started.html">Getting Started with Protective Computing</a></li>
+    <li>Nielsen & Norman, "Usability Engineering": Chapter on error prevention and recovery</li>
+  </ul>
+
+  <h3>Next Steps</h3>
+  <p>
+    1. <strong>Audit one system:</strong> Can users undo their most critical actions? What's not reversible, and why?<br>
+    2. <strong>Implement soft deletion:</strong> If you have a delete operation, add a recovery window.<br>
+    3. <strong>Explore other principles:</strong> <a href="../getting-started.html">Return to Getting Started</a> and pick the next principle to apply.
+  </p>
+
+  <div class="footnote">
+    <strong>Protective Computing — Reversibility Reference</strong><br>
+    Part of the Protective Computing discipline. For citation, reference <a href="https://doi.org/10.5281/zenodo.18688516">10.5281/zenodo.18688516</a>.
+  </div>
+
+</div>
+</body>
+</html>
