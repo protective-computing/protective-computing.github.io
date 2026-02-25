@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Degraded Functionality — Protective Computing</title>
+    <meta name="description" content="Systems remain usable when resources are scarce. Graceful degradation prioritizes essential over luxurious.">
+    <link rel="icon" href="/assets/logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 50%, #0f1628 100%);
+            min-height: 100vh;
+        }
+        header {
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(0, 255, 200, 0.2);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #00ffc8 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        nav a {
+            color: #00ffc8;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #7c3aed;
+        }
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #00ffc8 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: #888;
+            font-size: 16px;
+            margin-bottom: 2rem;
+        }
+        .breadcrumb {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        .breadcrumb a {
+            color: #00ffc8;
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #00ffc8;
+            border-left: 3px solid #7c3aed;
+            padding-left: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: #c0c0c0;
+        }
+        .box {
+            border-left: 4px solid;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+        .box.success {
+            border-left-color: #00ffc8;
+            background: rgba(0, 255, 200, 0.08);
+        }
+        .box.warning {
+            border-left-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.08);
+        }
+        .box.info {
+            border-left-color: #7c3aed;
+            background: rgba(124, 58, 237, 0.08);
+        }
+        .box-title {
+            font-weight: bold;
+            color: #00ffc8;
+            margin-bottom: 0.5rem;
+        }
+        .box p {
+            margin-bottom: 0.5rem;
+        }
+        .box p:last-child {
+            margin-bottom: 0;
+        }
+        strong {
+            color: #fff;
+        }
+        code {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: "Courier New", monospace;
+            color: #00ffc8;
+        }
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+            color: #c0c0c0;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .related {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .related-item {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            padding: 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #00ffc8;
+            transition: all 0.3s;
+        }
+        .related-item:hover {
+            background: rgba(124, 58, 237, 0.2);
+            border-color: #7c3aed;
+        }
+        footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 255, 200, 0.1);
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+        footer a {
+            color: #00ffc8;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">⚡ Protective Computing</a>
+            <div>
+                <a href="/docs/getting-started.html">Getting Started</a>
+                <a href="https://zenodo.org/communities/protective-computing/" target="_blank">Zenodo</a>
+                <a href="https://github.com/protective-computing/protective-computing.github.io" target="_blank">GitHub</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/docs/getting-started.html">Getting Started</a> / <strong>Degraded Functionality</strong>
+        </div>
+
+        <h1>Degraded Functionality</h1>
+        <p class="subtitle">Systems remain usable when resources are scarce. Graceful degradation prioritizes essential features over luxurious ones.</p>
+
+        <div class="box success">
+            <div class="box-title">Definition Summary</div>
+            <p><strong>What it is:</strong> Degraded Functionality means the system continues to serve essential use-cases when bandwidth, power, RAM, disk, or cognition are severely constrained. Instead of failing completely, it sheds non-essential features gracefully.</p>
+            <p><strong>Why it matters:</strong> Vulnerable users often lack resources we take for granted. Refugees may have old phones with 2GB RAM. Disaster survivors may be on 2G satellite networks. Disabled users may lack the cognitive bandwidth for complex UI. A system requiring latest hardware or fast internet excludes the people who need it most.</p>
+            <p><strong>When to use:</strong> Every system should degrade gracefully. This is not a feature for edge cases; it's core resilience. Test on constrained devices and networks as part of your baseline acceptance criteria.</p>
+        </div>
+
+        <h2>Why Degraded Functionality Matters</h2>
+        <p>Resources are not universally abundant:</p>
+        <ul>
+            <li><strong>Bandwidth:</strong> 2G networks, satellite internet, mesh radio, dial-up still exist globally</li>
+            <li><strong>Power:</strong> Refugees on hand-crank chargers, disaster zones without electricity, aging batteries</li>
+            <li><strong>Computation:</strong> Old phones, cheap Android devices with 512MB RAM, Raspberry Pi, embedded systems</li>
+            <li><strong>Cognition:</strong> Crisis, trauma, disability (dyslexia, ADHD, dementia), language barriers reduce cognitive bandwidth</li>
+            <li><strong>Storage:</strong> Users cannot afford storage upgrades; systems must minimize disk/memory footprint</li>
+        </ul>
+        <p>Systems designed for abundance fail catastrophically under scarcity. A "responsive loading state" does not help a user on dial-up; it just drains their data allowance and battery.</p>
+
+        <h2>Implementation Patterns</h2>
+
+        <h3>Progressive Enhancement</h3>
+        <p>Build the core experience on rock-solid fundamentals; enhance for users with better hardware.</p>
+        <ul>
+            <li><strong>Baseline:</strong> Keyboard navigation, plain text, no JavaScript required</li>
+            <li><strong>Enhanced:</strong> AJAX, animations, rich UI for users with modern browsers</li>
+            <li><strong>Consequence:</strong> User on 2G network gets text version; user on fiber gets instant live updates</li>
+        </ul>
+        <p><strong>Example:</strong> GitHub's repository page works in plaintext HTML (no JavaScript). JavaScript layer adds live collaboration and real-time updates.</p>
+
+        <h3>Explicit Feature Tiers</h3>
+        <p>Clearly communicate which features require which resources:</p>
+        <ul>
+            <li>"Video calls require 2Mbps bandwidth; audio calls work on 256kbps"</li>
+            <li>"Rich formatting requires 2GB RAM; plain text works on 512MB devices"</li>
+            <li>"Real-time sync requires WiFi; polling sync works on 2G"</li>
+            <li>Let users choose: "Use lite version on this network" or "Download full dataset when wifi available"</li>
+        </ul>
+
+        <h3>Data Compression & Optimization</h3>
+        <p>Reduce bandwidth, storage, and computation requirements:</p>
+        <ul>
+            <li>JPEG/WebP images instead of PNG/high-quality raw</li>
+            <li>Gzip compression for text responses</li>
+            <li>Lazy loading: don't fetch data until user requests it</li>
+            <li>Offline-first: sync when convenient, not constantly</li>
+            <li>Caching: minimize redundant downloads</li>
+        </ul>
+
+        <h3>Simplify Cognitive Load</h3>
+        <p>Reduce mental processing required to use the system:</p>
+        <ul>
+            <li>One action per screen, not 10 options per page</li>
+            <li>Clear language, no jargon</li>
+            <li>Keyboard shortcuts visible; no hidden UI patterns</li>
+            <li>Minimize notifications; make them actionable</li>
+            <li>Consistent navigation; avoid surprise UI changes</li>
+        </ul>
+
+        <h3>Keyboard-Only Accessibility</h3>
+        <p>Systems must function without mouse, touchscreen, or accessibility hardware:</p>
+        <ul>
+            <li>Tab navigation works logically</li>
+            <li>No hover-only interactions (breaks on touch and keyboard)</li>
+            <li>Screen reader support (ARIA labels, semantic HTML)</li>
+            <li>Works with voice input, switch control, eye-tracking</li>
+        </ul>
+
+        <h3>Asynchronous & Batch Operations</h3>
+        <p>Don't block on network round-trips. Queue operations and execute when possible:</p>
+        <ul>
+            <li>User writes offline; changes queue locally</li>
+            <li>When network available, batch sends all pending changes</li>
+            <li>Meanwhile, user continues working</li>
+            <li>No "Connection lost. Retry?" modal that freezes the app</li>
+        </ul>
+
+        <h2>Anti-Patterns (What to Avoid)</h2>
+
+        <div class="box warning">
+            <div class="box-title">❌ Bloated JavaScript Bundles</div>
+            <p>Requiring megabytes of JavaScript to render basic content. On 2G networks, the page times out before loading.</p>
+            <p><strong>Consequence:</strong> Users on slow networks cannot use your system at all.</p>
+        </div>
+
+        <div class="box warning">
+            <div class="box-title">❌ Infinite Scroll / Auto-Loading</div>
+            <p>Page automatically loads more content as user scrolls. On slow networks, this drains battery and data.</p>
+            <p><strong>Consequence:</strong> Users lose data allowance faster; system is unusable on metered connections.</p>
+        </div>
+
+        <div class="box warning">
+            <div class="box-title">❌ Mandatory Video/Media</div>
+            <p>Core content delivered in video only. No transcript, no plain text alternative.</p>
+            <p><strong>Consequence:</strong> Users on slow networks, hearing disability, or literacy issues cannot access content.</p>
+        </div>
+
+        <div class="box warning">
+            <div class="box-title">❌ Large Uncompressed Images</div>
+            <p>10MB image files, no responsive sizing, no compression.</p>
+            <p><strong>Consequence:</strong> Single image consumes user's entire monthly data allowance.</p>
+        </div>
+
+        <div class="box warning">
+            <div class="box-title">❌ Required Real-Time Connection</div>
+            <p>System requires continuous internet. Disconnect for 5 seconds and entire app freezes.</p>
+            <p><strong>Consequence:</strong> Unusable on mobile with intermittent connectivity.</p>
+        </div>
+
+        <h2>Real-World Examples</h2>
+
+        <h3>Wikipedia / Wikipedia Offline</h3>
+        <p><strong>What it is:</strong> Wikipedia works on any device, any connection. Offline version fits on USB stick.</p>
+        <p><strong>How it works:</strong></p>
+        <ul>
+            <li>Plain HTML pages; no JavaScript required</li>
+            <li>Images are optional; text works without them</li>
+            <li>Offline snapshot (~100GB compressed) downloadable for offline communities</li>
+            <li>Works on old phones, dial-up, and zero-connectivity contexts</li>
+        </ul>
+        <p><strong>Degraded functionality:</strong> Mobile version strips images; offline version strips media entirely. Core functionality (reading) always works.</p>
+
+        <h3>BBC Worlds Android App — Lite Version</h3>
+        <p><strong>What it is:</strong> News app designed for 2G networks in Africa and South Asia.</p>
+        <p><strong>How it works:</strong></p>
+        <ul>
+            <li>App is 5MB (vs 50MB+ for standard news apps)</li>
+            <li>Images are optional; can read text-only</li>
+            <li>Downloads articles for offline reading</li>
+            <li>Works on 2G; gracefully degrades as bandwidth improves</li>
+        </ul>
+        <p><strong>Degraded functionality:</strong> No video, no live feeds, no real-time sync. But news is readable.</p>
+
+        <h3>Messaging Apps — Text Before Media</h3>
+        <p><strong>Signal, Telegram (lite):</strong> Prioritizes text messages over media. You can send/receive text instantly on 2G. Media downloads in background when user has bandwidth.</p>
+        <p><strong>Consequence:</strong> User on slow network can still communicate via text. Media is bonus, not requirement.</p>
+
+        <h3>Anti-Example: Modern SPAs (Single-Page Apps)</h3>
+        <p><strong>The problem:</strong> Large JavaScript bundles, no server-side rendering. If JavaScript fails to load, page is blank.</p>
+        <p><strong>Consequence:</strong> On slow networks, users stare at blank screen for 30+ seconds. No fallback to basic content.</p>
+        <p><strong>Lesson:</strong> SPAs are powerful but break on slow networks unless hydration (server-side render + client JS enhancement) is implemented.</p>
+
+        <h2>Scope and Applicability</h2>
+
+        <p><strong>When to prioritize Degraded Functionality:</strong></p>
+        <ul>
+            <li>Mobile-first contexts (bandwidth variable, battery scarce)</li>
+            <li>Global systems (different regions have different infrastructure)</li>
+            <li>Accessibility-critical systems (users with disability may need simplified UI)</li>
+            <li>Emergency/crisis systems (disasters disable infrastructure; system must work partially)</li>
+            <li>Low-resource environments (refugee camps, disaster zones, rural areas)</li>
+        </ul>
+
+        <p><strong>When you might simplify:</strong></p>
+        <ul>
+            <li>Internal desktop tools where target users have corporate networks</li>
+            <li>Prototype/MVP stage (but plan for graceful degradation early; it's cheaper to build in)</li>
+        </ul>
+
+        <p><strong>Never sacrifice essential functionality for luxury.</strong> Test your system on 2G network, 10-year-old phone, and keyboard-only. If it breaks, you've designed for abundance.</p>
+
+        <h2>Synthesis Lineage: Disciplinary Roots</h2>
+
+        <p>Degraded Functionality formalizes patterns from multiple disciplines:</p>
+
+        <h3>Responsive Design & Progressive Enhancement</h3>
+        <p>Web design philosophy (Ethan Marcotte, 2010+) taught that websites must work on any device, any bandwidth. Progressive enhancement layers richness atop a solid foundation.</p>
+        <p><strong>Protective Computing extends:</strong> This applies to all systems, not just web. Degradation is architectural resilience, not cosmetic adaptation.</p>
+
+        <h3>Accessibility Standards (WCAG, Section 508)</h3>
+        <p>Accessibility law and research emphasize that systems must support diverse cognitive, physical, and sensory abilities. This requires simplicity, clarity, and keyboard accessibility.</p>
+        <p><strong>Protective Computing applies:</strong> Accessibility principles are degraded functionality principles. Designing for disabled users strengthens systems for everyone.</p>
+
+        <h3>Disaster Response & Critical Infrastructure</h3>
+        <p>Emergency responders and disaster management systems must function partially when infrastructure is severely degraded. Graceful degradation is non-negotiable in safety-critical systems.</p>
+        <p><strong>Protective Computing formalizes:</strong> Systems serving vulnerable populations should embody disaster-response principles: assume resources will fail and plan for partial operation.</p>
+
+        <h3>Mobile & Low-Bandwidth Design</h3>
+        <p>Mobile app design (especially for emerging markets like India, Africa) teaches that systems must assume low bandwidth, intermittent connectivity, and old hardware.</p>
+        <p><strong>Protective Computing mainstreams:</strong> Mobile constraints are not edge cases; they're global reality. All systems should assume scarcity.</p>
+
+        <h2>Relationship to Other Principles</h2>
+
+        <p><strong>Degraded Functionality enables:</strong></p>
+        <ul>
+            <li><strong>Local Authority:</strong> Offline operation is graceful degradation of connectivity. System functions locally when network fails.</li>
+            <li><strong>Exposure Minimization:</strong> Minimal data collection reduces bandwidth and power consumption. Efficient data handling degrades gracefully.</li>
+            <li><strong>Essential Utility:</strong> Prioritizing essential features directly translates to graceful degradation under resource constraints.</li>
+        </ul>
+
+        <h2>Next Steps</h2>
+
+        <p><strong>For system designers:</strong></p>
+        <ol>
+            <li>Test on constrained devices: 10-year-old phone, 2G network, 512MB RAM</li>
+            <li>Measure performance: Core path should complete in &lt;3 seconds on 2G; baseline in &lt;500ms offline</li>
+            <li>Implement progressive enhancement: Core content works without JavaScript</li>
+            <li>Optimize for mobile: Responsive images, compressed formats, lazy loading</li>
+            <li>Minimize cognitive load: Simplify UI; make essential path obvious</li>
+            <li>Support keyboard-only: Tab navigation, visible focus, no hover-only interactions</li>
+            <li>Test accessibility: WCAG AA minimum (WebAIM checklist, NVDA screen reader)</li>
+        </ol>
+
+        <h2>Related Principles</h2>
+        <ul>
+            <li><strong><a href="reversibility.html">Reversibility:</a></strong> Undo/redo on constrained devices; design simple undo that doesn't require memory-intensive history.</li>
+            <li><strong><a href="exposure-minimization.html">Exposure Minimization:</a></strong> Minimal data = less bandwidth, less storage, less power. Graceful degradation improves.</li>
+            <li><strong><a href="local-authority.html">Local Authority:</a></strong> Offline operation is full degradation of connectivity. Local-first architecture is core resilience.</li>
+            <li><strong><a href="coercion-resistance.html">Coercion Resistance:</a></strong> Coercion resistance cannot depend on unlimited resources; complexity is a vulnerability.</li>
+            <li><strong><a href="essential-utility.html">Essential Utility:</a></strong> Prioritizing essential features directly maps to graceful degradation under scarcity.</li>
+        </ul>
+
+        <p><strong>Next principle to explore:</strong></p>
+        <div class="related">
+            <a href="/docs/principles/essential-utility.html" class="related-item">◆ Essential Utility</a>
+            <a href="/docs/principles/coercion-resistance.html" class="related-item">🛡️ Coercion Resistance</a>
+            <a href="/docs/principles/reversibility.html" class="related-item">⟲ Reversibility</a>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>Protective Computing | <a href="https://doi.org/10.5281/zenodo.18688516" target="_blank">DOI: 10.5281/zenodo.18688516</a></p>
+        <p style="margin-top: 0.5rem; font-size: 12px;">Degraded Functionality principle • <a href="/docs/getting-started.html">Back to Getting Started</a></p>
+    </footer>
+</body>
+</html>

@@ -470,11 +470,20 @@
             <li>Make sync state visible to users (showing "synced" vs. "pending")</li>
         </ol>
 
+        <h2>Related Principles</h2>
+        <ul>
+            <li><strong><a href="reversibility.html">Reversibility:</a></strong> Local authority enables better undo/redo; all state lives locally, so rollback is trivial.</li>
+            <li><strong><a href="exposure-minimization.html">Exposure Minimization:</a></strong> Local decision-making keeps sensitive data off remote servers. Data stays on user's device.</li>
+            <li><strong><a href="coercion-resistance.html">Coercion Resistance:</a></strong> If users hold encryption keys locally, coercers cannot compel servers to disclose.</li>
+            <li><strong><a href="degraded-functionality.html">Degraded Functionality:</a></strong> Local operation is graceful degradation of connectivity. System works fully offline.</li>
+            <li><strong><a href="essential-utility.html">Essential Utility:</a></strong> Local-first eliminates cloud dependencies; essential functions don't depend on remote servers.</li>
+        </ul>
+
         <p><strong>Next principle to explore:</strong></p>
         <div class="related">
-            <a href="/docs/principles/reversibility.html" class="related-item">⟲ Reversibility</a>
-            <a href="/docs/principles/exposure-minimization.html" class="related-item">◐ Exposure Minimization</a>
             <a href="/docs/principles/coercion-resistance.html" class="related-item">🛡️ Coercion Resistance</a>
+            <a href="/docs/principles/degraded-functionality.html" class="related-item">⚡ Degraded Functionality</a>
+            <a href="/docs/principles/essential-utility.html" class="related-item">◆ Essential Utility</a>
         </div>
 
     </main>

@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coercion Resistance — Protective Computing</title>
+    <meta name="description" content="Users can maintain confidentiality and integrity under threat. Systems resist forced disclosure, extraction, and tampering.">
+    <link rel="icon" href="/assets/logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 50%, #0f1628 100%);
+            min-height: 100vh;
+        }
+        header {
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(0, 255, 200, 0.2);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #00ffc8 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        nav a {
+            color: #00ffc8;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #7c3aed;
+        }
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #00ffc8 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: #888;
+            font-size: 16px;
+            margin-bottom: 2rem;
+        }
+        .breadcrumb {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        .breadcrumb a {
+            color: #00ffc8;
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #00ffc8;
+            border-left: 3px solid #7c3aed;
+            padding-left: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: #c0c0c0;
+        }
+        .box {
+            border-left: 4px solid;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+        .box.success {
+            border-left-color: #00ffc8;
+            background: rgba(0, 255, 200, 0.08);
+        }
+        .box.warning {
+            border-left-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.08);
+        }
+        .box.info {
+            border-left-color: #7c3aed;
+            background: rgba(124, 58, 237, 0.08);
+        }
+        .box-title {
+            font-weight: bold;
+            color: #00ffc8;
+            margin-bottom: 0.5rem;
+        }
+        .box p {
+            margin-bottom: 0.5rem;
+        }
+        .box p:last-child {
+            margin-bottom: 0;
+        }
+        strong {
+            color: #fff;
+        }
+        code {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: "Courier New", monospace;
+            color: #00ffc8;
+        }
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+            color: #c0c0c0;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .related {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .related-item {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            padding: 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #00ffc8;
+            transition: all 0.3s;
+        }
+        .related-item:hover {
+            background: rgba(124, 58, 237, 0.2);
+            border-color: #7c3aed;
+        }
+        footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 255, 200, 0.1);
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+        footer a {
+            color: #00ffc8;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">🛡️ Protective Computing</a>
+            <div>
+                <a href="/docs/getting-started.html">Getting Started</a>
+                <a href="https://zenodo.org/communities/protective-computing/" target="_blank">Zenodo</a>
+                <a href="https://github.com/protective-computing/protective-computing.github.io" target="_blank">GitHub</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/docs/getting-started.html">Getting Started</a> / <strong>Coercion Resistance</strong>
+        </div>
+
+        <h1>Coercion Resistance</h1>
+        <p class="subtitle">Users can maintain confidentiality and integrity under threat. Systems resist forced disclosure, extraction, and tampering.</p>
+
+        <div class="box success">
+            <div class="box-title">Definition Summary</div>
+            <p><strong>What it is:</strong> Coercion Resistance means the system is designed so that neither users nor administrators can be forced (under threat, legal compulsion, or torture) to disclose, modify, or destroy user data.</p>
+            <p><strong>Why it matters:</strong> Vulnerable populations face hostile actors: authoritarian states, abusive partners, criminals, institutional oppressors. A system that can be forced to surrender data is not safe for them. Conversely, if the system is architected so that surrender is impossible or provably unhelpful, coercion loses its power.</p>
+            <p><strong>When to use:</strong> Any system serving users under threat must incorporate coercion resistance. This includes dissident communication, abuse-survivor support, refugee networks, and privacy-critical services in hostile contexts.</p>
+        </div>
+
+        <h2>Why Coercion Resistance Matters</h2>
+        <p>Adversaries use coercion when compromise fails. An attacker who cannot hack your system might instead:</p>
+        <ul>
+            <li>Threaten a user or administrator: "Give me the password or we harm you"</li>
+            <li>Use legal compulsion: court orders, subpoenas, "national security" letters</li>
+            <li>Physically torture for keys, passphrases, or biometric access</li>
+            <li>Plant malware that triggers data destruction if not given credentials</li>
+            <li>Demand that administrators modify the system or insert backdoors</li>
+        </ul>
+        <p>Against these threats, traditional security is useless. You cannot encrypt away coercion. You must architect so that:</p>
+        <ul>
+            <li><strong>Surrender buys nothing:</strong> Even if coerced parties comply, they cannot grant access to data they don't possess.</li>
+            <li><strong>Denial is provable:</strong> Victims can demonstrate they don't have what's demanded (no private keys, no administrator access).</li>
+            <li><strong>Destruction is automatic:</strong> If a threshold is crossed (failed login attempts, time without access), sensitive data self-destructs before coercers can exploit it.</li>
+            <li><strong>Plausible deniability:</strong> Even if data is compromised, its origin or authenticity is ambiguous.</li>
+        </ul>
+
+        <h2>Implementation Patterns</h2>
+
+        <h3>Zero-Knowledge Architecture</h3>
+        <p>Design so the system (and administrators) never possess plaintext user data. Users hold encryption keys; the system stores only ciphertext.</p>
+        <ul>
+            <li>User encrypts data locally with their key before transmission</li>
+            <li>System stores encrypted blob; cannot decrypt even with full database access</li>
+            <li>User decrypts locally on their device</li>
+            <li><strong>Consequence:</strong> Coercers cannot extract data; system genuinely cannot provide it</li>
+        </ul>
+        <p><strong>Example:</strong> Signal stores messages encrypted until recipient downloads them. Server holds ciphertext only. If compromised, attackers get bytes they cannot use.</p>
+
+        <h3>Passphrase-Based Encryption (Not Passwords)</h3>
+        <p>Passwords are weak under coercion (users can be forced to reveal them). Passphrases are stronger: long, memorable, and secret even from the user who created them.</p>
+        <ul>
+            <li>Use high-entropy passphrases (ideally 6+ random words, e.g., "correct-horse-battery-staple")</li>
+            <li>Derive encryption keys from passphrases using slow KDFs (PBKDF2, Scrypt, Argon2)</li>
+            <li>Never reveal the key to administrators or systems</li>
+            <li>Consequence: Even if user is coerced to reveal passphrase, an attacker must still brute-force the key derivation (expensive)</li>
+        </ul>
+
+        <h3>Plausible Deniability</h3>
+        <p>Architecture where data's existence or authenticity is ambiguous:</p>
+        <ul>
+            <li><strong>Decoy accounts:</strong> User maintains a secondary account with benign data. Under coercion, they reveal this account, and coercers cannot know if it's real or decoy.</li>
+            <li><strong>Hidden containers:</strong> Encrypted volumes appear to contain innocuous data; hidden volume contains sensitive data. Coercers cannot prove the hidden volume exists.</li>
+            <li><strong>Steganography:</strong> Sensitive data is hidden in innocuous files (images, audio) using imperceptible encoding. Coercers cannot detect it.</li>
+            <li><strong>Deniable messaging:</strong> Recipient can forge messages appearing to come from sender. No message is provably authentic, defeating forced testimony.</li>
+        </ul>
+
+        <h3>Dead Man's Switch</h3>
+        <p>Automatic data destruction if preconditions fail:</p>
+        <ul>
+            <li>User must authenticate periodically (e.g., every 24 hours). If they don't, keys are destroyed.</li>
+            <li>If user is kidnapped and cannot authenticate, encryption keys auto-destruct after timeout.</li>
+            <li>Consequence: Coercers cannot extract keys because keys no longer exist</li>
+            <li><strong>Risk:</strong> User must remember to authenticate; network outages can trigger unwanted destruction</li>
+        </ul>
+
+        <h3>Decentralized Authority</h3>
+        <p>Require threshold-of-N key reconstruction: no single person or entity can grant access.</p>
+        <ul>
+            <li>Split encryption key into N shares; need K shares to reconstruct (Shamir's Secret Sharing)</li>
+            <li>Distribute shares among trusted parties (distinct locations, jurisdictions)</li>
+            <li>No single coercion target can grant access; attacker must threaten N people simultaneously</li>
+            <li><strong>Consequence:</strong> Significantly raises cost and coordination burden for attackers</li>
+        </ul>
+
+        <h2>Anti-Patterns (What to Avoid)</h2>
+
+        <div class="box warning">
+            <div class="box-title">❌ "Security Through Obscurity"</div>
+            <p>Hiding vulnerability rather than eliminating it. System appears secure but surrenders instantly under coercion.</p>
+            <p><strong>Consequence:</strong> False sense of safety. Real victims are harmed when system fails.</p>
+        </div>
+
+        <div class="box warning">
+            <div class="box-title">❌ Master Keys / Backdoors for Administrators</div>
+            <p>System designed so administrators can decrypt any user data. Under coercion, administrators become single points of failure.</p>
+            <p><strong>Consequence:</strong> Coercers target administrators instead; identical breach surface.</p>
+        </div>
+
+        <div class="box warning">
+            <div class="box-title">❌ Weak Key Derivation</div>
+            <p>Passphrases encrypted with fast KDF (MD5, SHA-1). Coercers brute-force passphrases trivially.</p>
+            <p><strong>Consequence:</strong> Passphrase protection is illusory.</p>
+        </div>
+
+        <div class="box warning">
+            <div class="box-title">❌ Mandatory Biometric Authentication</div>
+            <p>Fingerprint, face, or iris unlock. Under coercion, biometric can be used against user (forced unlock).</p>
+            <p><strong>Consequence:</strong> User cannot deny access or plausibly claim they don't know the credential.</p>
+        </div>
+
+        <div class="box warning">
+            <div class="box-title">❌ No Destruction Mechanism</div>
+            <p>Data persists indefinitely. If system is compromised or coercer gains access, all history is available.</p>
+            <p><strong>Consequence:</strong> Zero mechanism to protect past communications.</p>
+        </div>
+
+        <h2>Real-World Examples</h2>
+
+        <h3>Signal — End-to-End Encryption with Forward Secrecy</h3>
+        <p><strong>What it is:</strong> Messaging system where messages are encrypted end-to-end; neither Signal servers nor any third party can read them.</p>
+        <p><strong>How it works:</strong></p>
+        <ul>
+            <li>Each message is encrypted under an ephemeral key that changes with every message</li>
+            <li>Keys are deleted after use (forward secrecy)</li>
+            <li>Even if server is compromised, attackers cannot decrypt past messages</li>
+            <li>Server stores encrypted messages temporarily; users fetch and delete</li>
+            <li>Signal cannot be forced to decrypt: it has no keys</li>
+        </ul>
+        <p><strong>Coercion resistance:</strong> Authorities can compel Signal to insert backdoors, but they cannot compel decryption of past messages (keys no longer exist).</p>
+
+        <h3>Briar — Offline Messaging Over Tor/Bluetooth</h3>
+        <p><strong>What it is:</strong> Messaging app for activists that works over Tor and Bluetooth mesh; works entirely offline.</p>
+        <p><strong>How it works:</strong></p>
+        <ul>
+            <li>Messages encrypted end-to-end; synced via Tor or portable devices</li>
+            <li>No central server to compel or compromise</li>
+            <li>Works even if internet is cut (governments cannot censor via blocking)**</li>
+            <li>App code is open-source; users can verify no backdoors exist</li>
+        </ul>
+        <p><strong>Coercion resistance:</strong> Extremely high. Attacker must physically seize devices to access encrypted data. Even then, passphrase protection resists decryption.</p>
+
+        <h3>VeraCrypt — Hidden Volumes (Plausible Deniability)</h3>
+        <p><strong>What it is:</strong> Disk encryption tool that supports hidden encrypted volumes within larger encrypted volumes.</p>
+        <p><strong>How it works:</strong></p>
+        <ul>
+            <li>User encrypts outer volume with one password; hidden volume within uses different password</li>
+            <li>To outside observer, hidden volume does not exist; space appears to be random padding</li>
+            <li>Under coercion, user can reveal outer password; hidden volume remains secure</li>
+        </ul>
+        <p><strong>Coercion resistance:</strong> User can plausibly claim there is no hidden volume. Coercers cannot prove otherwise.</p>
+
+        <h3>Anti-Example: WhatsApp Server Records</h3>
+        <p><strong>The problem:</strong> WhatsApp (despite end-to-end encryption) stores metadata: who contacted whom and when. This metadata is decryptable and can be subpoenaed.</p>
+        <p><strong>Consequence:</strong> Government can determine who is communicating but not what they say. For many purposes, this is sufficient to identify dissidents or targets.</p>
+        <p><strong>Lesson:</strong> Coercion resistance requires defending metadata, not just message content.</p>
+
+        <h2>Scope and Applicability</h2>
+
+        <p><strong>When to prioritize Coercion Resistance:</strong></p>
+        <ul>
+            <li>Users in authoritarian contexts (political dissidents, LGBTQ+ in hostile regions, refugees)</li>
+            <li>Abuse-survivor support systems (domestic violence, trafficking)</li>
+            <li>Sensitive communication (journalist sources, medical privacy, legal privilege)</li>
+            <li>Systems operating in jurisdictions with aggressive surveillance (mass data retention laws, forced backdoors)</li>
+            <li>Systems where data disclosure would endanger users (political networks, anti-government organizing)</li>
+        </ul>
+
+        <p><strong>When you might defer Coercion Resistance:</strong></p>
+        <ul>
+            <li>Systems operating in stable democracies with strong privacy law (still build it; just lower urgency)</li>
+            <li>Internal enterprise tools where users are not under external threat</li>
+            <li>Systems where compliance (lawful disclosure under court order) is non-negotiable</li>
+        </ul>
+
+        <p><strong>Never defer for systems serving vulnerable users.</strong> If your users face threat, their physical safety depends on it.</p>
+
+        <h2>Synthesis Lineage: Disciplinary Roots</h2>
+
+        <p>Coercion Resistance formalizes patterns established across cryptography, security, and activism:</p>
+
+        <h3>Cryptanalysis & Forward Secrecy</h3>
+        <p>Modern cryptography (Diffie-Hellman, 2006+) emphasizes ephemeral keys and forward secrecy (Lor, Jager et al.). The insight: even if long-term keys are compromise, past sessions remain secure if session keys are deleted after use.</p>
+        <p><strong>Protective Computing applies:</strong> Users need assurance that past communications cannot be decrypted, even if system is later compromised or coerced.</p>
+
+        <h3>Plausible Deniability & Steganography</h3>
+        <p>Security research (Anderson, Petitcolas) and cryptography (Rivest's "Chaffing and Winnowing") show that data can be hidden such that its existence is deniable. This protects against coercion: victim can truthfully claim "I don't have what you're asking for."</p>
+        <p><strong>Protective Computing applies:</strong> Victims should be able to deny access to sensitive data without lying, making coercion strategically useless.</p>
+
+        <h3>Zero-Knowledge Proofs</h3>
+        <p>Mathematical cryptography (Goldwasser, Micali) enables systems where authority is proven without disclosure. User can prove they know a secret without revealing it.</p>
+        <p><strong>Protective Computing applies:</strong> Systems should never require users to disclose secrets; proof of knowledge is sufficient.</p>
+
+        <h3>Activist & Dissident Security Practices</h3>
+        <p>Security research emerging from journalists, human rights organizations, and surveillance researchers documents coercion methods and countermeasures (EFF, Freedom of the Press Foundation, Guardian Project).</p>
+        <p><strong>Protective Computing formalizes:</strong> Patterns observed in practice by activists and dissidents facing real coercion.</p>
+
+        <h2>Relationship to Other Principles</h2>
+
+        <p><strong>Coercion Resistance depends on:</strong></p>
+        <ul>
+            <li><strong>Local Authority:</strong> If users retain local copies of keys and data, coercers cannot compel servers to disclose.</li>
+            <li><strong>Exposure Minimization:</strong> Less data collected = fewer attack surfaces. Minimizing stored data reduces coercion targets.</li>
+        </ul>
+
+        <p><strong>Coercion Resistance enables:</strong></p>
+        <ul>
+            <li><strong>Reversibility:</strong> Deniable messaging allows users to deny authenticity, enabling plausible deniability about past communications.</li>
+        </ul>
+
+        <h2>Next Steps</h2>
+
+        <p><strong>For system designers:</strong></p>
+        <ol>
+            <li>Identify your users: Are they under threat? From whom?</li>
+            <li>Map coercion vectors: How might attackers pressure users or administrators?</li>
+            <li>Eliminate master keys: If system administrators have decryption access, coercers will target them.</li>
+            <li>Implement zero-knowledge: Users encrypt locally; system stores only ciphertext.</li>
+            <li>Add key derivation: Passphrases → keys via Argon2 or Scrypt (not fast hashes).</li>
+            <li>Consider deniability: Can users plausibly claim sensitive data does not exist?</li>
+            <li>Plan destruction: How are keys and data destroyed if system is compromised or user is threatened?</li>
+        </ol>
+
+        <h2>Related Principles</h2>
+        <ul>
+            <li><strong><a href="reversibility.html">Reversibility:</a></strong> Deniable messaging makes communications non-authentic; users can plausibly deny past communications.</li>
+            <li><strong><a href="exposure-minimization.html">Exposure Minimization:</a></strong> Minimize data collected = minimize attack surface for forced extraction.</li>
+            <li><strong><a href="local-authority.html">Local Authority:</a></strong> Users holding encryption keys locally means coercers cannot compel server disclosure.</li>
+            <li><strong><a href="degraded-functionality.html">Degraded Functionality:</a></strong> Coercion resistance may require simpler architecture; complexity reduces security.</li>
+            <li><strong><a href="essential-utility.html">Essential Utility:</a></strong> Systems for vulnerable users must prioritize security over convenience.</li>
+        </ul>
+
+        <p><strong>Next principle to explore:</strong></p>
+        <div class="related">
+            <a href="/docs/principles/degraded-functionality.html" class="related-item">⚡ Degraded Functionality</a>
+            <a href="/docs/principles/essential-utility.html" class="related-item">◆ Essential Utility</a>
+            <a href="/docs/principles/reversibility.html" class="related-item">⟲ Reversibility</a>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>Protective Computing | <a href="https://doi.org/10.5281/zenodo.18688516" target="_blank">DOI: 10.5281/zenodo.18688516</a></p>
+        <p style="margin-top: 0.5rem; font-size: 12px;">Coercion Resistance principle • <a href="/docs/getting-started.html">Back to Getting Started</a></p>
+    </footer>
+</body>
+</html>

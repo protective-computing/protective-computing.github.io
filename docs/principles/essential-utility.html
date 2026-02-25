@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Essential Utility — Protective Computing</title>
+    <meta name="description" content="Systems optimize for survival and autonomy. Features serve human need, not engagement metrics or corporate extraction.">
+    <link rel="icon" href="/assets/logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 50%, #0f1628 100%);
+            min-height: 100vh;
+        }
+        header {
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(0, 255, 200, 0.2);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #00ffc8 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        nav a {
+            color: #00ffc8;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #7c3aed;
+        }
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #00ffc8 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: #888;
+            font-size: 16px;
+            margin-bottom: 2rem;
+        }
+        .breadcrumb {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        .breadcrumb a {
+            color: #00ffc8;
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #00ffc8;
+            border-left: 3px solid #7c3aed;
+            padding-left: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: #c0c0c0;
+        }
+        .box {
+            border-left: 4px solid;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+        .box.success {
+            border-left-color: #00ffc8;
+            background: rgba(0, 255, 200, 0.08);
+        }
+        .box.warning {
+            border-left-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.08);
+        }
+        .box.info {
+            border-left-color: #7c3aed;
+            background: rgba(124, 58, 237, 0.08);
+        }
+        .box-title {
+            font-weight: bold;
+            color: #00ffc8;
+            margin-bottom: 0.5rem;
+        }
+        .box p {
+            margin-bottom: 0.5rem;
+        }
+        .box p:last-child {
+            margin-bottom: 0;
+        }
+        strong {
+            color: #fff;
+        }
+        code {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: "Courier New", monospace;
+            color: #00ffc8;
+        }
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+            color: #c0c0c0;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .related {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .related-item {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            padding: 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #00ffc8;
+            transition: all 0.3s;
+        }
+        .related-item:hover {
+            background: rgba(124, 58, 237, 0.2);
+            border-color: #7c3aed;
+        }
+        footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 255, 200, 0.1);
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+        footer a {
+            color: #00ffc8;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">◆ Protective Computing</a>
+            <div>
+                <a href="/docs/getting-started.html">Getting Started</a>
+                <a href="https://zenodo.org/communities/protective-computing/" target="_blank">Zenodo</a>
+                <a href="https://github.com/protective-computing/protective-computing.github.io" target="_blank">GitHub</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/docs/getting-started.html">Getting Started</a> / <strong>Essential Utility</strong>
+        </div>
+
+        <h1>Essential Utility</h1>
+        <p class="subtitle">Systems optimize for survival and autonomy. Features serve human need, not engagement metrics or corporate extraction.</p>
+
+        <div class="box success">
+            <div class="box-title">Definition Summary</div>
+            <p><strong>What it is:</strong> Essential Utility means the system's reason for existence is to serve clearly identified human need. Every feature is evaluated against "does this help users survive or maintain autonomy?" Engagement metrics, retention mechanics, and monetization schemes that conflict with user welfare are rejected.</p>
+            <p><strong>Why it matters:</strong> Many systems are designed to extract attention, data, or money from users — not to serve them. A vulnerable person cannot afford a tool that optimizes for something other than their survival. Essential Utility is a philosophical commitment: this system is for you, not through you.</p>
+            <p><strong>When to use:</strong> Always. No system should sacrifice user welfare for any other goal. Systems serving vulnerable populations especially must be ruthlessly focused on essential use-cases.</p>
+        </div>
+
+        <h2>Why Essential Utility Matters</h2>
+        <p>Many contemporary systems optimize for metrics that harm users:</p>
+        <ul>
+            <li><strong>Engagement metrics:</strong> "Time on app" incentivizes addictive design, not usefulness</li>
+            <li><strong>Attention capture:</strong> Dark patterns, notifications, auto-play video waste users' cognitive bandwidth and battery</li>
+            <li><strong>Monetization:</strong> Ads prioritized over utility; free services harvest users as product</li>
+            <li><strong>Lock-in:</strong> Features designed to prevent user departure, not to serve user goals</li>
+            <li><strong>Distraction:</strong> "Recommended for you" feeds pull users away from their intent</li>
+        </ul>
+        <p>For privileged users, this might be tolerable. For vulnerable users — someone in crisis, with limited cognitive bandwidth, or using metered connectivity — distraction is not a luxury problem. It's a threat to survival.</p>
+
+        <h2>Implementation Patterns</h2>
+
+        <h3>Define Essential Use Cases Explicitly</h3>
+        <p>For each feature, ask: "Does this serve a survival or autonomy need?" If not, deprioritize.</p>
+        <ul>
+            <li><strong>Crisis communication app:</strong> Essential: send/receive messages. Useful: offline messaging. Nice-to-have: stickers, filters. De-prioritize the nice-to-have.</li>
+            <li><strong>Medical device:</strong> Essential: take vital readings, alert on critical values. Useful: sync to record. De-prioritize: social sharing, gamification.</li>
+            <li><strong>Financial tool:</strong> Essential: check balance, transfer funds. Useful: budgeting advice. De-prioritize: investment recommendations, FOMO alerts.</li>
+        </ul>
+
+        <h3>Remove Dark Patterns</h3>
+        <p>Systematically eliminate features designed to exploit:</p>
+        <ul>
+            <li><strong>Dark patterns to audit:</strong>
+                <ul>
+                    <li>Notifications that manipulate (FOMO, social pressure, urgency)</li>
+                    <li>Infinite scroll that wastes time and battery</li>
+                    <li>Hidden settings that default to the worst user outcome</li>
+                    <li>Confirmations that trick users into sharing data</li>
+                    <li>Paywalls hidden until after work is done</li>
+                    <li>Friction to unsubscribe or delete account</li>
+                </ul>
+            </li>
+            <li>Replace with transparent design: what does this feature do, and is it optional?</li>
+        </ul>
+
+        <h3>Minimize Cognitive Load</h3>
+        <p>Users in crisis have limited attention. Remove choices:</p>
+        <ul>
+            <li><strong>Standard workflows:</strong> "Send a message" should be one button, not a menu of options</li>
+            <li><strong>Smart defaults:</strong> Assume the most common, safest action. Expert users can override.</li>
+            <li><strong>No decision paralysis:</strong> If a user faces 20 options, they make worse decisions</li>
+            <li><strong>Plain language:</strong> Jargon burns cognitive cycles on parsing, not action</li>
+        </ul>
+
+        <h3>Measure Success by User Outcome, Not Engagement</h3>
+        <p>Change your metrics:</p>
+        <ul>
+            <li><strong>Bad metrics:</strong> DAU (daily active users), time on app, feature adoption</li>
+            <li><strong>Good metrics:</strong> Did user accomplish their goal? Did they need customer support? Did they leave the system satisfied or frustrated?</li>
+            <li><strong>For vulnerable users:</strong> Did they remain safe? Did they maintain autonomy? Did the system reduce crisis?</li>
+        </ul>
+
+        <h3>No Ads or Invasive Monetization</h3>
+        <p>Ads require attention capture and privacy invasion. Never acceptable for systems serving vulnerable users:</p>
+        <ul>
+            <li>Fund via donations, grants, or mainstream pricing (subscription, one-time purchase)</li>
+            <li>If free is required, fund transparently (nonprofit, philanthropic support)</li>
+            <li>Never harvest user data to monetize</li>
+            <li>If you monetize, be transparent about how, and give users a way to opt-out without losing core service</li>
+        </ul>
+
+        <h2>Anti-Patterns (What to Avoid)</h2>
+
+        <div class="box warning">
+            <div class="box-title">❌ "Engagement-First" Product Design</div>
+            <p>System optimizes for time-on-app before optimizing for user goals. Facebook, TikTok, Twitter use this. Essential Utility is the opposite.</p>
+            <p><strong>Consequence:</strong> Users lose attention to system goals. If system serves vulnerable population, this can be dangerous.</p>
+        </div>
+
+        <div class="box warning">
+            <div class="box-title">❌ Dark Patterns & Friction for Exit</div>
+            <p>App makes unsubscribe difficult, hides delete-account options, uses notifications to pull users back.</p>
+            <p><strong>Consequence:</strong> User cannot leave even if system no longer serves them. Relationship is coercive.</p>
+        </div>
+
+        <div class="box warning">
+            <div class="box-title">❌ Surprise Paywalls</div>
+            <p>Core feature is free until deep engagement; then paywall appears.</p>
+            <p><strong>Consequence:</strong> User invests time, then discovers they must pay or abandon work.</p>
+        </div>
+
+        <div class="box warning">
+            <div class="box-title">❌ Addictive Design (Slot Machine Mechanics)</div>
+            <p>Variable rewards, notifications, streak mechanics, leaderboards designed to be habit-forming.</p>
+            <p><strong>Consequence:</strong> Users in crisis cannot afford addictive distraction. System is exploitative.</p>
+        </div>
+
+        <div class="box warning">
+            <div class="box-title">❌ Monetizing User Data</div>
+            <p>System claims to be free, but actually sells user data to advertisers.</p>
+            <p><strong>Consequence:</strong> User thinks they're using a tool; actually they're the product. Violates consent and trust.</p>
+        </div>
+
+        <h2>Real-World Examples</h2>
+
+        <h3>Signal — Essential Messaging, Nothing Else</h3>
+        <p><strong>What it is:</strong> Encrypted messaging that does exactly one thing: let you communicate securely.</p>
+        <p><strong>Why it's essential utility:</strong></p>
+        <ul>
+            <li>No ads, no engagement metrics, no dark patterns</li>
+            <li>Funded by donations and grants, not user data sale</li>
+            <li>Open-source: users can verify nothing evil is hidden</li>
+            <li>Feature decisions driven by security and privacy, not engagement</li>
+            <li>Can delete account anytime; Signal deletes your data</li>
+        </ul>
+        <p><strong>Consequence:</strong> Dissidents, journalists, and abuse survivors trust Signal. It serves them, not itself.</p>
+
+        <h3>Wikipedia — Knowledge Commons</h3>
+        <p><strong>What it is:</strong> Free encyclopedia, no ads, no engagement metrics.</p>
+        <p><strong>Why it's essential utility:</strong></p>
+        <ul>
+            <li>funded by nonprofit Wikimedia Foundation, not advertisers</li>
+            <li>No algorithm to keep you scrolling</li>
+            <li>Content is donated; system optimizes for accuracy, not virality</li>
+            <li>Offline distribution; works without internet</li>
+        </ul>
+        <p><strong>Consequence:</strong> People worldwide depend on Wikipedia for genuine knowledge, not filtered information.</p>
+
+        <h3>Tor Browser — Anonymity Utility</h3>
+        <p><strong>What it is:</strong> Browser that routes your connection through anonymization network.</p>
+        <p><strong>Why it's essential utility:</strong></p>
+        <ul>
+            <li>Funded by grants, not ads or data harvesting</li>
+            <li>Open-source; security researchers can audit</li>
+            <li>Designed to serve journalists, dissidents, and those under surveillance</li>
+            <li>No dark patterns; does one thing well</li>
+        </ul>
+        <p><strong>Consequence:</strong> In hostile contexts, Tor is survival-critical.</p>
+
+        <h3>Anti-Example: Facebook / Meta Ecosystem</h3>
+        <p><strong>The problem:</strong> Optimizes for engagement (time on platform) and monetization (ad targeting) before user welfare.</p>
+        <ul>
+            <li>Algorithm surfaces outrage-inducing content because emotion drives engagement</li>
+            <li>Notifications designed to pull users back repeatedly</li>
+            <li>Financial incentive to know everything about users (better ads)</li>
+            <li>Hard to delete account; company resists user departure</li>
+        </ul>
+        <p><strong>Consequence:</strong> Billions of users, but system is not designed to serve them. It's designed to extract from them.</p>
+
+        <h3>Anti-Example: Medical Startup with Dark Patterns</h3>
+        <p><strong>The scenario:</strong> Telehealth app that helps users book therapy sessions. Core value: connecting with mental health providers.</p>
+        <p><strong>The dark pattern:</strong> App sends notifications: "You haven't booked a session in 3 days. Book now!" (FOMO), shows "X therapists are reviewing your profile" (social proof), makes unsubscribe hard.</p>
+        <p><strong>Consequence:</strong> User in crisis feels more pressure, not less. System exploits their vulnerability for engagement.</p>
+
+        <h2>Scope and Applicability</h2>
+
+        <p><strong>All systems should prioritize Essential Utility.</strong> This is not optional.</p>
+        <p><strong>Systems serving vulnerable populations must be ruthless about it:</strong></p>
+        <ul>
+            <li>Mental health, crisis support, suicide prevention tools</li>
+            <li>Abuse-survivor resources, domestic violence support</li>
+            <li>Medical devices, emergency communication</li>
+            <li>Refugee and displacement support</li>
+            <li>Privacy and security tools for dissidents and persecuted minorities</li>
+        </ul>
+
+        <p><strong>Even for non-vulnerable users, Essential Utility improves everything:</strong></p>
+        <ul>
+            <li>Users accomplish goals faster</li>
+            <li>System is more reliable (less complex = fewer bugs)</li>
+            <li>Trust increases (no fear of dark patterns or data harvesting)</li>
+            <li>Differentiation is clearer (competitor tools all optimized for dark patterns; you optimize for actual utility)</li>
+        </ul>
+
+        <h2>Synthesis Lineage: Disciplinary Roots</h2>
+
+        <p>Essential Utility formalizes principles from ethics, design, and usability:</p>
+
+        <h3>Design Ethics & Value-Based Design</h3>
+        <p>Contemporary design ethics (Costanza-Chock, Schuler & Namioka) emphasizes that all design embodies values. Technology is never neutral. If you don't explicitly value user welfare, your system will value something else (profit, engagement, control).</p>
+        <p><strong>Protective Computing applies:</strong> Choose human welfare as your primary value metric. Every other metric must serve this, not compete with it.</p>
+
+        <h3>Dark Patterns & Deceptive Design</h3>
+        <p>HCI research (Susser et al., Gray et al.) catalogs "dark patterns" — manipulative UI/UX designed to trick users. Essential Utility is the antidote: transparent design that respects user autonomy.</p>
+        <p><strong>Protective Computing formalizes:</strong> Audit your product for dark patterns; eliminate them systematically.</p>
+
+        <h3>Usability & Human-Centered Design</h3>
+        <p>Foundational HCI work (Norman, Nielsen) teaches that well-designed systems match user goals. System complexity should serve user needs, not system convenience.</p>
+        <p><strong>Protective Computing applies:</strong> This principle intensifies for vulnerable users, who cannot afford to put up with poor usability.</p>
+
+        <h3>Technology & Social Justice</h3>
+        <p>Critical technologists (hooks, Bietti, Zuboff) argue that technology is a site of power. Systems can liberate or oppress. Essential Utility is liberatory: technology designed for human autonomy, not control.</p>
+        <p><strong>Protective Computing formalizes:</strong> Technology serving vulnerable populations cannot be neutral. It must actively resist oppression.</p>
+
+        <h2>Relationship to Other Principles</h2>
+
+        <p><strong>Essential Utility is strengthened by:</strong></p>
+        <ul>
+            <li><strong>Degraded Functionality:</strong> Focusing on essential features naturally leads to graceful degradation. Non-essential bits are first to go under resource scarcity.</li>
+            <li><strong>Exposure Minimization:</strong> Collecting no unnecessary data also means no data to monetize or misuse. Aligns incentives away from exploitation.</li>
+            <li><strong>Reversibility:</strong> Undo/redo prevents mistakes, reducing user frustration. Complements simplified UI.</li>
+        </ul>
+
+        <h2>Next Steps</h2>
+
+        <p><strong>For system designers:</strong></p>
+        <ol>
+            <li>Define essential use-cases explicitly. What problem does this system solve?</li>
+            <li>List all features. For each, ask: "Is this essential, useful, or superfluous?" Cut the superfluous.</li>
+            <li>Audit for dark patterns: notifications, friction to exit, surprise costs, addictive mechanics.</li>
+            <li>Change success metrics from "engagement" to "user goal accomplishment."</li>
+            <li>Make monetization transparent. If you charge, say so upfront. If you harvest data, say so.</li>
+            <li>User test with actual target users. Do they accomplish their goal? Are they frustrated or satisfied?</li>
+            <li>Commit to no dark patterns. Document and enforce this in design reviews.</li>
+        </ol>
+
+        <h2>Related Principles</h2>
+        <ul>
+            <li><strong><a href="reversibility.html">Reversibility:</a></strong> Undo/redo is essential utility. Reduce mistakes and frustration; users focus on goals, not system recovery.</li>
+            <li><strong><a href="exposure-minimization.html">Exposure Minimization:</a></strong> Collecting no unnecessary data eliminates monetization conflict. System incentives align with user welfare.</li>
+            <li><strong><a href="local-authority.html">Local Authority:</a></strong> Local operation is essential; cloud-first architecture introduces dependency that compromises utility.</li>
+            <li><strong><a href="coercion-resistance.html">Coercion Resistance:</a></strong> Essential utility under threat; systems for vulnerable users cannot optimize for anything else.</li>
+            <li><strong><a href="degraded-functionality.html">Degraded Functionality:</a></strong> Essential features survive resource scarcity. Graceful degradation sustains utility under stress.</li>
+        </ul>
+
+        <p><strong>All principles working together:</strong></p>
+        <div class="related">
+            <a href="/docs/principles/reversibility.html" class="related-item">⟲ Reversibility</a>
+            <a href="/docs/principles/exposure-minimization.html" class="related-item">◐ Exposure Minimization</a>
+            <a href="/docs/principles/local-authority.html" class="related-item">⬇ Local Authority</a>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>Protective Computing | <a href="https://doi.org/10.5281/zenodo.18688516" target="_blank">DOI: 10.5281/zenodo.18688516</a></p>
+        <p style="margin-top: 0.5rem; font-size: 12px;">Essential Utility principle • <a href="/docs/getting-started.html">Back to Getting Started</a></p>
+    </footer>
+</body>
+</html>
