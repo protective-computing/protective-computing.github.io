@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protective Computing Specification v1.0</title>
+    <meta name="description" content="Formal specification for Protective Computing: threat model, normative principles, and compliance criteria.">
+    <link rel="icon" href="/assets/logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+            color: #e0e0e0;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 50%, #0f1628 100%);
+            min-height: 100vh;
+        }
+        header {
+            background: rgba(0, 0, 0, 0.5);
+            border-bottom: 2px solid rgba(0, 255, 200, 0.3);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #00ffc8 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        nav a {
+            color: #00ffc8;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #7c3aed;
+        }
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #00ffc8 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            border-bottom: 2px solid rgba(0, 255, 200, 0.2);
+            padding-bottom: 1rem;
+        }
+        .version {
+            color: #888;
+            font-size: 18px;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            color: #aaa;
+            font-size: 16px;
+            margin-bottom: 2rem;
+            max-width: 700px;
+        }
+        .toc {
+            background: rgba(124, 58, 237, 0.08);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin: 2rem 0;
+        }
+        .toc-title {
+            font-weight: bold;
+            color: #00ffc8;
+            margin-bottom: 1rem;
+        }
+        .toc ol {
+            margin-left: 2rem;
+            color: #c0c0c0;
+        }
+        .toc li {
+            margin: 0.5rem 0;
+        }
+        .toc a {
+            color: #00ffc8;
+            text-decoration: none;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            color: #00ffc8;
+            border-left: 4px solid #7c3aed;
+            padding-left: 1rem;
+        }
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #7c3aed;
+        }
+        h4 {
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: #00ffc8;
+            font-weight: 600;
+        }
+        p {
+            margin-bottom: 1.2rem;
+            color: #c0c0c0;
+            max-width: 90%;
+        }
+        .box {
+            border-left: 4px solid;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+        .box.abstract {
+            border-left-color: #7c3aed;
+            background: rgba(124, 58, 237, 0.08);
+        }
+        .box.threat {
+            border-left-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.08);
+        }
+        .box.normative {
+            border-left-color: #00ffc8;
+            background: rgba(0, 255, 200, 0.08);
+        }
+        .box-title {
+            font-weight: bold;
+            color: #00ffc8;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        .box p {
+            margin-bottom: 0.8rem;
+        }
+        .box p:last-child {
+            margin-bottom: 0;
+        }
+        strong {
+            color: #fff;
+        }
+        code {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-family: "Courier New", monospace;
+            color: #00ffc8;
+            font-size: 14px;
+        }
+        .normative-keyword {
+            background: rgba(255, 200, 0, 0.15);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #ffc800;
+            font-weight: bold;
+            font-variant: small-caps;
+        }
+        ul, ol {
+            margin: 1rem 0 1.5rem 2rem;
+            color: #c0c0c0;
+        }
+        li {
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+        .checklist {
+            list-style: none;
+            padding-left: 0;
+            margin-left: 2rem;
+        }
+        .checklist li {
+            padding-left: 28px;
+            position: relative;
+            margin-bottom: 0.6rem;
+        }
+        .checklist li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #00ffc8;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .must {
+            content: "MUST";
+            background: rgba(255, 107, 107, 0.2);
+            border-left: 2px solid #ff6b6b;
+            padding: 0.8rem;
+            margin: 0.8rem 0;
+            border-radius: 3px;
+        }
+        .should {
+            background: rgba(255, 200, 0, 0.15);
+            border-left: 2px solid #ffc800;
+            padding: 0.8rem;
+            margin: 0.8rem 0;
+            border-radius: 3px;
+        }
+        .may {
+            background: rgba(124, 58, 237, 0.1);
+            border-left: 2px solid #7c3aed;
+            padding: 0.8rem;
+            margin: 0.8rem 0;
+            border-radius: 3px;
+        }
+        .compliance-level {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 200, 0.2);
+            padding: 1.2rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            border-left: 4px solid #00ffc8;
+        }
+        .compliance-level strong {
+            color: #00ffc8;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(0, 255, 200, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 255, 200, 0.1);
+            color: #c0c0c0;
+        }
+        th {
+            background: rgba(124, 58, 237, 0.15);
+            color: #00ffc8;
+            font-weight: bold;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .cite {
+            color: #888;
+            font-size: 14px;
+            font-style: italic;
+            margin: 1rem 0 1rem 2rem;
+        }
+        footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 255, 200, 0.1);
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+        }
+        footer a {
+            color: #00ffc8;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .breadcrumb {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        .breadcrumb a {
+            color: #00ffc8;
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">◊ Protective Computing</a>
+            <div>
+                <a href="/docs/getting-started.html">Getting Started</a>
+                <a href="https://zenodo.org/communities/protective-computing/" target="_blank">Zenodo</a>
+                <a href="https://github.com/protective-computing/protective-computing.github.io" target="_blank">GitHub</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="breadcrumb">
+            <a href="/">Home</a> / <strong>Specification v1.0</strong>
+        </div>
+
+        <h1>Protective Computing Specification v1.0</h1>
+        <p class="version">Version 1.0 | Published February 25, 2026 | Status: Stable</p>
+        <p class="subtitle">Formal specification defining principles, threat model, and compliance criteria for systems serving users under conditions of human vulnerability and institutional threat.</p>
+
+        <div class="box abstract">
+            <div class="box-title">ABSTRACT</div>
+            <p>Protective Computing is a discipline for designing systems that serve users reliably under conditions of human vulnerability, institutional threat, and resource scarcity.</p>
+            <p>This specification defines:</p>
+            <ul style="margin: 1rem 0 0 2rem; color: #c0c0c0;">
+                <li>Formal threat model baseline (authoritarian surveillance, coercion, censorship)</li>
+                <li>Six core principles with normative requirements (RFC 2119 language)</li>
+                <li>Stability assumptions and architectural constraints</li>
+                <li>Compliance maturity levels (Level 1–4)</li>
+                <li>Versioning and deprecation policy</li>
+            </ul>
+            <p style="margin-top: 1.5rem;">Conformance to this specification certifies that a system prioritizes user autonomy, resilience, and welfare over competing objectives (profit, engagement, efficiency).</p>
+        </div>
+
+        <div class="toc">
+            <div class="toc-title">TABLE OF CONTENTS</div>
+            <ol>
+                <li><a href="#sec1">Definitions & Keywords</a></li>
+                <li><a href="#sec2">Threat Model</a></li>
+                <li><a href="#sec3">Stability Assumption</a></li>
+                <li><a href="#sec4">Core Principles (Normative)</a></li>
+                <li><a href="#sec5">Principle Interdependency</a></li>
+                <li><a href="#sec6">Compliance Levels</a></li>
+                <li><a href="#sec7">Versioning Policy</a></li>
+                <li><a href="#sec8">Non-Scope</a></li>
+            </ol>
+        </div>
+
+        <!-- SECTION 1: DEFINITIONS -->
+        <h2 id="sec1">1. Definitions & Keywords</h2>
+
+        <h3>Key Terms</h3>
+        <p><strong>User:</strong> An individual utilizing a system to accomplish an essential purpose, potentially under threat from institutional or adversarial actors.</p>
+        <p><strong>Threat:</strong> Institutional coercion (legal compulsion, arrest, torture), mass surveillance (data collection without consent), censorship (access denial), or device seizure.</p>
+        <p><strong>Resilience:</strong> Continued system functionality under degraded conditions—limited bandwidth, power, compute, or when administrators are compromised.</p>
+        <p><strong>Stability Assumption:</strong> Infrastructure is unreliable; users have scarce cognitive, temporal, and computational resources; adversaries are sophisticated and persistent.</p>
+        <p><strong>Attestation:</strong> Third-party verification that a system meets specified Protective Computing compliance level.</p>
+        <p><strong>Normative Language:</strong> Conformance keywords from RFC 2119:</p>
+        <ul>
+            <li><span class="normative-keyword">MUST</span> — absolute requirement; system must implement</li>
+            <li><span class="normative-keyword">SHOULD</span> — strong recommendation; justified deviation requires documentation</li>
+            <li><span class="normative-keyword">MAY</span> — optional; system may choose implementation approach</li>
+        </ul>
+
+        <!-- SECTION 2: THREAT MODEL -->
+        <h2 id="sec2">2. Threat Model</h2>
+
+        <div class="box threat">
+            <div class="box-title">BASELINE ADVERSARIES</div>
+            <p><strong>Protective Computing covers threats from:</strong></p>
+            <ul class="checklist">
+                <li><strong>State Surveillance Apparatus:</strong> Mass data retention, metadata analysis, pattern-of-life tracking</li>
+                <li><strong>Authoritarian Coercion:</strong> Forced access demands, torture, threats of violence against user or family</li>
+                <li><strong>Institutional Control:</strong> Account freezing, content removal, access denial via central authority</li>
+                <li><strong>Network Tampering:</strong> DDoS attacks, packet injection, man-in-the-middle interception, DNS manipulation</li>
+                <li><strong>Device Seizure:</strong> Theft, confiscation, forensic extraction (assumes secure passphrase resistance)</li>
+            </ul>
+        </div>
+
+        <h3>Out of Scope</h3>
+        <ul>
+            <li><strong>Cryptanalysis of broken algorithms:</strong> Assumes only vetted NIST/IETF-approved cryptography</li>
+            <li><strong>0-day software vulnerability exploitation:</strong> Assumes responsible vulnerability disclosure and patching</li>
+            <li><strong>Post-quantum attacks:</strong> Assumes quantum computers do not pose immediate threat (will be address in v2.0)</li>
+            <li><strong>Physical access after authentication:</strong> If passphrase is compromised, all bets are off (user responsibility)</li>
+        </ul>
+
+        <h3>Conservative Design Assumption</h3>
+        <p><strong>Systems MUST assume:</strong></p>
+        <ul>
+            <li>Networks are hostile (encryption required for all sensitive data in transit)</li>
+            <li>Administrators cannot be trusted (system must not store plaintext user data)</li>
+            <li>Infrastructure will fail (graceful degradation required; offline operation where feasible)</li>
+            <li>Users are under constant monitoring (minimize data footprint; assume worst-case disclosure)</li>
+        </ul>
+
+        <!-- SECTION 3: STABILITY ASSUMPTION -->
+        <h2 id="sec3">3. Stability Assumption</h2>
+
+        <p>This specification is <strong>stable for all v1.x releases</strong> (v1.0, v1.1, v1.2, etc.). A system claiming Protective Computing v1.0 compliance will remain compliant through v1.9, with no breaking changes.</p>
+
+        <h3>Stability Guarantees</h3>
+        <p><strong>Systems claiming v1.0 compliance MUST:</strong></p>
+        <ul class="checklist">
+            <li>Implement all six core principles at specified compliance level</li>
+            <li>Document threat model assumptions and scope</li>
+            <li>Provide evidence of third-party audit (Level 3+)</li>
+            <li>Maintain compliance as v1.x minor revisions are released</li>
+            <li>Declare version-specific compliance: e.g., "Protective Computing v1.0 Level 3"</li>
+        </ul>
+
+        <h3>Version Stability Mechanics</h3>
+        <table>
+            <tr>
+                <th>Release Type</th>
+                <th>Example</th>
+                <th>Breaking Changes?</th>
+                <th>Backward Compatible?</th>
+            </tr>
+            <tr>
+                <td><strong>Patch</strong></td>
+                <td>v1.0.1 → v1.0.2</td>
+                <td>No</td>
+                <td>Yes (exact)</td>
+            </tr>
+            <tr>
+                <td><strong>Minor</strong></td>
+                <td>v1.0 → v1.1</td>
+                <td>No</td>
+                <td>Yes (v1.0 systems remain compliant)</td>
+            </tr>
+            <tr>
+                <td><strong>Major</strong></td>
+                <td>v1.9 → v2.0</td>
+                <td>Possible</td>
+                <td>No (v1.x and v2.0 coexist; migration window provided)</td>
+            </tr>
+        </table>
+
+        <!-- SECTION 4: CORE PRINCIPLES -->
+        <h2 id="sec4">4. Core Principles (Normative)</h2>
+
+        <p>All six principles are <strong>mandatory</strong> for Protective Computing compliance. Systems claiming compliance must implement all six at their declared level.</p>
+
+        <!-- PRINCIPLE 1 -->
+        <h3>4.1 Reversibility</h3>
+        <p><strong>Principle:</strong> User actions and system changes <span class="normative-keyword">MUST</span> be undoable within documented recovery windows. Failures <span class="normative-keyword">MUST NOT</span> become irreversible harm.</p>
+
+        <div class="box normative">
+            <div class="box-title">Normative Requirements</div>
+            <ul class="checklist">
+                <li><span class="normative-keyword">MUST</span> provide undo/undo mechanism for all destructive user actions (delete, modify, publish)</li>
+                <li><span class="normative-keyword">MUST</span> display recovery window duration to user (e.g., "Item will be permanently deleted in 30 days")</li>
+                <li><span class="normative-keyword">SHOULD</span> maintain complete version history with point-in-time rollback capability</li>
+                <li><span class="normative-keyword">MUST NOT</span> permanently delete user data without explicit confirmation + mandatory delay (minimum 7 days)</li>
+                <li><span class="normative-keyword">MUST</span> document which system actions are reversible and which are irreversible</li>
+                <li><span class="normative-keyword">MAY</span> implement administrator-initiated recovery in enterprise contexts (with audit logging)</li>
+            </ul>
+        </div>
+
+        <table>
+            <tr>
+                <th>Compliance Level</th>
+                <th>Requirement</th>
+            </tr>
+            <tr>
+                <td><strong>Level 1</strong></td>
+                <td>Soft deletion: recovered data visible for 7+ days before permanent erasure</td>
+            </tr>
+            <tr>
+                <td><strong>Level 2</strong></td>
+                <td>Undo/redo stack: user can reverse actions within session</td>
+            </tr>
+            <tr>
+                <td><strong>Level 3</strong></td>
+                <td>Complete version history with point-in-time restore; 90+ day retention</td>
+            </tr>
+            <tr>
+                <td><strong>Level 4</strong></td>
+                <td>ACID transaction semantics; atomic operation guarantees across all data stores</td>
+            </tr>
+        </table>
+
+        <!-- PRINCIPLE 2 -->
+        <h3>4.2 Exposure Minimization</h3>
+        <p><strong>Principle:</strong> Data <span class="normative-keyword">MUST</span> be collected only when essential. What is collected <span class="normative-keyword">MUST</span> be defended with cryptography. Data retention <span class="normative-keyword">MUST</span> be minimal and automatic.</p>
+
+        <div class="box normative">
+            <div class="box-title">Normative Requirements</div>
+            <ul class="checklist">
+                <li><span class="normative-keyword">MUST</span> perform data minimization audit: justify every data field collected</li>
+                <li><span class="normative-keyword">MUST</span> encrypt sensitive data at rest (AES-256 minimum; ChaCha20 acceptable)</li>
+                <li><span class="normative-keyword">MUST</span> use TLS 1.3+ for all data in transit; TLS 1.2 acceptable with strong ciphersuites only</li>
+                <li><span class="normative-keyword">MUST</span> define explicit retention policy for every data field (max age before auto-delete)</li>
+                <li><span class="normative-keyword">SHOULD</span> implement zero-knowledge architecture: user holds encryption keys; system stores only ciphertext</li>
+                <li><span class="normative-keyword">MUST NOT</span> sell, share, or broker user data without explicit informed consent (opt-in, not opt-out)</li>
+                <li><span class="normative-keyword">MAY</span> aggregate/anonymize data for statistics with explicit user consent</li>
+            </ul>
+        </div>
+
+        <table>
+            <tr>
+                <th>Compliance Level</th>
+                <th>Requirement</th>
+            </tr>
+            <tr>
+                <td><strong>Level 1</strong></td>
+                <td>Data minimization audit completed; AES-256 at rest; TLS 1.3+ in transit</td>
+            </tr>
+            <tr>
+                <td><strong>Level 2</strong></td>
+                <td>Level 1 + auto-deletion policies for all fields; no ad networks or trackers</td>
+            </tr>
+            <tr>
+                <td><strong>Level 3</strong></td>
+                <td>Level 2 + zero-knowledge for sensitive data; user holds encryption keys; regular key rotation</td>
+            </tr>
+            <tr>
+                <td><strong>Level 4</strong></td>
+                <td>Level 3 + provable data minimization via differential privacy; formal verification of encryption implementation</td>
+            </tr>
+        </table>
+
+        <!-- PRINCIPLE 3 -->
+        <h3>4.3 Local Authority</h3>
+        <p><strong>Principle:</strong> Users <span class="normative-keyword">MUST</span> retain control and function locally. Systems <span class="normative-keyword">MUST NOT</span> require internet for essential operations.</p>
+
+        <div class="box normative">
+            <div class="box-title">Normative Requirements</div>
+            <ul class="checklist">
+                <li><span class="normative-keyword">MUST</span> support offline operation for all essential user workflows</li>
+                <li><span class="normative-keyword">MUST</span> cache essential data on user's device; users maintain local copy</li>
+                <li><span class="normative-keyword">MUST</span> sync gracefully without blocking user workflow (asynchronous, eventual consistency)</li>
+                <li><span class="normative-keyword">SHOULD</span> use eventual consistency, not strong global consistency</li>
+                <li><span class="normative-keyword">MUST NOT</span> require authentication for offline access to cached user data</li>
+                <li><span class="normative-keyword">MAY</span> use server as optional backup/sync point, not gatekeeper to user's own data</li>
+                <li><span class="normative-keyword">MUST</span> document offline vs. online feature parity and sync behavior</li>
+            </ul>
+        </div>
+
+        <table>
+            <tr>
+                <th>Compliance Level</th>
+                <th>Requirement</th>
+            </tr>
+            <tr>
+                <td><strong>Level 1</strong></td>
+                <td>Offline read capability; cached data available without network</td>
+            </tr>
+            <tr>
+                <td><strong>Level 2</strong></td>
+                <td>Full offline operation: read + write; changes sync when connectivity returns</td>
+            </tr>
+            <tr>
+                <td><strong>Level 3</strong></td>
+                <td>Multi-device sync with automatic conflict resolution (CRDT or operational transforms)</td>
+            </tr>
+            <tr>
+                <td><strong>Level 4</strong></td>
+                <td>Peer-to-peer sync capability; no central server required; direct device-to-device replication</td>
+            </tr>
+        </table>
+
+        <!-- PRINCIPLE 4 -->
+        <h3>4.4 Coercion Resistance</h3>
+        <p><strong>Principle:</strong> Users <span class="normative-keyword">MUST</span> be able to maintain confidentiality and integrity even under physical or legal coercion.</p>
+
+        <div class="box normative">
+            <div class="box-title">Normative Requirements</div>
+            <ul class="checklist">
+                <li><span class="normative-keyword">MUST</span> use encryption where users hold keys; system cannot decrypt user data</li>
+                <li><span class="normative-keyword">MUST</span> support strong passphrases (minimum 128 bits entropy; 6+ words recommended)</li>
+                <li><span class="normative-keyword">MUST</span> use slow key derivation (Argon2id, Scrypt; never MD5/SHA-1)</li>
+                <li><span class="normative-keyword">MUST NOT</span> provide administrative backdoors or master keys</li>
+                <li><span class="normative-keyword">SHOULD</span> implement plausible deniability features (decoy accounts, hidden data)</li>
+                <li><span class="normative-keyword">MAY</span> implement dead man's switch (automatic data destruction if conditions unmet)</li>
+                <li><span class="normative-keyword">MUST</span> document threat model clearly: what adversaries can and cannot extract</li>
+            </ul>
+        </div>
+
+        <table>
+            <tr>
+                <th>Compliance Level</th>
+                <th>Requirement</th>
+            </tr>
+            <tr>
+                <td><strong>Level 1</strong></td>
+                <td>Strong encryption; user-held keys; no master backdoors</td>
+            </tr>
+            <tr>
+                <td><strong>Level 2</strong></td>
+                <td>Level 1 + passphrase-based encryption (Argon2+); slow key derivation</td>
+            </tr>
+            <tr>
+                <td><strong>Level 3</strong></td>
+                <td>Level 2 + plausible deniability (decoy accounts or hidden containers); formal threat model documentation</td>
+            </tr>
+            <tr>
+                <td><strong>Level 4</strong></td>
+                <td>Level 3 + threshold key splitting (Shamir's Secret Sharing); distributed key reconstruction</td>
+            </tr>
+        </table>
+
+        <!-- PRINCIPLE 5 -->
+        <h3>4.5 Degraded Functionality</h3>
+        <p><strong>Principle:</strong> Systems <span class="normative-keyword">MUST</span> remain usable when bandwidth, power, compute, or cognition are severely constrained.</p>
+
+        <div class="box normative">
+            <div class="box-title">Normative Requirements</div>
+            <ul class="checklist">
+                <li><span class="normative-keyword">MUST</span> test baseline path on 2G networks (&lt;100KB initial HTML load)</li>
+                <li><span class="normative-keyword">MUST</span> function on devices with &lt;512MB RAM</li>
+                <li><span class="normative-keyword">MUST</span> support complete keyboard-only navigation (no mouse required)</li>
+                <li><span class="normative-keyword">MUST</span> gracefully degrade features under resource constraints</li>
+                <li><span class="normative-keyword">SHOULD</span> implement progressive enhancement (plain HTML works without JavaScript)</li>
+                <li><span class="normative-keyword">MUST NOT</span> auto-load media (user must explicitly request video/audio)</li>
+                <li><span class="normative-keyword">MUST</span> meet WCAG 2.1 Level AA accessibility standards (color contrast, screen reader support)</li>
+            </ul>
+        </div>
+
+        <table>
+            <tr>
+                <th>Compliance Level</th>
+                <th>Requirement</th>
+            </tr>
+            <tr>
+                <td><strong>Level 1</strong></td>
+                <td>Mobile responsive; plaintext/minimal CSS fallback on JS failure</td>
+            </tr>
+            <tr>
+                <td><strong>Level 2</strong></td>
+                <td>Level 1 + tested on 2G networks; works with &lt;512MB RAM; no large media autoload</td>
+            </tr>
+            <tr>
+                <td><strong>Level 3</strong></td>
+                <td>Level 2 + progressive enhancement (HTML baseline works without JS); keyboard-only navigation; WCAG AA</td>
+            </tr>
+            <tr>
+                <td><strong>Level 4</strong></td>
+                <td>Level 3 + measurable performance targets (&lt;3s load on 2G); documented accessibility audit</td>
+            </tr>
+        </table>
+
+        <!-- PRINCIPLE 6 -->
+        <h3>4.6 Essential Utility</h3>
+        <p><strong>Principle:</strong> Systems <span class="normative-keyword">MUST</span> optimize for user survival and autonomy. Features <span class="normative-keyword">MUST</span> serve essential needs, not engagement metrics or extraction.</p>
+
+        <div class="box normative">
+            <div class="box-title">Normative Requirements</div>
+            <ul class="checklist">
+                <li><span class="normative-keyword">MUST</span> document essential use cases explicitly; justify every feature</li>
+                <li><span class="normative-keyword">MUST NOT</span> use dark patterns (hidden friction-to-exit, manipulative notifications, deceptive confirmations)</li>
+                <li><span class="normative-keyword">SHOULD</span> minimize cognitive load (one action per screen; plain language; visible defaults)</li>
+                <li><span class="normative-keyword">MUST NOT</span> include addictive mechanics (streaks, variable rewards, leaderboards, FOMO notifications)</li>
+                <li><span class="normative-keyword">MUST</span> measure success by user goal completion, not engagement time or feature adoption</li>
+                <li><span class="normative-keyword">SHOULD</span> fund transparently (donations, grants, nonprofit support; not user data sales)</li>
+                <li><span class="normative-keyword">MUST NOT</span> require payment for essential features (accessibility tiers acceptable; never paywall core utility)</li>
+            </ul>
+        </div>
+
+        <table>
+            <tr>
+                <th>Compliance Level</th>
+                <th>Requirement</th>
+            </tr>
+            <tr>
+                <td><strong>Level 1</strong></td>
+                <td>No engagement metrics; no dark patterns; transparent funding model</td>
+            </tr>
+            <tr>
+                <td><strong>Level 2</strong></td>
+                <td>Level 1 + minimal cognitive load; success measured by user goal completion</td>
+            </tr>
+            <tr>
+                <td><strong>Level 3</strong></td>
+                <td>Level 2 + independent audit for dark patterns; user satisfaction metrics</td>
+            </tr>
+            <tr>
+                <td><strong>Level 4</strong></td>
+                <td>Level 3 + user-controlled feature set (customizable UI/UX); annual compliance audit</td>
+            </tr>
+        </table>
+
+        <!-- SECTION 5: INTERDEPENDENCY -->
+        <h2 id="sec5">5. Principle Interdependency</h2>
+
+        <p>The six principles are <strong>mutually reinforcing</strong>. Weakness in one undermines others. This section formalizes the relationships.</p>
+
+        <h3>Reinforcement Matrix</h3>
+        <table>
+            <tr>
+                <th>Principle A</th>
+                <th>Principle B</th>
+                <th>Relationship</th>
+            </tr>
+            <tr>
+                <td><strong>Reversibility</strong></td>
+                <td><strong>Exposure Minimization</strong></td>
+                <td>Synergistic: Less data kept = recovery windows are simpler. Undo/redo prevent data harm.</td>
+            </tr>
+            <tr>
+                <td><strong>Local Authority</strong></td>
+                <td><strong>All Principles</strong></td>
+                <td>Foundational: Offline operation enables resilience across all principles. Systems that replicate locally can enforce all others.</td>
+            </tr>
+            <tr>
+                <td><strong>Coercion Resistance</strong></td>
+                <td><strong>Exposure Minimization + Local Authority</strong></td>
+                <td>Required: User-held keys require local data. Minimal data collection reduces extraction targets.</td>
+            </tr>
+            <tr>
+                <td><strong>Degraded Functionality</strong></td>
+                <td><strong>Essential Utility</strong></td>
+                <td>Aligned: Prioritizing essential features directly maps to graceful degradation under scarcity.</td>
+            </tr>
+            <tr>
+                <td><strong>Essential Utility</strong></td>
+                <td><strong>All Principles</strong></td>
+                <td>Overriding: User welfare is the master constraint. All principles serve it.</td>
+            </tr>
+        </table>
+
+        <h3>Known Tensions</h3>
+        <ul>
+            <li><strong>Strong Consistency vs. Local Authority:</strong> Requiring quorum consensus conflicts with offline operation. Resolution: Protective Computing prioritizes availability (Local Authority) over consistency.</li>
+            <li><strong>Server-Side Processing vs. Exposure Minimization:</strong> Efficient computation on servers reveals data. Resolution: Accept performance cost; process on user device when possible.</li>
+            <li><strong>Feature Richness vs. Degraded Functionality:</strong> Complex UX fails on constrained devices. Resolution: Essential features work everywhere; enhanced features for users with resources.</li>
+        </ul>
+
+        <!-- SECTION 6: COMPLIANCE LEVELS -->
+        <h2 id="sec6">6. Compliance Levels</h2>
+
+        <p>All systems claiming Protective Computing compliance <span class="normative-keyword">MUST</span> declare a compliance level (1–4) for each principle. A system's overall compliance is determined by its weakest principle.</p>
+
+        <p><strong>Example claim:</strong> "Signal Messenger is Protective Computing v1.0 Level 3: Reversibility (L3), Exposure Minimization (L4), Local Authority (L2), Coercion Resistance (L4), Degraded Functionality (L2), Essential Utility (L4)"</p>
+
+        <h3>Level 1: Foundation</h3>
+        <div class="compliance-level">
+            <strong>Self-Attested Compliance</strong>
+            <p>System implements all six principles at basic level. No independent audit required.</p>
+            <ul>
+                <li>Suitable for: Internal tools, MVPs, non-critical systems, prototype validation</li>
+                <li>Effort: Minimal; engineering team self-certifies compliance</li>
+                <li>Claim format: "Protective Computing v1.0 Level 1"</li>
+            </ul>
+        </div>
+
+        <h3>Level 2: Standard</h3>
+        <div class="compliance-level">
+            <strong>Production Compliance</strong>
+            <p>System implements all six principles with documented depth. Minimal external review recommended.</p>
+            <ul>
+                <li>Suitable for: Production systems, public tools, significant user bases</li>
+                <li>Effort: Moderate; security code review recommended (not required)</li>
+                <li>Claim format: "Protective Computing v1.0 Level 2"</li>
+            </ul>
+        </div>
+
+        <h3>Level 3: Verified</h3>
+        <div class="compliance-level">
+            <strong>Third-Party Audited</strong>
+            <p>Independent security audit verifies compliance. Threat model formally documented.</p>
+            <ul>
+                <li>Suitable for: High-risk contexts, vulnerable populations, critical infrastructure</li>
+                <li>Effort: Significant; requires third-party security audit ($5k–$50k depending on scope)</li>
+                <li>Claim format: "Protective Computing v1.0 Level 3 (Auditor: [organization name])"</li>
+                <li>Requirements: Third-party audit report, threat model documentation, compliance matrix</li>
+            </ul>
+        </div>
+
+        <h3>Level 4: Certified</h3>
+        <div class="compliance-level">
+            <strong>Formal Certification Program</strong>
+            <p>Formal certification by Protective Computing Foundation (TBD). Continuous compliance monitoring. Annual recertification.</p>
+            <ul>
+                <li>Suitable for: Enterprise, government, mission-critical, production infrastructure</li>
+                <li>Effort: Substantial; requires formal audit + ongoing compliance engagement</li>
+                <li>Claim format: "Protective Computing v1.0 Level 4 Certified (Cert ID: [ID])"</li>
+                <li>Requirements: Formal certification audit, code review, public registry listing, annual audit</li>
+            </ul>
+        </div>
+
+        <!-- SECTION 7: VERSIONING POLICY -->
+        <h2 id="sec7">7. Versioning Policy</h2>
+
+        <p>Protective Computing uses Semantic Versioning: <code>v[Major].[Minor].[Patch]</code></p>
+
+        <h3>Release Tiers</h3>
+
+        <h4>Patch Releases (v1.0.0 → v1.0.1)</h4>
+        <ul>
+            <li><strong>Content:</strong> Bug fixes, clarifications, errata corrections</li>
+            <li><strong>Breaking Changes:</strong> None</li>
+            <li><strong>Backward Compatibility:</strong> Full (v1.0.0 compliant systems remain compliant on v1.0.1)</li>
+            <li><strong>Migration Required:</strong> No</li>
+        </ul>
+
+        <h4>Minor Releases (v1.0 → v1.1)</h4>
+        <ul>
+            <li><strong>Content:</strong> New implementation guidance, clarifications to threat model, additional examples</li>
+            <li><strong>Breaking Changes:</strong> None</li>
+            <li><strong>Backward Compatibility:</strong> Full (v1.0 compliant systems remain compliant on v1.1)</li>
+            <li><strong>Migration Required:</strong> No; optional upgrade to benefit from new guidance</li>
+            <li><strong>Example changes:</strong> New domain-specific extensions (healthcare, journalism); new threat scenarios</li>
+        </ul>
+
+        <h4>Major Releases (v1.x → v2.0)</h4>
+        <ul>
+            <li><strong>Triggers:</strong> New principle added, threat model fundamentally expanded, major architectural paradigm shift</li>
+            <li><strong>Breaking Changes:</strong> Possible</li>
+            <li><strong>Backward Compatibility:</strong> NO (v1.x systems do not automatically comply with v2.0)</li>
+            <li><strong>Migration Window:</strong> v1.x and v2.0 coexist for minimum 2 years; systems can claim dual compliance (e.g., "v1.4 and v2.0")</li>
+            <li><strong>Not Triggered By:</strong> New tools, new domain applications, new certifiers, performance improvements</li>
+        </ul>
+
+        <h3>Example Timeline</h3>
+        <ul>
+            <li><code>v1.0</code> (Feb 2026): Six principles, threat model, compliance framework — Stable</li>
+            <li><code>v1.1</code> (Q4 2026): Healthcare extension, journalism guidance, new threat scenarios — Backward compatible</li>
+            <li><code>v1.2</code> (Q2 2027): Mobile-specific guidance, accessibility expansion — Backward compatible</li>
+            <li><code>v2.0</code> (2028–2030): New principle (e.g., "Transparency") or revised threat model — Breaking changes possible; coexistence window required</li>
+        </ul>
+
+        <!-- SECTION 8: NON-SCOPE -->
+        <h2 id="sec8">8. Non-Scope</h2>
+
+        <p>Protective Computing <strong>does not address:</strong></p>
+
+        <ul>
+            <li><strong>Specific cryptographic algorithms:</strong> Delegates to NIST, IETF, and cryptanalysis community. Specification is agnostic to algorithm choice (as long as vetted).</li>
+            <li><strong>Programming languages or platforms:</strong> Language-agnostic. Applies to web, mobile, desktop, IoT, systems software.</li>
+            <li><strong>Custom threat models:</strong> Specification covers baseline. Organizations extending to additional threats are encouraged; extension must be documented.</li>
+            <li><strong>Performance targets:</strong> No "systems MUST load in &lt;1 second" requirements (varies by context). Baseline: works on 2G networks.</li>
+            <li><strong>User interface aesthetics:</strong> Design is not specified. "Beautiful" is not required; "usable" is.</li>
+            <li><strong>Organizational governance:</strong> Non-profit vs. for-profit, team structure, funding source not prescribed (as long as transparent).</li>
+        </ul>
+
+        <p><strong>Protective Computing is ORTHOGONAL to (not instead of):</strong></p>
+
+        <ul>
+            <li><strong>Legal Compliance:</strong> GDPR, CCPA, HIPAA, etc. Protective Computing + Legal Compliance are complementary requirements.</li>
+            <li><strong>Security Standards:</strong> ISO 27001, SOC 2, Common Criteria. Protective Computing works alongside these.</li>
+            <li><strong>Accessibility Standards:</strong> WCAG 2.1, Section 508. Protective Computing includes accessibility; additional standards are compatible.</li>
+        </ul>
+
+        <p><strong>Systems may (and should):</strong></p>
+        <ul>
+            <li>Claim Protective Computing compliance AND GDPR compliance simultaneously</li>
+            <li>Achieve Protective Computing Level 4 AND SOC 2 Type II certification</li>
+            <li>Be WCAG AAA AND Protective Computing Level 3</li>
+        </ul>
+
+        <hr style="margin: 3rem 0; border: none; height: 1px; background: rgba(0, 255, 200, 0.1);">
+
+        <h2>FORMAL SPECIFICATION ENDS HERE</h2>
+
+        <p style="color: #888; margin-top: 2rem; margin-bottom: 0;">For further reading, see:</p>
+        <ul style="color: #888; margin-bottom: 2rem;">
+            <li><a href="/docs/getting-started.html">Getting Started with Protective Computing</a> — Practical implementation guide</li>
+            <li><a href="/docs/principles/reversibility.html">Principle Deep-Dives</a> — Detailed reference documentation for each principle</li>
+            <li><a href="https://doi.org/10.5281/zenodo.18688516">The Overton Framework (DOI)</a> — Full disciplinary documentation</li>
+        </ul>
+
+    </main>
+
+    <footer>
+        <p><strong>Protective Computing Specification v1.0</strong></p>
+        <p>Stable Release | DOI: <a href="https://doi.org/10.5281/zenodo.18688516" target="_blank">10.5281/zenodo.18688516</a></p>
+        <p style="margin-top: 1rem; font-size: 12px;">Citation: "Protective Computing Specification v1.0," February 25, 2026. Retrieved from https://protective-computing.github.io/docs/spec/v1.0.html</p>
+        <p style="margin-top: 2rem; font-size: 12px; color: #555;"><a href="/">Home</a> | <a href="/docs/getting-started.html">Getting Started</a> | <a href="https://github.com/protective-computing/protective-computing.github.io" target="_blank">GitHub</a></p>
+    </footer>
+</body>
+</html>
