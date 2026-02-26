@@ -17,6 +17,26 @@ jobs:
         run: |
           powershell -ExecutionPolicy Bypass -File scripts/metadata-audit.ps1
 
+      - name: Regenerate semantic ledger artifacts
+        shell: pwsh
+        run: |
+          powershell -ExecutionPolicy Bypass -File scripts/generate-must-ledger.ps1
+          $source = Get-ChildItem scripts/audit-output -Filter "must-ledger-*.csv" | Where-Object { $_.Name -notlike "must-ledger-deduped-*.csv" } | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+          powershell -ExecutionPolicy Bypass -File scripts/dedupe-must-ledger.ps1 -CsvPath $source.FullName
+
+          $current = Get-ChildItem scripts/audit-output -Filter "must-ledger-deduped-*.csv" | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+          powershell -ExecutionPolicy Bypass -File scripts/fill-reversibility.ps1 -CsvPath $current.FullName
+          $current = Get-ChildItem scripts/audit-output -Filter "must-ledger-deduped-*.csv" | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+          powershell -ExecutionPolicy Bypass -File scripts/fill-exposure-minimization.ps1 -CsvPath $current.FullName
+          $current = Get-ChildItem scripts/audit-output -Filter "must-ledger-deduped-*.csv" | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+          powershell -ExecutionPolicy Bypass -File scripts/fill-local-authority.ps1 -CsvPath $current.FullName
+          $current = Get-ChildItem scripts/audit-output -Filter "must-ledger-deduped-*.csv" | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+          powershell -ExecutionPolicy Bypass -File scripts/fill-coercion-resistance.ps1 -CsvPath $current.FullName
+          $current = Get-ChildItem scripts/audit-output -Filter "must-ledger-deduped-*.csv" | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+          powershell -ExecutionPolicy Bypass -File scripts/fill-degraded-functionality.ps1 -CsvPath $current.FullName
+          $current = Get-ChildItem scripts/audit-output -Filter "must-ledger-deduped-*.csv" | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+          powershell -ExecutionPolicy Bypass -File scripts/fill-essential-utility.ps1 -CsvPath $current.FullName
+
       - name: Run semantic ledger audit (Stage 2)
         shell: pwsh
         run: |
