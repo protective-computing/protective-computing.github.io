@@ -17,6 +17,8 @@ Then browse `http://localhost:8080`.
 - Getting started: `/docs/getting-started.html`
 - Specification (v1.0): `/docs/spec/v1.0.html`
 - Principles index folder: `/docs/principles/`
+- Formal threat models: `/THREAT_MODELS.md`
+- Implementation patterns: `/IMPLEMENTATION_PATTERNS.md`
 - Reference implementation: `/docs/reference-implementation/paintracker-mapping.html`
 - Independent review: `/docs/independent-review.html`
 
