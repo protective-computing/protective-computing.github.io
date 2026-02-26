@@ -19,6 +19,7 @@ Then browse `http://localhost:8080`.
 - Principles index folder: `/docs/principles/`
 - Formal threat models: `/THREAT_MODELS.md`
 - Implementation patterns: `/IMPLEMENTATION_PATTERNS.md`
+- Compliance & audit matrix: `/COMPLIANCE_AUDIT_MATRIX.md`
 - Reference implementation: `/docs/reference-implementation/paintracker-mapping.html`
 - Independent review: `/docs/independent-review.html`
 
