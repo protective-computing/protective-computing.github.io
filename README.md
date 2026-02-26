@@ -20,6 +20,8 @@ Then browse `http://localhost:8080`.
 - Formal threat models: `/THREAT_MODELS.md`
 - Implementation patterns: `/IMPLEMENTATION_PATTERNS.md`
 - Compliance & audit matrix: `/COMPLIANCE_AUDIT_MATRIX.md`
+- Audit evidence index: `/AUDIT_EVIDENCE.md`
+- Independent review checklist: `/INDEPENDENT_REVIEW_CHECKLIST.md`
 - Reference implementation: `/docs/reference-implementation/paintracker-mapping.html`
 - Independent review: `/docs/independent-review.html`
 
@@ -37,6 +39,7 @@ Suggested labels:
 - `v1.x` is stable and backward-compatible for compliance claims.
 - `v1.1+` incorporates review-driven clarifications and implementation guidance.
 - `v2.0` is reserved for paradigm-level changes (new principles or fundamental threat-model expansion).
+- Frozen baseline: `v1.0.0` tag marks the stable reference state for reproducible audits; subsequent hardening/docs updates are tracked as `v1.1+` guidance.
 
 ## Metadata Audit
 
