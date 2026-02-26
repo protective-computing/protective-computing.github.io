@@ -204,6 +204,26 @@
   }
   .card.soft{ background: var(--panel2); }
 
+  .flow{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:10px;
+    margin: 10px 0 14px;
+  }
+  .stage{
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 12.5px;
+    color: var(--text);
+    background: rgba(255,255,255,0.03);
+  }
+  .arrow{
+    color: var(--faint);
+    font-size: 13px;
+  }
+
   h2{
     margin: 0 0 10px;
     font-size: 14px;
@@ -341,7 +361,47 @@
     </div>
   </section>
 
+  <section class="card" style="margin-top:18px;">
+    <h2>Problem Statement</h2>
+    <p style="margin:0;color:var(--muted);line-height:1.7;font-size:15px;">
+      Mainstream software is usually built on a Stability Assumption: persistent connectivity, predictable infrastructure,
+      cognitive surplus, environmental safety, and institutional trust. These assumptions fail under crisis, illness,
+      displacement, coercion, and systemic instability.
+    </p>
+    <ul class="list" style="margin-top:10px;">
+      <li>When stability assumptions fail, engagement-first systems produce lockout, disclosure, and irreversible harm.</li>
+      <li>These are structural failures, not edge cases, in high-risk operating environments.</li>
+      <li>Protective Computing replaces this model with enforceable constraints designed for degraded and adversarial conditions.</li>
+    </ul>
+    <p style="margin:10px 0 0;color:var(--muted);font-size:14px;line-height:1.6;">
+      Protective Computing formalizes a missing systems layer for environments where stability cannot be assumed.
+    </p>
+  </section>
+
   <div class="grid">
+    <section class="card" style="grid-column: 1 / -1;">
+      <h2>Enforcement Pipeline</h2>
+      <div class="flow" aria-label="Normative enforcement stages">
+        <span class="stage">Stage 1: Metadata / Sitemap / Robots</span>
+        <span class="arrow">→</span>
+        <span class="stage">Stage 2: Completeness (no semantic blanks)</span>
+        <span class="arrow">→</span>
+        <span class="stage">Stage 3: Verification hardness (no weak methods)</span>
+      </div>
+      <ul class="list">
+        <li>Each stage is executed in CI on push and pull request.</li>
+        <li>Stage 3 fails if <code>WEAK_VERIFICATION_COUNT &gt; 0</code>.</li>
+        <li>Current baseline: <code>WEAK_VERIFICATION_COUNT=0</code>.</li>
+        <li>Normative claims are tied to executable verification procedures and audited artifacts.</li>
+      </ul>
+      <p style="margin:10px 0 0;color:var(--muted);font-size:13px;line-height:1.6;">
+        Evidence:
+        <a href="https://github.com/protective-computing/protective-computing.github.io/blob/main/.github/workflows/audit.yml">CI workflow</a>,
+        <a href="https://github.com/protective-computing/protective-computing.github.io/blob/main/scripts/semantic-ledger-audit.ps1">semantic gate script</a>,
+        <a href="https://github.com/protective-computing/protective-computing.github.io/tree/main/scripts/audit-output">audit artifacts</a>.
+      </p>
+    </section>
+
     <section class="card">
       <h2>Foundational Work</h2>
       <ul class="list">
