@@ -22,6 +22,7 @@ Then browse `http://localhost:8080`.
 - Compliance & audit matrix: `/COMPLIANCE_AUDIT_MATRIX.md`
 - Audit evidence index: `/AUDIT_EVIDENCE.md`
 - Independent review checklist: `/INDEPENDENT_REVIEW_CHECKLIST.md`
+- v1.1 planning issue templates: `/V1_1_ISSUE_TEMPLATES.md`
 - Reference implementation: `/docs/reference-implementation/paintracker-mapping.html`
 - Independent review: `/docs/independent-review.html`
 
