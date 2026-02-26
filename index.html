@@ -223,6 +223,35 @@
     color: var(--faint);
     font-size: 13px;
   }
+  .proof{
+    margin-top: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.03);
+    color: var(--muted);
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+  .compare{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 13px;
+  }
+  .compare th,
+  .compare td{
+    border: 1px solid var(--line);
+    padding: 9px 10px;
+    text-align: left;
+    color: var(--muted);
+    vertical-align: top;
+  }
+  .compare th{
+    color: var(--text);
+    background: rgba(255,255,255,0.03);
+    font-weight: 700;
+  }
 
   h2{
     margin: 0 0 10px;
@@ -394,12 +423,47 @@
         <li>Current baseline: <code>WEAK_VERIFICATION_COUNT=0</code>.</li>
         <li>Normative claims are tied to executable verification procedures and audited artifacts.</li>
       </ul>
+      <div class="proof" aria-label="Proof of enforcement">
+        <strong style="color:var(--text);">Proof of Enforcement (snapshot)</strong><br>
+        <code>WEAK_VERIFICATION_COUNT=0</code> · <code>Stage 3 gate passed</code><br>
+        Verification status is continuously recomputed from the published ledger and fails CI on regression.
+      </div>
       <p style="margin:10px 0 0;color:var(--muted);font-size:13px;line-height:1.6;">
         Evidence:
         <a href="https://github.com/protective-computing/protective-computing.github.io/blob/main/.github/workflows/audit.yml">CI workflow</a>,
         <a href="https://github.com/protective-computing/protective-computing.github.io/blob/main/scripts/semantic-ledger-audit.ps1">semantic gate script</a>,
         <a href="https://github.com/protective-computing/protective-computing.github.io/tree/main/scripts/audit-output">audit artifacts</a>.
       </p>
+    </section>
+
+    <section class="card" style="grid-column: 1 / -1;">
+      <h2>What Makes It Different</h2>
+      <table class="compare" aria-label="Conventional vs Protective comparison">
+        <thead>
+          <tr>
+            <th>Conventional Model</th>
+            <th>Protective Model</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Optimize retention and engagement</td>
+            <td>Optimize essential task completion under stress</td>
+          </tr>
+          <tr>
+            <td>Assume stability and persistent connectivity</td>
+            <td>Assume degradation and adversarial conditions</td>
+          </tr>
+          <tr>
+            <td>Centralize control and data authority</td>
+            <td>Preserve local authority and offline agency</td>
+          </tr>
+          <tr>
+            <td>Feature growth as default success signal</td>
+            <td>Essential utility with reversibility constraints</td>
+          </tr>
+        </tbody>
+      </table>
     </section>
 
     <section class="card">
@@ -465,6 +529,9 @@
       <div class="line"></div>
 
       <h2>How to cite</h2>
+      <p style="margin:0 0 8px;color:var(--muted);font-size:13px;line-height:1.6;">
+        Non-technical summary: design software that stays safe and useful when people are vulnerable and systems are unstable.
+      </p>
       <p style="margin:0;color:var(--muted);font-size:13px;line-height:1.6;">
         Cite the Canon DOI:
         <a href="https://doi.org/10.5281/zenodo.18688516">10.5281/zenodo.18688516</a>
