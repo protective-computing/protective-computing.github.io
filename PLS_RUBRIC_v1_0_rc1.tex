@@ -1,0 +1,568 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\section{Protective Legitimacy Score (PLS) --- Operational Rubric v1.0
+(Draft)}\label{protective-legitimacy-score-pls--operational-rubric-v10-draft}
+
+\subsection{1. Purpose}\label{1-purpose}
+
+Convert principle conformance into an auditable, reproducible score for
+implementation review under vulnerability conditions.
+
+\subsection{2. Scoring Model}\label{2-scoring-model}
+
+\begin{itemize}
+\tightlist
+\item
+  Score range: \texttt{0–100}
+\item
+  Principle scores: \texttt{0–4} each
+\item
+  Weighted composite with hard fail guards
+\end{itemize}
+
+\subsubsection{Principle Weights}\label{principle-weights}
+
+\begin{itemize}
+\tightlist
+\item
+  Reversibility: 16
+\item
+  Exposure Minimization: 18
+\item
+  Local Authority: 18
+\item
+  Coercion Resistance: 18
+\item
+  Degraded Functionality: 15
+\item
+  Essential Utility: 15
+\end{itemize}
+
+Total: 100
+
+\subsection{3. Principle Definitions and Level
+Criteria}\label{3-principle-definitions-and-level-criteria}
+
+\subsubsection{3.1 Reversibility (Weight:
+16)}\label{31-reversibility-weight-16}
+
+Can destructive actions be undone, and are recovery pathways
+non-punitive?
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{0}: No undo, permanent deletion, no recovery mechanism
+\item
+  \texttt{1}: Basic undo for UI actions, but no data recovery
+\item
+  \texttt{2}: Soft deletion + recovery window (7+ days)
+\item
+  \texttt{3}: State history, export-before-delete, tested recovery flows
+\item
+  \texttt{4}: Independently verified + user-initiated full restore from
+  prior state snapshots
+\end{itemize}
+
+\subsubsection{3.2 Exposure Minimization (Weight:
+18)}\label{32-exposure-minimization-weight-18}
+
+Is data surface area minimized across network, dependencies, telemetry,
+and retention behavior?
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{0}: Background telemetry, third-party tracking, remote
+  dependencies in critical path
+\item
+  \texttt{1}: Analytics opt-out exists but defaults-on
+\item
+  \texttt{2}: No analytics; minimal network calls; documented egress
+\item
+  \texttt{3}: Verified egress allowlist and reproducible network audit
+\item
+  \texttt{4}: Independent network review with zero unexpected data
+  egress
+\end{itemize}
+
+\subsubsection{3.3 Local Authority (Weight:
+18)}\label{33-local-authority-weight-18}
+
+Can users access and operate core workflows without remote
+authentication, permission, or service continuity?
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{0}: Core functionality requires internet/cloud gatekeeping
+\item
+  \texttt{1}: Offline mode exists but essential workflows significantly
+  degrade
+\item
+  \texttt{2}: Core workflows operate offline; sync remains optional
+\item
+  \texttt{3}: User controls export/state portability; offline flows are
+  tested and documented
+\item
+  \texttt{4}: Independently verified local-first architecture with no
+  essential cloud lock-in
+\end{itemize}
+
+\subsubsection{3.4 Coercion Resistance (Weight:
+18)}\label{34-coercion-resistance-weight-18}
+
+Can the system bound disclosure and preserve safety under adversarial
+device inspection and pressure?
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{0}: No panic/discreet controls; obvious labeling and
+  persistent revealing notifications
+\item
+  \texttt{1}: Basic panic/discreet control exists but is weakly tested
+\item
+  \texttt{2}: Low-visibility mode and discreet notifications with
+  internal tests
+\item
+  \texttt{3}: Reproducible adversarial scenario tests (forced audit /
+  seizure simulations)
+\item
+  \texttt{4}: Independent adversarial review with documented threat
+  boundary validation
+\end{itemize}
+
+\subsubsection{3.5 Degraded Functionality (Weight:
+15)}\label{35-degraded-functionality-weight-15}
+
+Does the system remain usable under resource constraints (network
+instability, low battery, constrained compute, cognitive overload)?
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{0}: Requires stable connectivity/resources for essential use
+\item
+  \texttt{1}: Graceful errors only; no practical degraded-mode
+  continuity
+\item
+  \texttt{2}: Core flows operate in offline/low-resource conditions
+\item
+  \texttt{3}: Tested under constrained conditions (for example low
+  battery and weak network)
+\item
+  \texttt{4}: Independent stress-test verification of degraded-mode
+  reliability
+\end{itemize}
+
+\subsubsection{3.6 Essential Utility (Weight:
+15)}\label{36-essential-utility-weight-15}
+
+Are critical-path features available without paywall, institutional
+lock, or discretionary gatekeeping?
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{0}: Paywall or lockout on essential workflows
+\item
+  \texttt{1}: Freemium model with essential-path restrictions
+\item
+  \texttt{2}: Core survival/critical features are unrestricted
+\item
+  \texttt{3}: Verified absence of paywall/lockout on documented
+  essential paths
+\item
+  \texttt{4}: Independent audit confirms no essential-path gatekeeping
+\end{itemize}
+
+\subsection{4. Weighted Composite
+Calculation}\label{4-weighted-composite-calculation}
+
+For each principle:
+
+\texttt{principle\_points\ =\ (level\ /\ 4)\ *\ weight}
+
+Composite score:
+
+\texttt{PLS\ =\ sum(principle\_points)}
+
+\subsection{5. Hard Fail Guards}\label{5-hard-fail-guards}
+
+Any of the following sets disposition to \texttt{Fail} regardless of
+weighted score:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Stage 3 gate failure
+  (\texttt{WEAK\_VERIFICATION\_COUNT\ \textgreater{}\ 0})
+\item
+  Evidence of master decrypt/backdoor capability
+\item
+  Essential workflow paywall or lockout in free/critical path
+\item
+  Missing threat-boundary disclosure for coercion contexts
+\end{enumerate}
+
+\subsection{6. Disposition Bands}\label{6-disposition-bands}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{85–100}: Strong legitimacy (operationally reliable)
+\item
+  \texttt{70–84}: Conditional legitimacy (targeted remediation required)
+\item
+  \texttt{50–69}: Weak legitimacy (substantial gaps)
+\item
+  \texttt{\textless{}50}: Non-legitimate under Protective standard
+\end{itemize}
+
+\subsection{7. Worked Examples}\label{7-worked-examples}
+
+\subsubsection{7.1 Example: Conventional Cloud Note-Taking
+App}\label{71-example-conventional-cloud-note-taking-app}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}llll@{}}
+\toprule\noalign{}
+Principle & Level & Rationale & Points \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Reversibility & 1 & Basic undo, but deleted notes unrecoverable after
+retention window & 4.00 \\
+Exposure Minimization & 0 & Analytics telemetry, third-party tracking,
+cloud sync dependency & 0.00 \\
+Local Authority & 0 & Requires login/cloud for essential state
+continuity & 0.00 \\
+Coercion Resistance & 0 & No discreet mode, obvious labeling, persistent
+notification surface & 0.00 \\
+Degraded Functionality & 1 & Network-loss errors without real degraded
+continuity & 3.75 \\
+Essential Utility & 2 & Free tier exists but essential operations are
+constrained & 7.50 \\
+\end{longtable}
+}
+
+\textbf{Total PLS:} \texttt{15.25\ /\ 100}\\
+\textbf{Disposition:} \texttt{Non-legitimate}
+
+\textbf{Hard Fail Guards:}
+
+\begin{itemize}
+\tightlist
+\item
+  Potential authority/paywall constraints on essential path
+\item
+  No coercion boundary disclosure
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsubsection{7.2 Example: PainTracker Reference Mapping
+(Illustrative)}\label{72-example-paintracker-reference-mapping-illustrative}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}llll@{}}
+\toprule\noalign{}
+Principle & Level & Rationale & Points \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Reversibility & 3 & Recovery window and reversibility controls
+documented and testable & 12.00 \\
+Exposure Minimization & 4 & No analytics, bounded egress assumptions,
+strong minimization posture & 18.00 \\
+Local Authority & 4 & Offline-capable essential flows and local-control
+emphasis & 18.00 \\
+Coercion Resistance & 3 & Threat boundaries and coercion scenarios
+documented with tests & 13.50 \\
+Degraded Functionality & 3 & Essential paths tested under constrained
+operation assumptions & 11.25 \\
+Essential Utility & 4 & Essential path not paywalled and utility-first
+orientation & 15.00 \\
+\end{longtable}
+}
+
+\textbf{Total PLS:} \texttt{87.75\ /\ 100}\\
+\textbf{Disposition:} \texttt{Strong\ legitimacy}
+
+\textbf{Hard Fail Guards:}
+
+\begin{itemize}
+\tightlist
+\item
+  None triggered in this illustrative profile
+\end{itemize}
+
+\subsection{8. Anti-Gaming Safeguards}\label{8-anti-gaming-safeguards}
+
+The rubric is designed to resist Goodhart's Law (optimizing score
+without protective outcomes).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{No security theater}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Claims require reproducible evidence, not marketing language.
+  \end{itemize}
+\item
+  \textbf{No hollow reversibility}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    UI-only undo without state/data recovery does not score above
+    \texttt{1}.
+  \end{itemize}
+\item
+  \textbf{No fake offline mode}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Offline claims must preserve essential workflows under real network
+    isolation.
+  \end{itemize}
+\item
+  \textbf{No cosmetic coercion controls}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Discreet/panic features must be validated under adversarial scenario
+    tests.
+  \end{itemize}
+\item
+  \textbf{No self-attested Level 4}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Level \texttt{4} requires independent review evidence.
+  \end{itemize}
+\end{enumerate}
+
+\subsection{9. Re-Scoring Triggers}\label{9-re-scoring-triggers}
+
+Systems should be re-scored when:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Major architectural changes occur (for example sync model or
+  dependency shifts)
+\item
+  Security incidents occur
+\item
+  Critical-path feature set changes
+\item
+  Annual audit cycle occurs (minimum every 12 months)
+\item
+  New community threat evidence is validated
+\end{enumerate}
+
+Re-scoring is protective maintenance, not punitive administration.
+
+\subsection{10. Evidence Requirements}\label{10-evidence-requirements}
+
+Minimum evidence set:
+
+\begin{itemize}
+\tightlist
+\item
+  Stage 1/2/3 CI outputs
+\item
+  MUST-justification ledger rows and implementation statuses
+\item
+  Threat scenario artifacts (coercion, offline, egress, key-path)
+\item
+  Verification logs with explicit pass/fail criteria
+\end{itemize}
+
+\subsection{11. Reporting Format}\label{11-reporting-format}
+
+A compliant report should include:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Commit/version reviewed
+\item
+  Principle levels (\texttt{0–4}) and rationale
+\item
+  Weighted total
+\item
+  Hard fail guard checks
+\item
+  Required remediation and re-test conditions
+\end{enumerate}
+
+\subsection{12. CI/CD Integration Guidance
+(Optional)}\label{12-cicd-integration-guidance-optional}
+
+PLS can be partially automated through staged testing pipelines. Stage
+labels below map to common test layers and can be adapted to local CI
+naming:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Stage 1 (Unit/Component):} reversibility and recovery
+  mechanism tests (for example soft delete, undo, export)
+\item
+  \textbf{Stage 2 (Integration/System):} offline behavior and egress
+  conformance checks (for example network isolation, allowlist
+  validation)
+\item
+  \textbf{Stage 3 (Adversarial/E2E):} coercion and degraded-condition
+  scenario checks (for example panic-mode inspection, low-battery
+  workflows)
+\end{itemize}
+
+CI may auto-fail builds on hard-fail guard violations (for example
+unexpected network egress, new analytics endpoint, or Stage 3 semantic
+failure).
+
+\textbf{However:} Human review remains required for contextual judgment,
+threat-model alignment, and final disposition scoring.
+
+\subsection{13. Call for Reviewers}\label{13-call-for-reviewers}
+
+This rubric is pending independent review before promotion to normative
+status. Feedback is invited on:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Principle criteria clarity} --- are level definitions
+  (\texttt{0–4}) unambiguous and testable?
+\item
+  \textbf{Worked example accuracy} --- do scoring examples reflect
+  realistic system architectures?
+\item
+  \textbf{Anti-gaming robustness} --- can safeguards resist
+  Goodhart\textquotesingle s Law in practice?
+\item
+  \textbf{Hard fail guard completeness} --- are critical failure modes
+  missing?
+\item
+  \textbf{Weighting justification} --- do principle weights
+  (\texttt{16/18/18/18/15/15}) reflect relative vulnerability cost?
+\end{enumerate}
+
+Submit feedback via:
+
+\begin{itemize}
+\tightlist
+\item
+  GitHub Issues:
+  \url{https://github.com/protective-computing/protective-computing.github.io/issues}
+\item
+  Community page: \url{https://protective-computing.github.io/}
+\end{itemize}
+
+Recommended review window: 2 weeks from release-candidate publication.
+
+\subsection{14. Version History \&
+Feedback}\label{14-version-history--feedback}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{v1.0 (Draft):} process guidance; non-normative and pending
+  independent review cycle.
+\end{itemize}
+
+Promotion to citable artifact should require:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Explicit principle criteria validated by reviewers
+\item
+  Worked examples verified for arithmetic and rationale
+\item
+  Anti-gaming safeguards reviewed independently
+\item
+  At least one external reviewer feedback cycle completed
+\end{enumerate}
+
+\end{document}
