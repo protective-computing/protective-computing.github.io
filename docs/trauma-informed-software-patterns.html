@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trauma-informed Software Patterns — Protective Computing</title>
+  <meta name="description" content="Trauma-informed patterns for protective software: reduce cognitive load, keep users safe under stress, and ensure essential tasks work without trust or stability." />
+  <link rel="canonical" href="https://protective-computing.github.io/docs/trauma-informed-software-patterns.html" />
+
+  <meta property="og:site_name" content="Protective Computing" />
+  <meta property="og:title" content="Trauma-informed Software Patterns" />
+  <meta property="og:description" content="Practical patterns for safety under stress: minimal disclosure, reversible actions, and predictable offline behavior." />
+  <meta property="og:url" content="https://protective-computing.github.io/docs/trauma-informed-software-patterns.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://protective-computing.github.io/assets/og/protective-computing.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Trauma-informed Software Patterns" />
+  <meta name="twitter:description" content="Practical patterns for safety under stress: minimal disclosure, reversible actions, and predictable offline behavior." />
+  <meta name="twitter:image" content="https://protective-computing.github.io/assets/og/protective-computing.png" />
+
+  <style>
+    :root{
+      --bg: #070A10;
+      --panel: rgba(255,255,255,0.06);
+      --panel2: rgba(255,255,255,0.04);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.68);
+      --faint: rgba(255,255,255,0.52);
+      --line: rgba(255,255,255,0.10);
+      --brand: #34d3ff;
+      --brand2:#7c5cff;
+      --shadow: 0 18px 55px rgba(0,0,0,.55);
+      --radius: 18px;
+    }
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(124,92,255,.18), transparent 60%),
+                  radial-gradient(1100px 650px at 90% 15%, rgba(52,211,255,.14), transparent 55%),
+                  radial-gradient(900px 500px at 50% 90%, rgba(52,211,255,.10), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      letter-spacing: -0.015em;
+    }
+    a{ color: inherit; text-decoration: none; }
+    a:hover{ text-decoration: underline; text-underline-offset: 3px; }
+    :focus-visible{ outline: 2px solid rgba(52,211,255,0.55); outline-offset: 2px; }
+
+    .wrap{ max-width: 980px; margin: 0 auto; padding: 28px 22px 80px; }
+    .back{
+      display:inline-block;
+      padding: 9px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+    .back:hover{ background: rgba(255,255,255,0.06); text-decoration:none; color: var(--text); }
+
+    .card{ border:1px solid var(--line); background: var(--panel); border-radius: 22px; padding: 22px; box-shadow: var(--shadow); }
+    h1{ margin: 0 0 10px; font-size: clamp(28px, 3.6vw, 44px); letter-spacing: -0.04em; }
+    .subtitle{ margin:0 0 18px; color: var(--muted); line-height: 1.7; max-width: 80ch; }
+
+    h2{ margin: 22px 0 10px; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); }
+    p, li{ color: var(--muted); line-height: 1.8; font-size: 15px; }
+    ul{ margin: 10px 0 0; padding-left: 18px; }
+    code{ background: rgba(0,0,0,0.28); border: 1px solid var(--line); padding: 2px 6px; border-radius: 8px; font-size: 12px; color: var(--text); }
+
+    .grid{
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    @media (max-width: 760px){ .grid{ grid-template-columns: 1fr; } }
+
+    .tile{
+      border:1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      padding: 14px;
+    }
+    .tile h3{ margin: 0 0 6px; font-size: 15px; color: var(--text); }
+    .tile p{ margin: 0; color: var(--muted); font-size: 14px; }
+
+    .links{ margin-top: 18px; border-top: 1px solid var(--line); padding-top: 14px; }
+  </style>
+
+  <!-- Privacy-friendly analytics by Plausible -->
+  <script async src="https://plausible.io/js/pa-_ThpRaAClu8dKUNrYHpiL.js"></script>
+  <script>
+    globalThis.plausible = globalThis.plausible || function () {
+      globalThis.plausible.q = globalThis.plausible.q || [];
+      globalThis.plausible.q.push(arguments);
+    };
+    globalThis.plausible.init = globalThis.plausible.init || function (options) {
+      globalThis.plausible.o = options || {};
+    };
+    globalThis.plausible.init();
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="../">← Home</a>
+
+    <article class="card">
+      <h1>Trauma-informed Software Patterns</h1>
+      <p class="subtitle">
+        “Trauma-informed” here is not a UI aesthetic — it’s a safety property: in high stress, people have less time, less attention,
+        and less tolerance for surprises. Protective software should reduce cognitive load, minimize exposure, and fail safely.
+      </p>
+
+      <h2>Patterns (practical, testable)</h2>
+      <div class="grid">
+        <section class="tile">
+          <h3>1) Make the essential path obvious</h3>
+          <p>One “do the thing” action, predictable placement, works offline. Avoid hidden states and ambiguous toggles.</p>
+        </section>
+        <section class="tile">
+          <h3>2) Reduce disclosure by default</h3>
+          <p>Show only what’s needed for the current task. Minimize previews, exports, and “helpful” sharing prompts.</p>
+        </section>
+        <section class="tile">
+          <h3>3) Prefer reversible actions</h3>
+          <p>Undo, restore windows, and “safe trash” beat permanent deletes. Treat reversibility as a requirement, not a feature.</p>
+        </section>
+        <section class="tile">
+          <h3>4) Choose stable, plain-language labels</h3>
+          <p>Stress kills recall. Use consistent naming and avoid jargon when it matters. Don’t rename core concepts casually.</p>
+        </section>
+        <section class="tile">
+          <h3>5) Support “stop using it” safely</h3>
+          <p>Clear exit paths: export, delete, or freeze. Reversibility and local authority should extend to leaving.</p>
+        </section>
+        <section class="tile">
+          <h3>6) Degrade deliberately</h3>
+          <p>When storage/CPU/battery are scarce, reduce features without breaking the essential workflow.</p>
+        </section>
+      </div>
+
+      <h2>Where this connects in Protective Computing</h2>
+      <ul>
+        <li><a href="principles/exposure-minimization.html">Exposure Minimization</a>: collect and reveal less, by default.</li>
+        <li><a href="principles/reversibility.html">Reversibility</a>: make error recovery a first-class behavior.</li>
+        <li><a href="principles/degraded-functionality.html">Degraded Functionality</a>: define safe behavior under constraint.</li>
+        <li><a href="principles/essential-utility.html">Essential Utility</a>: keep the “must work” path simple and durable.</li>
+        <li><a href="principles/coercion-resistance.html">Coercion Resistance</a>: plan for pressure, not just accidents.</li>
+      </ul>
+
+      <h2>References</h2>
+      <ul>
+        <li><a href="https://doi.org/10.5281/zenodo.18688516">Protective Computing Canon (Zenodo DOI)</a></li>
+        <li><a href="https://doi.org/10.5281/zenodo.18782339">Field Guide v0.1 (Zenodo DOI)</a></li>
+        <li><a href="https://www.who.int/teams/health-and-care-workforce/gender-equity-and-human-rights/rights-and-gender-based-violence">WHO: Rights & gender-based violence (background context)</a></li>
+      </ul>
+
+      <div class="links">
+        <p style="margin:0;color:var(--faint);font-size:13px;">
+          Next: <a href="offline-first-health-architecture.html">Offline-first health architecture</a> ·
+          <a href="stability-assumption.html">Stability Assumption</a>
+        </p>
+      </div>
+    </article>
+  </div>
+</body>
+</html>

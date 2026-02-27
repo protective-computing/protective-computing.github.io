@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stability Assumption (Stability Bias) — Protective Computing</title>
+  <meta name="description" content="What the Stability Assumption is, why it fails under crisis and institutional instability, and how Protective Computing replaces it with enforceable constraints." />
+  <link rel="canonical" href="https://protective-computing.github.io/docs/stability-assumption.html" />
+
+  <meta property="og:site_name" content="Protective Computing" />
+  <meta property="og:title" content="Stability Assumption (Stability Bias)" />
+  <meta property="og:description" content="Why ‘normal operating conditions’ isn’t a safe default, and how to design systems that degrade safely." />
+  <meta property="og:url" content="https://protective-computing.github.io/docs/stability-assumption.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://protective-computing.github.io/assets/og/protective-computing.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Stability Assumption (Stability Bias)" />
+  <meta name="twitter:description" content="Why ‘normal operating conditions’ isn’t a safe default, and how to design systems that degrade safely." />
+  <meta name="twitter:image" content="https://protective-computing.github.io/assets/og/protective-computing.png" />
+
+  <style>
+    :root{
+      --bg: #070A10;
+      --panel: rgba(255,255,255,0.06);
+      --panel2: rgba(255,255,255,0.04);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.68);
+      --faint: rgba(255,255,255,0.52);
+      --line: rgba(255,255,255,0.10);
+      --brand: #34d3ff;
+      --brand2:#7c5cff;
+      --shadow: 0 18px 55px rgba(0,0,0,.55);
+      --radius: 18px;
+    }
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(124,92,255,.18), transparent 60%),
+                  radial-gradient(1100px 650px at 90% 15%, rgba(52,211,255,.14), transparent 55%),
+                  radial-gradient(900px 500px at 50% 90%, rgba(52,211,255,.10), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      letter-spacing: -0.015em;
+    }
+    a{ color: inherit; text-decoration: none; }
+    a:hover{ text-decoration: underline; text-underline-offset: 3px; }
+    :focus-visible{ outline: 2px solid rgba(52,211,255,0.55); outline-offset: 2px; }
+
+    .wrap{ max-width: 980px; margin: 0 auto; padding: 28px 22px 80px; }
+    .back{
+      display:inline-block;
+      padding: 9px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+    .back:hover{ background: rgba(255,255,255,0.06); text-decoration:none; color: var(--text); }
+
+    .card{ border:1px solid var(--line); background: var(--panel); border-radius: 22px; padding: 22px; box-shadow: var(--shadow); }
+    h1{ margin: 0 0 10px; font-size: clamp(28px, 3.6vw, 44px); letter-spacing: -0.04em; }
+    .subtitle{ margin:0 0 18px; color: var(--muted); line-height: 1.7; max-width: 75ch; }
+
+    h2{ margin: 22px 0 10px; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); }
+    p, li{ color: var(--muted); line-height: 1.8; font-size: 15px; }
+    ul{ margin: 10px 0 0; padding-left: 18px; }
+    .callout{ margin-top: 14px; padding: 12px 14px; border:1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,0.03); }
+    .callout strong{ color: var(--text); }
+    code{ background: rgba(0,0,0,0.28); border: 1px solid var(--line); padding: 2px 6px; border-radius: 8px; font-size: 12px; color: var(--text); }
+    .links{ margin-top: 18px; border-top: 1px solid var(--line); padding-top: 14px; }
+    .links a{ color: var(--text); }
+  </style>
+
+  <!-- Privacy-friendly analytics by Plausible -->
+  <script async src="https://plausible.io/js/pa-_ThpRaAClu8dKUNrYHpiL.js"></script>
+  <script>
+    globalThis.plausible = globalThis.plausible || function () {
+      globalThis.plausible.q = globalThis.plausible.q || [];
+      globalThis.plausible.q.push(arguments);
+    };
+    globalThis.plausible.init = globalThis.plausible.init || function (options) {
+      globalThis.plausible.o = options || {};
+    };
+    globalThis.plausible.init();
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="../">← Home</a>
+
+    <article class="card">
+      <h1>Stability Assumption (Stability Bias)</h1>
+      <p class="subtitle">
+        Most software is quietly built on a Stability Assumption: that the world is predictable enough that “normal operating
+        conditions” hold most of the time. Protective Computing treats that as a design error.
+      </p>
+
+      <h2>Definition</h2>
+      <p>
+        The Stability Assumption is the belief (usually implicit) that users have reliable connectivity, safe environments,
+        uninterrupted attention, stable institutions, and time to recover from mistakes.
+        A related failure mode is <em>stability bias</em>: teams treat instability as an edge case and postpone protective behavior
+        to “later” — until the product becomes too coupled to reverse.
+      </p>
+
+      <h2>Why It Fails</h2>
+      <p>
+        Under crisis, coercion, illness, displacement, or institutional instability, software that optimizes for engagement and
+        growth can produce irreversible harm: lockout, forced disclosure, account seizure, and data loss.
+        These aren’t rare corner cases for many populations — they’re predictable operating conditions.
+      </p>
+      <ul>
+        <li><strong>Connectivity collapses</strong>: outages, throttling, air-gapped environments, roaming costs.</li>
+        <li><strong>Attention collapses</strong>: cognitive fatigue, panic, sleep deprivation, medical stress.</li>
+        <li><strong>Safety collapses</strong>: coercion, surveillance, device seizure, forced unlock.</li>
+        <li><strong>Institutional trust collapses</strong>: arbitrary moderation, hostile HR/legal, shifting policy regimes.</li>
+      </ul>
+
+      <h2>Protective Replacement: Enforceable Constraints</h2>
+      <p>
+        Protective Computing replaces “assume stability” with explicit constraints you can test and audit:
+      </p>
+      <ul>
+        <li><a href="principles/reversibility.html">Reversibility</a>: destructive actions remain undoable; failure doesn’t become permanent.</li>
+        <li><a href="principles/exposure-minimization.html">Exposure Minimization</a>: collect less, retain less, reveal less by default.</li>
+        <li><a href="principles/local-authority.html">Local Authority</a>: preserve user control even offline and under delay.</li>
+        <li><a href="principles/degraded-functionality.html">Degraded Functionality</a>: define acceptable behavior under scarcity.</li>
+        <li><a href="principles/coercion-resistance.html">Coercion Resistance</a>: design for hostile contexts and forced disclosure.</li>
+        <li><a href="principles/essential-utility.html">Essential Utility</a>: optimize for survival tasks and critical paths, not retention.</li>
+      </ul>
+
+      <div class="callout">
+        <strong>Practical heuristic:</strong>
+        If a design requires “the user can just…” (remember a password, find a code, call support, read fine print, wait 48 hours),
+        you’re probably depending on stability.
+      </div>
+
+      <h2>Verification Mindset</h2>
+      <p>
+        Treat stability as a hypothesis, not a fact. Write down what “degradation” means for your product (battery low, no network,
+        hostile device access) and attach verification procedures that would fail if the system regresses.
+      </p>
+      <p>
+        The Protective Computing spec is written to support this: requirements are normative and paired with evidence expectations.
+        Start here: <a href="spec/v1.0.html">Specification v1.0</a>.
+      </p>
+
+      <h2>References</h2>
+      <ul>
+        <li><a href="https://doi.org/10.5281/zenodo.18688516">Protective Computing Canon (Zenodo DOI)</a></li>
+        <li><a href="https://doi.org/10.5281/zenodo.18782339">Field Guide v0.1 (Zenodo DOI)</a></li>
+      </ul>
+
+      <div class="links">
+        <p style="margin:0;color:var(--faint);font-size:13px;">
+          Next: <a href="offline-first-health-architecture.html">Offline-first health architecture</a> ·
+          <a href="trauma-informed-software-patterns.html">Trauma-informed software patterns</a>
+        </p>
+      </div>
+    </article>
+  </div>
+</body>
+</html>

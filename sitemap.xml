@@ -2,13 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://protective-computing.github.io/</loc>
-    <lastmod>2026-02-26T22:21:50-08:00</lastmod>
+    <lastmod>2026-02-27T00:52:46-08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://protective-computing.github.io/docs/getting-started.html</loc>
     <lastmod>2026-02-26T22:11:23-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://protective-computing.github.io/docs/stability-assumption.html</loc>
+    <lastmod>2026-02-27T00:52:46-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://protective-computing.github.io/docs/offline-first-health-architecture.html</loc>
+    <lastmod>2026-02-27T00:52:46-08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://protective-computing.github.io/docs/trauma-informed-software-patterns.html</loc>
+    <lastmod>2026-02-27T00:52:46-08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
