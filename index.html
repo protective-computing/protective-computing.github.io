@@ -24,13 +24,28 @@
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebSite",
+      "@id": "https://protective-computing.github.io/#website",
+      "name": "Protective Computing",
+      "url": "https://protective-computing.github.io/",
+      "publisher": { "@id": "https://protective-computing.github.io/#org" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://protective-computing.github.io/#webpage-home",
+      "url": "https://protective-computing.github.io/",
+      "name": "Protective Computing",
+      "isPartOf": { "@id": "https://protective-computing.github.io/#website" },
+      "about": { "@id": "https://protective-computing.github.io/#article" }
+    },
+    {
       "@type": "Person",
-      "@id": "https://protective-computing.github.io/#person-k-overton",
+      "@id": "https://protective-computing.github.io/#person",
       "name": "K, Overton"
     },
     {
       "@type": "Organization",
-      "@id": "https://protective-computing.github.io/#org-crisiscore",
+      "@id": "https://protective-computing.github.io/#org",
       "name": "CrisisCore Systems",
       "url": "https://protective-computing.github.io/",
       "sameAs": [
@@ -41,31 +56,39 @@
     },
     {
       "@type": "ScholarlyArticle",
-      "@id": "https://protective-computing.github.io/#scholarlyarticle-protective-computing",
+      "@id": "https://protective-computing.github.io/#article",
       "headline": "Protective Computing in Conditions of Human Vulnerability",
       "name": "Protective Computing in Conditions of Human Vulnerability",
       "description": "Protective Computing: systems design under conditions of human vulnerability.",
       "inLanguage": "en",
-      "author": { "@id": "https://protective-computing.github.io/#person-k-overton" },
-      "publisher": { "@id": "https://protective-computing.github.io/#org-crisiscore" },
-      "url": "https://protective-computing.github.io/",
-      "mainEntityOfPage": "https://protective-computing.github.io/",
+      "author": { "@id": "https://protective-computing.github.io/#person" },
+      "publisher": { "@id": "https://protective-computing.github.io/#org" },
+      "url": "https://doi.org/10.5281/zenodo.18688516",
+      "mainEntityOfPage": { "@id": "https://protective-computing.github.io/#webpage-home" },
       "identifier": "https://doi.org/10.5281/zenodo.18688516",
+      "isPartOf": { "@id": "https://protective-computing.github.io/#website" },
       "sameAs": [
         "https://doi.org/10.5281/zenodo.18688516"
+      ],
+      "citation": [
+        {
+          "@type": "CreativeWork",
+          "name": "Protective Computing Canon (Zenodo record)",
+          "url": "https://doi.org/10.5281/zenodo.18688516"
+        }
       ],
       "license": "https://creativecommons.org/licenses/by/4.0/"
     },
     {
       "@type": "SoftwareApplication",
-      "@id": "https://protective-computing.github.io/#softwareapp-paintracker",
+      "@id": "https://protective-computing.github.io/#app",
       "name": "PainTracker",
       "applicationCategory": "HealthApplication",
       "operatingSystem": "Web",
       "url": "https://paintracker.ca/",
-      "author": { "@id": "https://protective-computing.github.io/#person-k-overton" },
-      "publisher": { "@id": "https://protective-computing.github.io/#org-crisiscore" },
-      "isBasedOn": "https://protective-computing.github.io/docs/reference-implementation/paintracker-mapping.html"
+      "author": { "@id": "https://protective-computing.github.io/#person" },
+      "publisher": { "@id": "https://protective-computing.github.io/#org" },
+      "subjectOf": "https://protective-computing.github.io/docs/reference-implementation/paintracker-mapping.html"
     }
   ]
 }
