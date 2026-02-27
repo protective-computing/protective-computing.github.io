@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Offline-first Health Architecture — Protective Computing</title>
-  <meta name="description" content="A protective, offline-first architecture for health and medical apps: local authority, exposure minimization, reversible operations, and safe sync." />
+  <title>Offline-first Health Architecture: Local Authority + Safe Sync — Protective Computing</title>
+  <meta name="description" content="A protective offline-first health architecture for sensitive apps: local encrypted store, intent log, deterministic sync, and exposure minimization." />
   <link rel="canonical" href="https://protective-computing.github.io/docs/offline-first-health-architecture.html" />
 
   <meta property="og:site_name" content="Protective Computing" />
-  <meta property="og:title" content="Offline-first Health Architecture" />
-  <meta property="og:description" content="How to build health apps that remain safe and useful with no network, high stress, and sensitive data." />
+  <meta property="og:title" content="Offline-first Health Architecture: Local Authority + Safe Sync" />
+  <meta property="og:description" content="A protective offline-first health architecture for sensitive apps: local encrypted store, intent log, deterministic sync, and exposure minimization." />
   <meta property="og:url" content="https://protective-computing.github.io/docs/offline-first-health-architecture.html" />
   <meta property="og:type" content="article" />
   <meta property="og:image" content="https://protective-computing.github.io/assets/og/protective-computing.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Offline-first Health Architecture" />
-  <meta name="twitter:description" content="How to build health apps that remain safe and useful with no network, high stress, and sensitive data." />
+  <meta name="twitter:title" content="Offline-first Health Architecture: Local Authority + Safe Sync" />
+  <meta name="twitter:description" content="A protective offline-first health architecture for sensitive apps: local encrypted store, intent log, deterministic sync, and exposure minimization." />
   <meta name="twitter:image" content="https://protective-computing.github.io/assets/og/protective-computing.png" />
 
   <style>
@@ -72,8 +72,10 @@
 
     .callout{ margin-top: 14px; padding: 12px 14px; border:1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,0.03); }
     .callout strong{ color: var(--text); }
-    .links{ margin-top: 18px; border-top: 1px solid var(--line); padding-top: 14px; }
-    .links a{ color: var(--text); }
+    .related{ margin-top: 18px; padding: 12px 14px; border:1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,0.03); }
+    .related-title{ margin: 0 0 8px; color: var(--faint); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .related ul{ margin: 0; padding-left: 18px; }
+    .related a{ color: var(--text); }
   </style>
 
   <!-- Privacy-friendly analytics by Plausible -->
@@ -94,7 +96,7 @@
     <a class="back" href="../">← Home</a>
 
     <article class="card">
-      <h1>Offline-first Health Architecture</h1>
+      <h1>Offline-first Health Architecture: Local Authority + Safe Sync</h1>
       <p class="subtitle">
         Health and medical-adjacent apps have the worst possible combination of requirements: highly sensitive data, high-stress use,
         and real harm when systems fail. Offline-first is necessary — but not sufficient. Protective Computing adds the constraints
@@ -167,12 +169,13 @@
         <li><a href="https://www.inkandswitch.com/local-first/">Local-first Software (Ink & Switch)</a></li>
       </ul>
 
-      <div class="links">
-        <p style="margin:0;color:var(--faint);font-size:13px;">
-          Next: <a href="stability-assumption.html">Stability Assumption</a> ·
-          <a href="trauma-informed-software-patterns.html">Trauma-informed software patterns</a>
-        </p>
-      </div>
+      <aside class="related" aria-label="Related pages">
+        <p class="related-title">Related pages</p>
+        <ul>
+          <li><a href="stability-assumption.html">Stability Assumption</a></li>
+          <li><a href="trauma-informed-software-patterns.html">Trauma-informed software patterns</a></li>
+        </ul>
+      </aside>
     </article>
   </div>
 </body>

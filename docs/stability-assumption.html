@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stability Assumption (Stability Bias) — Protective Computing</title>
-  <meta name="description" content="What the Stability Assumption is, why it fails under crisis and institutional instability, and how Protective Computing replaces it with enforceable constraints." />
+  <title>Stability Assumption: Why “Normal Operating Conditions” Fail — Protective Computing</title>
+  <meta name="description" content="The Stability Assumption is a design error: when crisis, coercion, or illness hit, “normal” fails. Replace it with enforceable protective constraints." />
   <link rel="canonical" href="https://protective-computing.github.io/docs/stability-assumption.html" />
 
   <meta property="og:site_name" content="Protective Computing" />
-  <meta property="og:title" content="Stability Assumption (Stability Bias)" />
-  <meta property="og:description" content="Why ‘normal operating conditions’ isn’t a safe default, and how to design systems that degrade safely." />
+  <meta property="og:title" content="Stability Assumption: Why “Normal” Fails" />
+  <meta property="og:description" content="The Stability Assumption is a design error: when crisis, coercion, or illness hit, “normal” fails. Replace it with enforceable protective constraints." />
   <meta property="og:url" content="https://protective-computing.github.io/docs/stability-assumption.html" />
   <meta property="og:type" content="article" />
   <meta property="og:image" content="https://protective-computing.github.io/assets/og/protective-computing.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Stability Assumption (Stability Bias)" />
-  <meta name="twitter:description" content="Why ‘normal operating conditions’ isn’t a safe default, and how to design systems that degrade safely." />
+  <meta name="twitter:title" content="Stability Assumption: Why “Normal” Fails" />
+  <meta name="twitter:description" content="The Stability Assumption is a design error: when crisis, coercion, or illness hit, “normal” fails. Replace it with enforceable protective constraints." />
   <meta name="twitter:image" content="https://protective-computing.github.io/assets/og/protective-computing.png" />
 
   <style>
@@ -71,8 +71,10 @@
     .callout{ margin-top: 14px; padding: 12px 14px; border:1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,0.03); }
     .callout strong{ color: var(--text); }
     code{ background: rgba(0,0,0,0.28); border: 1px solid var(--line); padding: 2px 6px; border-radius: 8px; font-size: 12px; color: var(--text); }
-    .links{ margin-top: 18px; border-top: 1px solid var(--line); padding-top: 14px; }
-    .links a{ color: var(--text); }
+    .related{ margin-top: 18px; padding: 12px 14px; border:1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,0.03); }
+    .related-title{ margin: 0 0 8px; color: var(--faint); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .related ul{ margin: 0; padding-left: 18px; }
+    .related a{ color: var(--text); }
   </style>
 
   <!-- Privacy-friendly analytics by Plausible -->
@@ -93,7 +95,7 @@
     <a class="back" href="../">← Home</a>
 
     <article class="card">
-      <h1>Stability Assumption (Stability Bias)</h1>
+      <h1>Stability Assumption: Why “Normal Operating Conditions” Fail</h1>
       <p class="subtitle">
         Most software is quietly built on a Stability Assumption: that the world is predictable enough that “normal operating
         conditions” hold most of the time. Protective Computing treats that as a design error.
@@ -155,12 +157,13 @@
         <li><a href="https://doi.org/10.5281/zenodo.18782339">Field Guide v0.1 (Zenodo DOI)</a></li>
       </ul>
 
-      <div class="links">
-        <p style="margin:0;color:var(--faint);font-size:13px;">
-          Next: <a href="offline-first-health-architecture.html">Offline-first health architecture</a> ·
-          <a href="trauma-informed-software-patterns.html">Trauma-informed software patterns</a>
-        </p>
-      </div>
+      <aside class="related" aria-label="Related pages">
+        <p class="related-title">Related pages</p>
+        <ul>
+          <li><a href="offline-first-health-architecture.html">Offline-first health architecture</a></li>
+          <li><a href="trauma-informed-software-patterns.html">Trauma-informed software patterns</a></li>
+        </ul>
+      </aside>
     </article>
   </div>
 </body>

@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trauma-informed Software Patterns — Protective Computing</title>
-  <meta name="description" content="Trauma-informed patterns for protective software: reduce cognitive load, keep users safe under stress, and ensure essential tasks work without trust or stability." />
+  <title>Trauma-informed Software Patterns: Safety Under Stress — Protective Computing</title>
+  <meta name="description" content="Trauma-informed software patterns for safety under stress: reduce cognitive load and disclosure with reversible actions, predictable offline behavior, and deliberate degradation." />
   <link rel="canonical" href="https://protective-computing.github.io/docs/trauma-informed-software-patterns.html" />
 
   <meta property="og:site_name" content="Protective Computing" />
-  <meta property="og:title" content="Trauma-informed Software Patterns" />
-  <meta property="og:description" content="Practical patterns for safety under stress: minimal disclosure, reversible actions, and predictable offline behavior." />
+  <meta property="og:title" content="Trauma-informed Software Patterns: Safety Under Stress" />
+  <meta property="og:description" content="Trauma-informed software patterns for safety under stress: reduce cognitive load and disclosure with reversible actions, predictable offline behavior, and deliberate degradation." />
   <meta property="og:url" content="https://protective-computing.github.io/docs/trauma-informed-software-patterns.html" />
   <meta property="og:type" content="article" />
   <meta property="og:image" content="https://protective-computing.github.io/assets/og/protective-computing.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Trauma-informed Software Patterns" />
-  <meta name="twitter:description" content="Practical patterns for safety under stress: minimal disclosure, reversible actions, and predictable offline behavior." />
+  <meta name="twitter:title" content="Trauma-informed Software Patterns: Safety Under Stress" />
+  <meta name="twitter:description" content="Trauma-informed software patterns for safety under stress: reduce cognitive load and disclosure with reversible actions, predictable offline behavior, and deliberate degradation." />
   <meta name="twitter:image" content="https://protective-computing.github.io/assets/og/protective-computing.png" />
 
   <style>
@@ -87,7 +87,10 @@
     .tile h3{ margin: 0 0 6px; font-size: 15px; color: var(--text); }
     .tile p{ margin: 0; color: var(--muted); font-size: 14px; }
 
-    .links{ margin-top: 18px; border-top: 1px solid var(--line); padding-top: 14px; }
+    .related{ margin-top: 18px; padding: 12px 14px; border:1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,0.03); }
+    .related-title{ margin: 0 0 8px; color: var(--faint); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .related ul{ margin: 0; padding-left: 18px; }
+    .related a{ color: var(--text); }
   </style>
 
   <!-- Privacy-friendly analytics by Plausible -->
@@ -108,7 +111,7 @@
     <a class="back" href="../">← Home</a>
 
     <article class="card">
-      <h1>Trauma-informed Software Patterns</h1>
+      <h1>Trauma-informed Software Patterns: Safety Under Stress</h1>
       <p class="subtitle">
         “Trauma-informed” here is not a UI aesthetic — it’s a safety property: in high stress, people have less time, less attention,
         and less tolerance for surprises. Protective software should reduce cognitive load, minimize exposure, and fail safely.
@@ -158,12 +161,13 @@
         <li><a href="https://www.who.int/teams/health-and-care-workforce/gender-equity-and-human-rights/rights-and-gender-based-violence">WHO: Rights & gender-based violence (background context)</a></li>
       </ul>
 
-      <div class="links">
-        <p style="margin:0;color:var(--faint);font-size:13px;">
-          Next: <a href="offline-first-health-architecture.html">Offline-first health architecture</a> ·
-          <a href="stability-assumption.html">Stability Assumption</a>
-        </p>
-      </div>
+      <aside class="related" aria-label="Related pages">
+        <p class="related-title">Related pages</p>
+        <ul>
+          <li><a href="stability-assumption.html">Stability Assumption</a></li>
+          <li><a href="offline-first-health-architecture.html">Offline-first health architecture</a></li>
+        </ul>
+      </aside>
     </article>
   </div>
 </body>
