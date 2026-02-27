@@ -16,6 +16,7 @@
 <meta name="twitter:title" content="Protective Computing" />
 <meta name="twitter:description" content="Protective Computing: systems design under conditions of human vulnerability." />
 <meta name="twitter:image" content="https://protective-computing.github.io/assets/logo.png" />
+<meta name="theme-color" content="#070A10" />
 <link rel="icon" href="assets/logo.png" type="image/png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,6 +53,26 @@
 
   a{ color: inherit; text-decoration: none; }
   a:hover{ text-decoration: underline; text-underline-offset: 3px; }
+
+  .skip{
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: rgba(0,0,0,0.75);
+    color: var(--text);
+    transform: translateY(-160%);
+    transition: transform 120ms ease;
+    z-index: 10;
+  }
+  .skip:focus{ transform: translateY(0); outline: none; }
+
+  :focus-visible{
+    outline: 2px solid rgba(52,211,255,0.55);
+    outline-offset: 2px;
+  }
 
   .wrap{
     max-width: 1080px;
@@ -204,6 +225,43 @@
   }
   .card.soft{ background: var(--panel2); }
 
+  .quick{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 14px;
+  }
+  @media (max-width: 900px){
+    .quick{ grid-template-columns: 1fr; }
+  }
+  .quick .q{
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px;
+    background: rgba(255,255,255,0.03);
+  }
+  .quick .k{
+    display:inline-flex;
+    align-items:center;
+    gap: 8px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--faint);
+    font-weight: 800;
+  }
+  .quick .q h3{
+    margin: 8px 0 6px;
+    font-size: 15px;
+    letter-spacing: -0.02em;
+  }
+  .quick .q p{
+    margin: 0;
+    color: var(--muted);
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+
   .flow{
     display:flex;
     flex-wrap:wrap;
@@ -283,6 +341,7 @@
     .principles{ grid-template-columns: 1fr; }
   }
   .chip{
+    display:block;
     border: 1px solid var(--line);
     background: rgba(255,255,255,0.03);
     border-radius: 14px;
@@ -299,16 +358,15 @@
     font-size: 13.5px;
     margin-bottom: 4px;
   }
-  .chip .chip-icon{
-    font-size: 22px;
-    margin-bottom: 8px;
-    display: inline-block;
-    opacity: 0.8;
-  }
   .chip .pdesc{
     color: var(--muted);
     font-size: 12.5px;
     line-height: 1.5;
+  }
+
+  .chip:hover{
+    background: rgba(255,255,255,0.06);
+    text-decoration:none;
   }
 
   /* Footer */
@@ -327,30 +385,37 @@
     margin: 22px 0 16px;
   }
   code{
-    background: rgba(255,255,255,0.06);
+    background: rgba(0,0,0,0.28);
     border: 1px solid var(--line);
     padding: 2px 6px;
     border-radius: 8px;
     font-size: 12px;
-    color: rgba(255,255,255,0.85);
+    color: var(--text);
   }
 </style>
 <!-- Privacy-friendly analytics by Plausible -->
 <script async src="https://plausible.io/js/pa-_ThpRaAClu8dKUNrYHpiL.js"></script>
 <script>
-  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
-  plausible.init()
+  globalThis.plausible = globalThis.plausible || function () {
+    globalThis.plausible.q = globalThis.plausible.q || [];
+    globalThis.plausible.q.push(arguments);
+  };
+  globalThis.plausible.init = globalThis.plausible.init || function (options) {
+    globalThis.plausible.o = options || {};
+  };
+  globalThis.plausible.init();
 </script>
 </head>
 
 <body>
+<a class="skip" href="#main">Skip to content</a>
 <div class="wrap">
 
-  <div class="top">
+  <header class="top" role="banner">
     <div class="brand">
       <div class="mark" title="Protective Computing">
         <!-- Put your logo at /assets/logo.png (optional). If it doesn't exist, this box just stays as a gradient. -->
-        <img src="assets/logo.png" alt="" onerror="this.remove();">
+        <img src="assets/logo.png" alt="Protective Computing logo">
       </div>
       <div class="titleblock">
         <div class="name">Protective Computing</div>
@@ -358,7 +423,7 @@
       </div>
     </div>
 
-    <div class="nav">
+    <nav class="nav" aria-label="Primary">
       <a class="pill" href="docs/getting-started.html">Getting Started</a>
       <a class="pill" href="docs/principles/">Principles</a>
       <a class="pill" href="docs/spec/v1.0.html">Specification v1.0</a>
@@ -367,15 +432,18 @@
       <a class="pill" href="https://doi.org/10.5281/zenodo.18688516">DOI</a>
       <a class="pill" href="https://zenodo.org/communities/protective-computing">Zenodo</a>
       <a class="pill" href="https://github.com/protective-computing">GitHub</a>
-    </div>
-  </div>
+    </nav>
+  </header>
+
+  <main id="main">
 
   <section class="hero">
     <h1>Protective Computing</h1>
     <p class="tagline">
-      A systems-engineering discipline focused on software designed for conditions of
-      <span class="accent">human vulnerability</span>—crisis, displacement, illness, coercion, and institutional instability.
-      It rejects the Stability Assumption and prioritizes containment, reversibility, and essential utility under degradation.
+      A systems-engineering discipline for software built under conditions of
+      <span class="accent">human vulnerability</span>—crisis, illness, coercion, displacement, and institutional instability.
+      It rejects the Stability Assumption and replaces it with enforceable constraints: reversibility, exposure minimization,
+      local authority, degraded functionality, coercion resistance, and essential utility.
     </p>
 
     <div class="cta">
@@ -385,6 +453,7 @@
       <a class="btn" href="docs/reference-implementation/paintracker-mapping.html">View Reference Implementation</a>
       <a class="btn" href="docs/independent-review.html">Contribute Your Review</a>
       <a class="btn" href="https://doi.org/10.5281/zenodo.18688516">Read the Canon (v1.3)</a>
+      <a class="btn" href="https://doi.org/10.5281/zenodo.18782339">Read the Field Guide (v0.1)</a>
       <a class="btn" href="https://zenodo.org/communities/protective-computing">Browse the Community</a>
       <a class="btn" href="https://github.com/protective-computing/protective-computing.github.io">Edit this site</a>
     </div>
@@ -393,6 +462,27 @@
       <span><span class="dot">●</span> License: <code>CC-BY 4.0 (Canon)</code></span>
       <span><span class="dot">●</span> Scope: safety-critical HCI, privacy engineering, resilience</span>
       <span><span class="dot">●</span> Anchor: <code>10.5281/zenodo.18688516</code></span>
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:18px;">
+    <h2>Start Here</h2>
+    <div class="quick" aria-label="Suggested reading order">
+      <div class="q">
+        <div class="k">Step 1</div>
+        <h3><a href="docs/getting-started.html">Adopt the mindset</a></h3>
+        <p>Get the practical framing, vocabulary, and where Protective Computing fits in your engineering process.</p>
+      </div>
+      <div class="q">
+        <div class="k">Step 2</div>
+        <h3><a href="docs/spec/v1.0.html">Use the constraints</a></h3>
+        <p>Read the normative spec (MUST / SHOULD / MUST NOT) and apply it in design reviews and audits.</p>
+      </div>
+      <div class="q">
+        <div class="k">Step 3</div>
+        <h3><a href="docs/independent-review.html">Strengthen the canon</a></h3>
+        <p>Contribute independent review with concrete verification procedures and evidence expectations.</p>
+      </div>
     </div>
   </section>
 
@@ -486,46 +576,55 @@
           <span style="font-size:12.5px;color:var(--faint);">Operational companion for systems engineers</span></li>
       </ul>
 
+      <p style="margin:12px 0 8px;color:var(--text);font-size:13.5px;font-weight:700;">Specification</p>
+      <ul class="list">
+        <li><a href="docs/spec/v1.0.html">Protective Computing Specification v1.0</a><br>
+          <span style="font-size:12.5px;color:var(--faint);">Normative requirements with verification procedures</span></li>
+        <li><a href="docs/spec/v1.0-must-justifications.html">MUST Justifications Ledger</a><br>
+          <span style="font-size:12.5px;color:var(--faint);">Rationale, threat tags, and status taxonomy for MUSTs</span></li>
+      </ul>
+
       <p style="margin:12px 0 8px;color:var(--text);font-size:13.5px;font-weight:700;">Tooling (Forthcoming)</p>
       <ul class="list">
-        <li>Protective Legitimacy Score — Operational Rubric v1.0</li>
-        <li>Protective Design Patterns v0.1</li>
-        <li>Implementation Companion Guide</li>
-        <li>Threat Modeling Templates for Vulnerability Contexts</li>
+        <li><a href="PLS_RUBRIC_v1_0_rc1.pdf">Protective Legitimacy Score — Operational Rubric v1.0 (PDF)</a></li>
+        <li><a href="https://github.com/protective-computing/protective-computing.github.io/blob/main/IMPLEMENTATION_PATTERNS.md">Protective Design Patterns v0.1 (draft)</a></li>
+        <li><a href="https://github.com/protective-computing/protective-computing.github.io/blob/main/THREAT_MODELS.md">Threat Modeling Templates (draft)</a></li>
       </ul>
 
       <div class="line"></div>
 
       <h2>Core Principles</h2>
       <div class="principles">
-        <div class="chip">          <div class="chip-icon">⟲</div>          <div class="pname">Reversibility</div>
+        <a class="chip" href="docs/principles/reversibility.html">
+          <div class="chip-icon">⟲</div>
+          <div class="pname">Reversibility</div>
           <div class="pdesc">User actions and system changes remain undoable; failures don’t become permanent harm.</div>
-        </div>
-        <div class="chip">
+        </a>
+        <a class="chip" href="docs/principles/exposure-minimization.html">
           <div class="chip-icon">◐</div>
           <div class="pname">Exposure Minimization</div>
           <div class="pdesc">Reduce data surface by default; collect only what is essential, locally, with intent.</div>
-        </div>
-        <div class="chip">
+        </a>
+        <a class="chip" href="docs/principles/local-authority.html">
           <div class="chip-icon">⬇</div>
           <div class="pname">Local Authority</div>
           <div class="pdesc">The user retains control even offline; autonomy survives institutional delay.</div>
-        </div>
-        <div class="chip">
+        </a>
+        <a class="chip" href="docs/principles/coercion-resistance.html">
           <div class="chip-icon">🛡️</div>
           <div class="pname">Coercion Resistance</div>
           <div class="pdesc">Design for hostile contexts: pressure, surveillance, forced disclosure, compromised devices.</div>
-        </div>
-        <div class="chip">
+        </a>
+        <a class="chip" href="docs/principles/degraded-functionality.html">
           <div class="chip-icon">⚡</div>
           <div class="pname">Degraded Functionality</div>
           <div class="pdesc">Operate under battery scarcity, network collapse, cognitive fatigue, and time pressure.</div>
-        </div>
-        <div class="chip">
+        </a>
+        <a class="chip" href="docs/principles/essential-utility.html">
           <div class="chip-icon">◆</div>
           <div class="pname">Essential Utility</div>
           <div class="pdesc">Optimize for survival tasks, not engagement metrics; prioritize the critical path.</div>
-        </div>
+        </a>
       </div>
     </section>
 
@@ -549,6 +648,15 @@
 
       <div class="line"></div>
 
+      <h2>Evidence</h2>
+      <ul class="list">
+        <li><a href="https://github.com/protective-computing/protective-computing.github.io/blob/main/AUDIT_EVIDENCE.md">Audit evidence index</a></li>
+        <li><a href="https://github.com/protective-computing/protective-computing.github.io/blob/main/COMPLIANCE_AUDIT_MATRIX.md">Compliance audit matrix</a></li>
+        <li><a href="https://github.com/protective-computing/protective-computing.github.io/blob/main/INDEPENDENT_REVIEW_CHECKLIST.md">Independent review checklist</a></li>
+      </ul>
+
+      <div class="line"></div>
+
       <h2>How to cite</h2>
       <p style="margin:0 0 8px;color:var(--muted);font-size:13px;line-height:1.6;">
         Non-technical summary: design software that stays safe and useful when people are vulnerable and systems are unstable.
@@ -564,6 +672,8 @@
     <div>Protective Computing — topic community & engineering surface.</div>
     <div>Hosted on GitHub Pages.</div>
   </footer>
+
+  </main>
 
 </div>
 </body>
