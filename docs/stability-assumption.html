@@ -70,6 +70,7 @@
     ul{ margin: 10px 0 0; padding-left: 18px; }
     .callout{ margin-top: 14px; padding: 12px 14px; border:1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,0.03); }
     .callout strong{ color: var(--text); }
+    .hook{ margin: 14px 0 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,0.03); color: var(--text); line-height: 1.75; }
     code{ background: rgba(0,0,0,0.28); border: 1px solid var(--line); padding: 2px 6px; border-radius: 8px; font-size: 12px; color: var(--text); }
     .related{ margin-top: 18px; padding: 12px 14px; border:1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,0.03); }
     .related-title{ margin: 0 0 8px; color: var(--faint); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
@@ -99,6 +100,13 @@
       <p class="subtitle">
         Most software is quietly built on a Stability Assumption: that the world is predictable enough that “normal operating
         conditions” hold most of the time. Protective Computing treats that as a design error.
+      </p>
+
+      <p class="hook">
+        Most software fails in the real world for a simple reason: it assumes the world stays normal.
+        When the network drops, when attention is scarce, or when safety disappears, the product stops being helpful and starts
+        producing harm — lockout, forced disclosure, and irreversible mistakes.
+        Protective Computing is the discipline of designing for those moments on purpose.
       </p>
 
       <h2>Definition</h2>
