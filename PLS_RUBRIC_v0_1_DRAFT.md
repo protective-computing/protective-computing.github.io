@@ -3,6 +3,13 @@
 ## 1. Purpose
 Convert principle conformance into an auditable, reproducible score for implementation review under vulnerability conditions.
 
+## 1.1 Research Foundation
+This rubric is part of the Protective Computing corpus and should be interpreted with the canonical structural paper:
+
+Overton, K. (2026). _Protective Computing Canon v1.0: A Structural Map of the Discipline._  
+Protective Computing Community.  
+https://doi.org/10.5281/zenodo.18887610
+
 ## 2. Scoring Model
 - Score range: `0–100`
 - Principle scores: `0–4` each
