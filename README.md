@@ -1,6 +1,11 @@
 # protective-computing.github.io
 Official landing page for the Protective Computing discipline — systems design under conditions of human vulnerability.
 
+## Primary citations
+
+- Canon (Structural Map) DOI: https://doi.org/10.5281/zenodo.18887610
+- Theory (Overton Framework v1.3) DOI: https://doi.org/10.5281/zenodo.18688516
+
 ## Local Preview
 
 Open `index.html` directly in a browser for a quick check, or run a minimal static server:
