@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Degraded-Mode UX Patterns — Protective Computing</title>
+<meta name="description" content="UX patterns for software that must function under low battery, weak connectivity, and resource constraints. A checklist for designing graceful degradation." />
+<link rel="canonical" href="https://protective-computing.github.io/docs/degraded-mode-ux-patterns.html" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Protective Computing" />
+<meta property="og:title" content="Degraded-Mode UX Patterns — Protective Computing" />
+<meta property="og:description" content="UX patterns for software that must function under low battery, weak connectivity, and resource constraints. A checklist for designing graceful degradation." />
+<meta property="og:url" content="https://protective-computing.github.io/docs/degraded-mode-ux-patterns.html" />
+<meta property="og:image" content="https://protective-computing.github.io/assets/logo.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Degraded-Mode UX Patterns — Protective Computing" />
+<meta name="twitter:description" content="UX patterns for software that must function under low battery, weak connectivity, and resource constraints. A checklist for designing graceful degradation." />
+<meta name="twitter:image" content="https://protective-computing.github.io/assets/logo.png" />
+<link rel="icon" href="../assets/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #070A10;
+    --panel: rgba(255,255,255,0.06);
+    --text: rgba(255,255,255,0.92);
+    --muted: rgba(255,255,255,0.68);
+    --faint: rgba(255,255,255,0.52);
+    --line: rgba(255,255,255,0.10);
+    --shadow: 0 18px 55px rgba(0,0,0,.55);
+  }
+  *{ box-sizing: border-box; }
+  html, body{ height: 100%; }
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(107,123,255,.14), transparent 60%),
+          radial-gradient(1100px 650px at 90% 15%, rgba(87,217,255,.16), transparent 55%),
+                var(--bg);
+    color: var(--text);
+    letter-spacing: -0.015em;
+  }
+  a{ color: #57d9ff; text-decoration: none; }
+  a:hover{ text-decoration: underline; text-underline-offset: 3px; }
+  .wrap{
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 22px 60px;
+  }
+  .back{
+    display: inline-block;
+    padding: 8px 12px;
+    margin-bottom: 20px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .back:hover{ background: rgba(255,255,255,0.04); }
+  h1{
+    font-size: 2.2rem;
+    line-height: 1.1;
+    margin: 0 0 10px;
+    font-weight: 850;
+  }
+  .subtitle{
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+  h2{
+    font-size: 1.6rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    font-weight: 800;
+  }
+  h3{
+    font-size: 1.1rem;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    font-weight: 750;
+    color: var(--text);
+  }
+  p, li{
+    color: var(--muted);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+  ul{
+    margin: 14px 0;
+    padding-left: 20px;
+  }
+  li{ margin: 8px 0; }
+  code{
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--line);
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--text);
+  }
+  .box{
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: 14px;
+    padding: 18px;
+    margin: 20px 0;
+  }
+  .box-title{
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  .checklist{
+    list-style: none;
+    padding-left: 0;
+  }
+  .checklist li{ padding-left: 24px; margin: 10px 0; position: relative; }
+  .checklist li:before{ content: "✓"; position: absolute; left: 0; color: #57d9ff; font-weight: bold; }
+  .pattern{
+    border: 1px solid rgba(87,217,255,0.15);
+    background: rgba(87,217,255,0.04);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin: 20px 0;
+  }
+  .pattern-label{
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(87,217,255,0.75);
+    margin-bottom: 8px;
+  }
+  .antipattern{
+    border: 1px solid rgba(255,100,100,0.18);
+    background: rgba(255,100,100,0.04);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin: 20px 0;
+  }
+  .antipattern-label{
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,130,130,0.75);
+    margin-bottom: 8px;
+  }
+  hr{
+    border: none;
+    height: 1px;
+    background: var(--line);
+    margin: 30px 0;
+  }
+</style>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-_ThpRaAClu8dKUNrYHpiL.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+</head>
+<body>
+<div class="wrap">
+  <a href="../" class="back">← Back to Home</a>
+  <a href="principles/degraded-functionality.html" class="back" style="margin-left:8px;">Degraded Functionality Principle →</a>
+
+  <h1>Degraded-Mode UX Patterns</h1>
+  <p class="subtitle">UX patterns for software that must function under low battery, weak connectivity, and resource constraints. A practical guide to graceful degradation.</p>
+
+  <p>
+    Graceful degradation is the discipline of ensuring that a system fails in the direction of less functionality rather than no functionality. Under Protective Computing, it is a design requirement, not a stretch goal.
+  </p>
+  <p>
+    This page catalogs the patterns that make degraded-mode operation practical, and the anti-patterns that make systems brittle under constraint. It is paired with the normative <a href="principles/degraded-functionality.html">Degraded-Infrastructure Functionality principle</a>.
+  </p>
+
+  <hr>
+
+  <h2>The Degraded-Mode Checklist</h2>
+  <p>Before launch, verify that your critical path survives each of these conditions:</p>
+  <div class="box">
+    <div class="box-title">Network degradation</div>
+    <ul class="checklist">
+      <li>Tested under simulated 2G (250 kbps, 300 ms latency)</li>
+      <li>Tested with total network absence (airplane mode)</li>
+      <li>Tested with intermittent connectivity (packet loss 30%+)</li>
+      <li>Core flows complete without a network round-trip</li>
+      <li>Timeout handling is graceful: users see a clear message, not a hang</li>
+    </ul>
+  </div>
+  <div class="box">
+    <div class="box-title">Device resource constraints</div>
+    <ul class="checklist">
+      <li>Tested on a low-end device profile (512 MB RAM, 2018-era CPU)</li>
+      <li>No memory crashes on core flows</li>
+      <li>Low-power mode does not break core functionality</li>
+      <li>Battery-intensive background processes are suppressed when battery is low</li>
+      <li>Core flows complete with less than 10% battery remaining</li>
+    </ul>
+  </div>
+  <div class="box">
+    <div class="box-title">Accessibility under constraint</div>
+    <ul class="checklist">
+      <li>Keyboard-only navigation works on all core flows</li>
+      <li>Core flows do not depend on animations, transitions, or CSS transforms</li>
+      <li>Core flows do not depend on JavaScript for basic interactivity</li>
+      <li>Text is readable without custom fonts (falls back to system fonts)</li>
+      <li>Core flows work with JavaScript disabled or blocked by content policy</li>
+    </ul>
+  </div>
+  <div class="box">
+    <div class="box-title">Screen and context constraints</div>
+    <ul class="checklist">
+      <li>Core flows are fully functional on screens 320px wide</li>
+      <li>Touch targets are at least 44×44px</li>
+      <li>No horizontal scrolling required on mobile viewports</li>
+      <li>High-contrast mode does not break the UI</li>
+      <li>Core flows work with OS text size set to maximum</li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <h2>Patterns: Network Resilience</h2>
+
+  <div class="pattern">
+    <div class="pattern-label">Pattern</div>
+    <h3 style="margin-top:0;">Optimistic UI with Local Write Queue</h3>
+    <p>
+      Write operations are accepted immediately into a local queue and confirmed to the user at once. Sync to the server happens asynchronously when connectivity is available. The user is never blocked waiting for a network acknowledgement.
+    </p>
+    <p><strong>When to use:</strong> Any operation that the user needs confirmed immediately — form submissions, record creation, updates.</p>
+  </div>
+
+  <div class="pattern">
+    <div class="pattern-label">Pattern</div>
+    <h3 style="margin-top:0;">Stale-While-Revalidate Cache</h3>
+    <p>
+      Serve cached data immediately while fetching fresh data in the background. The user sees content without waiting for a network round-trip. When fresh data arrives, update quietly if possible, or notify the user of changes if the difference matters.
+    </p>
+    <p><strong>When to use:</strong> Read-heavy flows where slightly stale data is acceptable — dashboards, history views, reference content.</p>
+  </div>
+
+  <div class="pattern">
+    <div class="pattern-label">Pattern</div>
+    <h3 style="margin-top:0;">Progressive Asset Loading</h3>
+    <p>
+      Load the minimum assets required for core functionality first. Load images, fonts, and enhancement scripts only after core content is interactive. Use <code>loading="lazy"</code> for images not in the initial viewport. Serve low-resolution image placeholders on constrained connections.
+    </p>
+    <p><strong>When to use:</strong> All pages with non-critical assets.</p>
+  </div>
+
+  <div class="antipattern">
+    <div class="antipattern-label">Anti-Pattern</div>
+    <h3 style="margin-top:0;">Blocking Spinner on Network Request</h3>
+    <p>
+      Displaying a full-screen or flow-blocking spinner while waiting for a server response assumes the network will respond quickly. On degraded connections, the spinner blocks the user indefinitely. There is no affordance to retry, cancel, or proceed offline.
+    </p>
+    <p><strong>Replace with:</strong> Show partial content immediately, indicate sync status non-blockingly (e.g., a small status indicator in the corner), and allow the user to proceed with locally available data.</p>
+  </div>
+
+  <hr>
+
+  <h2>Patterns: Power and Resource Conservation</h2>
+
+  <div class="pattern">
+    <div class="pattern-label">Pattern</div>
+    <h3 style="margin-top:0;">Passive Sync on Power and Wi-Fi</h3>
+    <p>
+      Heavy sync operations (full data refresh, media upload, large downloads) are scheduled only when the device is on Wi-Fi and charging. On battery with cellular, only essential sync occurs. Users can override this for urgent cases.
+    </p>
+    <p><strong>When to use:</strong> Apps that sync media, large datasets, or bulk records.</p>
+  </div>
+
+  <div class="pattern">
+    <div class="pattern-label">Pattern</div>
+    <h3 style="margin-top:0;">Essential-Only Mode</h3>
+    <p>
+      Detect low battery (under 15%) and automatically switch to a stripped-down UI: animations off, background processes suspended, non-critical content hidden. The user sees a clear indication that the app is in essential mode and can exit it manually.
+    </p>
+    <p><strong>When to use:</strong> Apps where the user might be using the device in an emergency.</p>
+  </div>
+
+  <div class="antipattern">
+    <div class="antipattern-label">Anti-Pattern</div>
+    <h3 style="margin-top:0;">Continuous Background Polling</h3>
+    <p>
+      Polling a server every 30 seconds for updates, maintaining WebSocket connections, or keeping GPS active in the background — these drain battery and mobile data. On low-resource devices, they compete with core functionality and can cause crashes.
+    </p>
+    <p><strong>Replace with:</strong> Push notifications for time-sensitive updates; user-triggered refresh for everything else. Use platform-appropriate background fetch APIs with strict rate limits.</p>
+  </div>
+
+  <hr>
+
+  <h2>Patterns: Interface Under Cognitive Constraint</h2>
+
+  <div class="pattern">
+    <div class="pattern-label">Pattern</div>
+    <h3 style="margin-top:0;">Single-Task Screens</h3>
+    <p>
+      Each screen in the critical path presents exactly one decision or action. Navigation, secondary information, and optional features are hidden or collapsed. The user knows what to do next without reading the whole screen.
+    </p>
+    <p><strong>When to use:</strong> Forms, submission flows, emergency actions.</p>
+  </div>
+
+  <div class="pattern">
+    <div class="pattern-label">Pattern</div>
+    <h3 style="margin-top:0;">Persistent Progress Indicators</h3>
+    <p>
+      Multi-step flows show a clear, persistent indicator of how many steps remain. The user can see where they are in the process and what completing it requires. Partial progress is saved so a crash or interruption does not require restarting.
+    </p>
+    <p><strong>When to use:</strong> Any multi-step form or onboarding flow where interruption is likely.</p>
+  </div>
+
+  <div class="pattern">
+    <div class="pattern-label">Pattern</div>
+    <h3 style="margin-top:0;">Confirmation Before Irreversibility</h3>
+    <p>
+      Actions that cannot be undone require explicit, plain-language confirmation that describes exactly what will be lost. The confirmation is a deliberate step, not a dismissable dialog.
+    </p>
+    <p><strong>When to use:</strong> Deletion, account termination, data export, and any action that changes data in ways the user cannot recover from.</p>
+  </div>
+
+  <div class="antipattern">
+    <div class="antipattern-label">Anti-Pattern</div>
+    <h3 style="margin-top:0;">Engagement Interrupts on Critical Path</h3>
+    <p>
+      Push notifications, upsell prompts, review requests, or "while you're here" banners injected into a critical flow introduce cognitive load at the worst possible moment. A user trying to submit evidence, complete a medical form, or exit a coercive situation does not need a rating prompt.
+    </p>
+    <p><strong>Replace with:</strong> Reserve all engagement mechanics for sessions where the user is not in the middle of a critical task. Detect active critical paths and suppress all non-essential prompts during them.</p>
+  </div>
+
+  <hr>
+
+  <h2>Patterns: Accessibility Fallback</h2>
+
+  <div class="pattern">
+    <div class="pattern-label">Pattern</div>
+    <h3 style="margin-top:0;">Progressive Enhancement Base Layer</h3>
+    <p>
+      Build each critical flow so it works as plain HTML with no JavaScript. Add JavaScript as an enhancement layer that improves — but does not gate — functionality. This ensures the flow survives JavaScript failures, overly aggressive ad-blockers, and corporate content filtering.
+    </p>
+  </div>
+
+  <div class="pattern">
+    <div class="pattern-label">Pattern</div>
+    <h3 style="margin-top:0;">System Font Stack</h3>
+    <p>
+      Use system font stacks rather than requiring web font loads for all text on the critical path. Web fonts are a network dependency and a render-blocking resource. The visual difference is minor; the degraded-mode benefit is significant.
+    </p>
+  </div>
+
+  <div class="antipattern">
+    <div class="antipattern-label">Anti-Pattern</div>
+    <h3 style="margin-top:0;">Animation-Gated State Changes</h3>
+    <p>
+      Using CSS transitions or JavaScript animations to make state changes visible — and then reading the post-animation DOM state — creates dependencies on animation completion. On slow devices, animations drop frames or skip, leaving the UI in an inconsistent state.
+    </p>
+    <p><strong>Replace with:</strong> Separate state management from visual presentation. State changes should be immediate and correct; animations should be cosmetic overlays that are safe to skip.</p>
+  </div>
+
+  <hr>
+
+  <h2>Testing Degraded-Mode UX</h2>
+  <p>No degraded-mode design is verified until it has been tested under actual degraded conditions:</p>
+  <ul>
+    <li><strong>Chrome DevTools Network Throttle:</strong> Set to "Slow 3G" or a custom profile with 250 kbps and 300 ms latency; complete every core flow</li>
+    <li><strong>Airplane mode test:</strong> Enable airplane mode, then attempt every core flow; anything that fails is a blocking issue</li>
+    <li><strong>Old device test:</strong> Use a real low-end Android device (or a CPU throttle in DevTools) for core flows</li>
+    <li><strong>Battery simulation:</strong> Some OS simulators allow forcing low-battery mode; trigger essential-mode behavior and verify it does not break core flows</li>
+    <li><strong>JavaScript-disabled test:</strong> Disable JavaScript in browser settings and attempt core flows; document what breaks and why</li>
+  </ul>
+
+  <h2>Related Resources</h2>
+  <ul>
+    <li><a href="principles/degraded-functionality.html">Degraded-Infrastructure Functionality principle deep-dive</a></li>
+    <li><a href="audit-checklist.html">Protective Computing Audit Checklist</a></li>
+    <li><a href="what-software-gets-wrong-about-instability.html">What Software Gets Wrong About Instability</a></li>
+    <li><a href="local-authority-vs-cloud-dependence.html">Local Authority vs Cloud Dependence</a></li>
+    <li><a href="spec/v1.0.html">Protective Computing Specification v1.0</a></li>
+  </ul>
+
+  <hr>
+  <p style="color: var(--faint); font-size: 13px; margin-top: 40px;">
+    Protective Computing — <a href="../">back to home</a>
+  </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Designing for Coercion Resistance — Protective Computing</title>
+<meta name="description" content="How to audit software for coercion risk and design systems that protect users under institutional threat, duress, and forced disclosure." />
+<link rel="canonical" href="https://protective-computing.github.io/docs/designing-for-coercion-resistance.html" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Protective Computing" />
+<meta property="og:title" content="Designing for Coercion Resistance — Protective Computing" />
+<meta property="og:description" content="How to audit software for coercion risk and design systems that protect users under institutional threat, duress, and forced disclosure." />
+<meta property="og:url" content="https://protective-computing.github.io/docs/designing-for-coercion-resistance.html" />
+<meta property="og:image" content="https://protective-computing.github.io/assets/logo.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Designing for Coercion Resistance — Protective Computing" />
+<meta name="twitter:description" content="How to audit software for coercion risk and design systems that protect users under institutional threat, duress, and forced disclosure." />
+<meta name="twitter:image" content="https://protective-computing.github.io/assets/logo.png" />
+<link rel="icon" href="../assets/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #070A10;
+    --panel: rgba(255,255,255,0.06);
+    --text: rgba(255,255,255,0.92);
+    --muted: rgba(255,255,255,0.68);
+    --faint: rgba(255,255,255,0.52);
+    --line: rgba(255,255,255,0.10);
+    --shadow: 0 18px 55px rgba(0,0,0,.55);
+  }
+  *{ box-sizing: border-box; }
+  html, body{ height: 100%; }
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(107,123,255,.14), transparent 60%),
+          radial-gradient(1100px 650px at 90% 15%, rgba(87,217,255,.16), transparent 55%),
+                var(--bg);
+    color: var(--text);
+    letter-spacing: -0.015em;
+  }
+  a{ color: #57d9ff; text-decoration: none; }
+  a:hover{ text-decoration: underline; text-underline-offset: 3px; }
+  .wrap{
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 22px 60px;
+  }
+  .back{
+    display: inline-block;
+    padding: 8px 12px;
+    margin-bottom: 20px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .back:hover{ background: rgba(255,255,255,0.04); }
+  h1{
+    font-size: 2.2rem;
+    line-height: 1.1;
+    margin: 0 0 10px;
+    font-weight: 850;
+  }
+  .subtitle{
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+  h2{
+    font-size: 1.6rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    font-weight: 800;
+  }
+  h3{
+    font-size: 1.1rem;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    font-weight: 750;
+    color: var(--text);
+  }
+  p, li{
+    color: var(--muted);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+  ul{
+    margin: 14px 0;
+    padding-left: 20px;
+  }
+  li{ margin: 8px 0; }
+  code{
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--line);
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--text);
+  }
+  .box{
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: 14px;
+    padding: 18px;
+    margin: 20px 0;
+  }
+  .box-title{
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  .checklist{
+    list-style: none;
+    padding-left: 0;
+  }
+  .checklist li{ padding-left: 24px; margin: 10px 0; position: relative; }
+  .checklist li:before{ content: "✓"; position: absolute; left: 0; color: #57d9ff; font-weight: bold; }
+  .threat{
+    border: 1px solid rgba(255,150,50,0.25);
+    background: rgba(255,150,50,0.06);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 16px 0;
+  }
+  .threat-label{
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,180,80,0.9);
+    margin-bottom: 6px;
+  }
+  hr{
+    border: none;
+    height: 1px;
+    background: var(--line);
+    margin: 30px 0;
+  }
+</style>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-_ThpRaAClu8dKUNrYHpiL.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+</head>
+<body>
+<div class="wrap">
+  <a href="../" class="back">← Back to Home</a>
+  <a href="principles/coercion-resistance.html" class="back" style="margin-left:8px;">Coercion Resistance Principle →</a>
+
+  <h1>Designing for Coercion Resistance</h1>
+  <p class="subtitle">How to audit software for coercion risk and design systems that protect users under institutional threat, duress, and forced disclosure.</p>
+
+  <p>
+    Coercion resistance is not a niche security concern. It is a structural requirement for any software used by people in high-risk environments: domestic abuse survivors, journalists, refugees, whistleblowers, patients with sensitive diagnoses, or anyone whose safety depends on controlling access to their own data.
+  </p>
+  <p>
+    Most security engineering addresses external attackers. Coercion resistance addresses a different threat model: <strong>what happens when the attacker has physical access to the user, the device, or the legal authority to compel disclosure?</strong>
+  </p>
+
+  <hr>
+
+  <h2>The Coercion Threat Model</h2>
+  <p>Coercion takes several forms. Each requires a different design response:</p>
+
+  <div class="threat">
+    <div class="threat-label">Threat Type 1</div>
+    <h3 style="margin-top:0;">Physical Device Access</h3>
+    <p>An abuser, authority, or adversary has physical access to the user's device — either with or without the user's cooperation. They can see the screen, read files, inspect installed apps, and access anything that does not require additional authentication.</p>
+  </div>
+
+  <div class="threat">
+    <div class="threat-label">Threat Type 2</div>
+    <h3 style="margin-top:0;">Forced Authentication</h3>
+    <p>The user is compelled to unlock the device or provide their password under duress. This may be a legal order (border crossing, law enforcement), a coercive relationship (abusive partner, employer), or direct physical threat.</p>
+  </div>
+
+  <div class="threat">
+    <div class="threat-label">Threat Type 3</div>
+    <h3 style="margin-top:0;">Server-Side Subpoena or Data Request</h3>
+    <p>A government, law enforcement agency, or legal adversary compels your infrastructure to disclose user data. You do not need to be malicious for this to harm your users — you only need to hold data they did not want disclosed.</p>
+  </div>
+
+  <div class="threat">
+    <div class="threat-label">Threat Type 4</div>
+    <h3 style="margin-top:0;">Surveillance by Proximity</h3>
+    <p>Someone with access to the same network, the same device, or the same household can observe the user's behavior — not necessarily the content, but the metadata. Who they contacted, when they opened an app, what they searched for.</p>
+  </div>
+
+  <hr>
+
+  <h2>How to Audit for Coercion Risk</h2>
+  <p>For each threat type above, ask these questions about your system:</p>
+
+  <h3>Physical Device Access Audit</h3>
+  <div class="box">
+    <ul class="checklist">
+      <li>What is visible without unlocking the device? (Notification previews, app names, lock-screen widgets?)</li>
+      <li>What is accessible without authentication after the device is already unlocked?</li>
+      <li>Can the user quickly hide, disguise, or wipe sensitive content from an unlocked device?</li>
+      <li>Does the app appear in the recent-apps list with a screenshot of the last screen visible?</li>
+      <li>Are there any locally stored files, photos, or exports that persist after sessions close?</li>
+    </ul>
+  </div>
+
+  <h3>Forced Authentication Audit</h3>
+  <div class="box">
+    <ul class="checklist">
+      <li>Does the app support a duress PIN or password that reveals only a decoy or empty state?</li>
+      <li>Can users quickly delete all local data from a pre-authenticated screen?</li>
+      <li>Is biometric authentication the only option, or are passphrases also supported?</li>
+      <li>Does the system allow remote wipe of local data if the device is not in the user's control?</li>
+      <li>Are there any recovery codes or backup credentials stored somewhere the attacker could find?</li>
+    </ul>
+  </div>
+
+  <h3>Server-Side Data Risk Audit</h3>
+  <div class="box">
+    <ul class="checklist">
+      <li>What data would you be compelled to hand over if served a legal request?</li>
+      <li>Is any sensitive data encrypted with user-held keys (zero-knowledge), so you cannot decrypt it even if compelled?</li>
+      <li>Do your logs contain identifying information about user behavior?</li>
+      <li>Are there retention schedules that limit how long sensitive data is held?</li>
+      <li>Is your infrastructure jurisdiction clear to users? Do they know which legal system governs their data?</li>
+    </ul>
+  </div>
+
+  <h3>Proximity Surveillance Audit</h3>
+  <div class="box">
+    <ul class="checklist">
+      <li>Does the app leak metadata over the network that would reveal it is being used?</li>
+      <li>Are push notifications encrypted end-to-end, or could a network observer read them?</li>
+      <li>Does the app transmit data in the background, creating observable traffic patterns?</li>
+      <li>Could someone on the same Wi-Fi network determine what the user is doing based on traffic analysis?</li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <h2>Coercion Resistance Design Patterns</h2>
+
+  <h3>Pattern 1: Rapid Wipe</h3>
+  <p>
+    Provide a single-action mechanism for the user to wipe or hide sensitive local data quickly. This should work without going through account settings, without network access, and without a confirmation dialog that takes more than one tap.
+  </p>
+  <div class="box">
+    <div class="box-title">Implementation notes</div>
+    <ul>
+      <li>Use a shake gesture, long-press, or hidden trigger — documented somewhere the user can set it up before they need it</li>
+      <li>Wipe should remove local data, cached content, and session tokens</li>
+      <li>Consider showing a benign "app not installed" or blank screen after wipe, not an error</li>
+      <li>Do not require a network connection to perform local wipe</li>
+    </ul>
+  </div>
+
+  <h3>Pattern 2: Minimal Server Footprint</h3>
+  <p>
+    Store the minimum on your servers. What you do not hold, you cannot be compelled to disclose. For sensitive apps, consider a zero-knowledge architecture where the server holds only encrypted blobs and the user holds the decryption key.
+  </p>
+  <div class="box">
+    <div class="box-title">Implementation notes</div>
+    <ul>
+      <li>Map all data stored server-side; question each field's necessity</li>
+      <li>Encrypt sensitive content client-side before upload, using keys derived from user credentials</li>
+      <li>Log only what is operationally required; rotate and purge logs on a defined schedule</li>
+      <li>Publish a transparency report or data inventory so users know what you hold</li>
+    </ul>
+  </div>
+
+  <h3>Pattern 3: Honest Security Claims</h3>
+  <p>
+    The most common coercion resistance failure is not a design failure — it is a documentation failure. Apps claim protection they do not provide. Users trust those claims and are harmed when they fail under pressure.
+  </p>
+  <div class="box">
+    <div class="box-title">Implementation notes</div>
+    <ul>
+      <li>Do not claim "end-to-end encrypted" unless the server genuinely cannot decrypt user content</li>
+      <li>Document exactly what is and is not protected under each threat type</li>
+      <li>Be explicit about jurisdiction and what legal requests you would comply with</li>
+      <li>Update security documentation when your architecture changes</li>
+    </ul>
+  </div>
+
+  <h3>Pattern 4: Exposure Minimization by Default</h3>
+  <p>
+    The less data you collect, the less damage coercion can do. Default settings should minimize data collection. Users who want to share more can opt in.
+  </p>
+  <div class="box">
+    <div class="box-title">Implementation notes</div>
+    <ul>
+      <li>Analytics, telemetry, and behavioral tracking are off by default</li>
+      <li>Contact lists, location, and social graph access require explicit, per-use permission</li>
+      <li>Data minimization applies to metadata as well as content (timestamps, read receipts, typing indicators)</li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <h2>Anti-Patterns to Remove</h2>
+  <ul>
+    <li><strong>Mandatory cloud backup:</strong> If sensitive data is automatically synced to your servers without user consent, you hold it and can be compelled to disclose it</li>
+    <li><strong>Persistent session tokens:</strong> Long-lived tokens mean a device that is accessed later still grants full access</li>
+    <li><strong>Account recovery via SMS:</strong> SMS is trivially intercepted in many threat models; offer passphrase-based alternatives</li>
+    <li><strong>Screenshot-capturing recent-apps views:</strong> The OS thumbnail of the last screen is visible without unlocking — sensitive screens should be masked</li>
+    <li><strong>Notification content previews:</strong> Content in notifications is visible without unlocking; default to hiding content</li>
+  </ul>
+
+  <hr>
+
+  <h2>Relationship to Other Principles</h2>
+  <p>Coercion resistance works in conjunction with:</p>
+  <ul>
+    <li><strong><a href="principles/exposure-minimization.html">Exposure Minimization:</a></strong> The less data held, the less that coercion can extract</li>
+    <li><strong><a href="principles/local-authority.html">Local Authority:</a></strong> Data the user controls locally is harder to compel from a third party</li>
+    <li><strong><a href="principles/reversibility.html">Reversibility:</a></strong> The ability to undo actions includes the ability to undo disclosures where technically possible</li>
+  </ul>
+
+  <h2>Related Resources</h2>
+  <ul>
+    <li><a href="principles/coercion-resistance.html">Coercion Resistance principle deep-dive</a></li>
+    <li><a href="audit-checklist.html">Full Protective Computing Audit Checklist</a></li>
+    <li><a href="spec/v1.0.html">Protective Computing Specification v1.0</a></li>
+    <li><a href="https://doi.org/10.5281/zenodo.18887610">Protective Computing Canon v1.0 (DOI)</a></li>
+  </ul>
+
+  <hr>
+  <p style="color: var(--faint); font-size: 13px; margin-top: 40px;">
+    Protective Computing — <a href="../">back to home</a>
+  </p>
+</div>
+</body>
+</html>

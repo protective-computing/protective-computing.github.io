@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Local Authority vs Cloud Dependence — Protective Computing</title>
+<meta name="description" content="Why centralized cloud-first architecture fails vulnerable users, and how local-authority design preserves user agency under degraded or adversarial conditions." />
+<link rel="canonical" href="https://protective-computing.github.io/docs/local-authority-vs-cloud-dependence.html" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Protective Computing" />
+<meta property="og:title" content="Local Authority vs Cloud Dependence — Protective Computing" />
+<meta property="og:description" content="Why centralized cloud-first architecture fails vulnerable users, and how local-authority design preserves user agency under degraded or adversarial conditions." />
+<meta property="og:url" content="https://protective-computing.github.io/docs/local-authority-vs-cloud-dependence.html" />
+<meta property="og:image" content="https://protective-computing.github.io/assets/logo.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Local Authority vs Cloud Dependence — Protective Computing" />
+<meta name="twitter:description" content="Why centralized cloud-first architecture fails vulnerable users, and how local-authority design preserves user agency under degraded or adversarial conditions." />
+<meta name="twitter:image" content="https://protective-computing.github.io/assets/logo.png" />
+<link rel="icon" href="../assets/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #070A10;
+    --panel: rgba(255,255,255,0.06);
+    --text: rgba(255,255,255,0.92);
+    --muted: rgba(255,255,255,0.68);
+    --faint: rgba(255,255,255,0.52);
+    --line: rgba(255,255,255,0.10);
+    --shadow: 0 18px 55px rgba(0,0,0,.55);
+  }
+  *{ box-sizing: border-box; }
+  html, body{ height: 100%; }
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(107,123,255,.14), transparent 60%),
+          radial-gradient(1100px 650px at 90% 15%, rgba(87,217,255,.16), transparent 55%),
+                var(--bg);
+    color: var(--text);
+    letter-spacing: -0.015em;
+  }
+  a{ color: #57d9ff; text-decoration: none; }
+  a:hover{ text-decoration: underline; text-underline-offset: 3px; }
+  .wrap{
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 22px 60px;
+  }
+  .back{
+    display: inline-block;
+    padding: 8px 12px;
+    margin-bottom: 20px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .back:hover{ background: rgba(255,255,255,0.04); }
+  h1{
+    font-size: 2.2rem;
+    line-height: 1.1;
+    margin: 0 0 10px;
+    font-weight: 850;
+  }
+  .subtitle{
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+  h2{
+    font-size: 1.6rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    font-weight: 800;
+  }
+  h3{
+    font-size: 1.1rem;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    font-weight: 750;
+    color: var(--text);
+  }
+  p, li{
+    color: var(--muted);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+  ul{
+    margin: 14px 0;
+    padding-left: 20px;
+  }
+  li{ margin: 8px 0; }
+  code{
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--line);
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--text);
+  }
+  .box{
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: 14px;
+    padding: 18px;
+    margin: 20px 0;
+  }
+  .box-title{
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  table{
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+  th{
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+    color: var(--text);
+    font-weight: 700;
+    font-size: 13px;
+  }
+  td{
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: var(--muted);
+    vertical-align: top;
+  }
+  tr:last-child td{ border-bottom: none; }
+  .cloud-cell{ color: rgba(255,130,130,0.85); }
+  .local-cell{ color: rgba(100,220,180,0.85); }
+  hr{
+    border: none;
+    height: 1px;
+    background: var(--line);
+    margin: 30px 0;
+  }
+</style>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-_ThpRaAClu8dKUNrYHpiL.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+</head>
+<body>
+<div class="wrap">
+  <a href="../" class="back">← Back to Home</a>
+  <a href="principles/local-authority.html" class="back" style="margin-left:8px;">Local Authority Principle →</a>
+
+  <h1>Local Authority vs Cloud Dependence</h1>
+  <p class="subtitle">Why centralized cloud-first architecture fails vulnerable users, and how local-authority design preserves user agency under degraded or adversarial conditions.</p>
+
+  <p>
+    Cloud-first architecture is the dominant pattern in modern software. It offers real benefits: synchronized state across devices, no data loss from device failure, and reduced development complexity. For most users in most conditions, it works.
+  </p>
+  <p>
+    But for users in degraded or adversarial conditions — no reliable connectivity, confiscated devices, coercive institutions, crisis states — cloud dependence is not a feature. It is a structural vulnerability. The more a system depends on continuous cloud connectivity to function, the more completely it fails when that connectivity is unavailable or unsafe.
+  </p>
+
+  <hr>
+
+  <h2>What Cloud Dependence Looks Like in Practice</h2>
+  <p>Cloud-dependent systems share a set of identifiable failure modes:</p>
+  <ul>
+    <li><strong>Authentication gate:</strong> The user cannot access anything — including data they created — without a successful server round-trip to verify credentials</li>
+    <li><strong>Read-only fallback at best:</strong> When offline, users might see stale cached data, but cannot create, update, or meaningfully interact with their records</li>
+    <li><strong>No local copy:</strong> The canonical data lives on the server; the local device is just a view layer</li>
+    <li><strong>Sync as a black box:</strong> Conflict resolution happens on the server, invisibly to the user</li>
+    <li><strong>Your outage is their lockout:</strong> When the service is down, users lose access entirely, even to their own records</li>
+    <li><strong>Third-party key custody:</strong> Encryption (if present) uses keys the service controls, meaning the service can decrypt and is compelled to disclose</li>
+  </ul>
+
+  <hr>
+
+  <h2>What Local Authority Looks Like in Practice</h2>
+  <p>Local-authority design inverts these properties:</p>
+  <ul>
+    <li><strong>Offline operation is the baseline:</strong> The app works without a network connection for all critical functions</li>
+    <li><strong>Data is owned by the device:</strong> The canonical copy lives locally; the server is a sync target, not the source of truth</li>
+    <li><strong>Sync is transparent:</strong> When conflicts occur, the user is shown what conflicted and asked to resolve it</li>
+    <li><strong>Authentication is local where possible:</strong> Device-level auth (PIN, passphrase, biometric) grants access to locally stored data without server verification</li>
+    <li><strong>Export is always available:</strong> Users can retrieve their full data at any time without connectivity or support</li>
+    <li><strong>User holds the key:</strong> Sensitive content is encrypted with user-controlled keys; the server holds only encrypted blobs</li>
+  </ul>
+
+  <hr>
+
+  <h2>Side-by-Side Comparison</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Scenario</th>
+        <th class="cloud-cell">Cloud-Dependent Response</th>
+        <th class="local-cell">Local-Authority Response</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Network unavailable</td>
+        <td class="cloud-cell">User is locked out; app shows error</td>
+        <td class="local-cell">App functions normally; syncs when connectivity returns</td>
+      </tr>
+      <tr>
+        <td>Service outage</td>
+        <td class="cloud-cell">Complete data inaccessibility</td>
+        <td class="local-cell">Local data remains accessible; sync resumes when service restores</td>
+      </tr>
+      <tr>
+        <td>Device confiscated</td>
+        <td class="cloud-cell">Adversary can log in via web; data fully exposed</td>
+        <td class="local-cell">Local encryption requires device credentials; remote session revocable</td>
+      </tr>
+      <tr>
+        <td>Legal data request</td>
+        <td class="cloud-cell">Service must disclose server-held plaintext data</td>
+        <td class="local-cell">Server holds only encrypted blobs; keys not held by service</td>
+      </tr>
+      <tr>
+        <td>User wants to leave service</td>
+        <td class="cloud-cell">Export depends on service remaining operational</td>
+        <td class="local-cell">Export is available at any time from local device</td>
+      </tr>
+      <tr>
+        <td>Connectivity is intermittent</td>
+        <td class="cloud-cell">Partial operations; risk of data corruption or loss</td>
+        <td class="local-cell">All operations complete locally; sync handles eventual consistency</td>
+      </tr>
+      <tr>
+        <td>Coercive actor has physical access</td>
+        <td class="cloud-cell">Device acts as authenticated session; all cloud data accessible</td>
+        <td class="local-cell">Local wipe removes local data; no live session to exploit</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <h2>Why Cloud-First Persists Despite These Failures</h2>
+  <p>Cloud-first architecture is not adopted maliciously. It has genuine advantages that make it the default choice for most development teams:</p>
+  <ul>
+    <li><strong>Development speed:</strong> Building against a centralized API is simpler than managing local-first state and conflict resolution</li>
+    <li><strong>Multi-device sync:</strong> Users expect data to be available across devices; cloud-first makes this trivial</li>
+    <li><strong>No device loss risk:</strong> If a device is destroyed, cloud-stored data survives</li>
+    <li><strong>Business model alignment:</strong> Server-held data enables analytics, monetization, and retention features</li>
+    <li><strong>Team capacity:</strong> Conflict-free replicated data types (CRDTs) and local-first architectures require specialized expertise most teams do not have</li>
+  </ul>
+  <p>
+    These are real trade-offs. Protective Computing does not argue for eliminating cloud architecture. It argues for recognizing when cloud dependence creates structural risk for vulnerable users, and designing against that risk deliberately.
+  </p>
+
+  <hr>
+
+  <h2>Designing for Local Authority: Practical Steps</h2>
+
+  <h3>Step 1: Map the Critical Path</h3>
+  <p>Identify the minimum set of actions the user must be able to perform to achieve their core goal. This is the set of functions that must work offline, on a degraded device, without cloud connectivity.</p>
+
+  <h3>Step 2: Identify Cloud Dependencies on the Critical Path</h3>
+  <p>For each action on the critical path, determine whether it currently requires a network call. Authentication, data reads, data writes, and validation steps are common cloud dependencies.</p>
+
+  <h3>Step 3: Remove or Defer Each Dependency</h3>
+  <div class="box">
+    <div class="box-title">Dependency removal strategies</div>
+    <ul>
+      <li><strong>Authentication:</strong> Cache a local session token after first authentication; validate locally until token expires</li>
+      <li><strong>Data reads:</strong> Cache records locally on first fetch; serve from cache when offline</li>
+      <li><strong>Data writes:</strong> Queue writes locally; sync to server when connectivity returns</li>
+      <li><strong>Validation:</strong> Run validation logic locally; re-validate against server when connected</li>
+      <li><strong>Feature flags:</strong> Cache flag state; fall back to safe defaults when offline</li>
+    </ul>
+  </div>
+
+  <h3>Step 4: Make Sync Transparent</h3>
+  <p>When the user comes back online, show them what changed, what conflicted, and what was discarded. Do not silently resolve conflicts in ways that could cause data loss.</p>
+
+  <h3>Step 5: Test the Offline Path</h3>
+  <p>Test every critical path with the network disabled. If anything breaks, it is not yet a local-authority design.</p>
+
+  <hr>
+
+  <h2>The Offline-First Architecture Pattern</h2>
+  <p>
+    For sensitive applications, the full expression of local authority is an offline-first architecture: data lives on the device first; the server is a sync peer, not the primary. This is detailed in the <a href="offline-first-health-architecture.html">Offline-First Health Architecture</a> page.
+  </p>
+
+  <h2>Related Resources</h2>
+  <ul>
+    <li><a href="principles/local-authority.html">Local Authority principle deep-dive</a></li>
+    <li><a href="offline-first-health-architecture.html">Offline-First Health Architecture</a></li>
+    <li><a href="designing-for-coercion-resistance.html">Designing for Coercion Resistance</a> — How local authority intersects with coercion threat models</li>
+    <li><a href="audit-checklist.html">Protective Computing Audit Checklist</a></li>
+    <li><a href="spec/v1.0.html">Protective Computing Specification v1.0</a></li>
+  </ul>
+
+  <hr>
+  <p style="color: var(--faint); font-size: 13px; margin-top: 40px;">
+    Protective Computing — <a href="../">back to home</a>
+  </p>
+</div>
+</body>
+</html>
