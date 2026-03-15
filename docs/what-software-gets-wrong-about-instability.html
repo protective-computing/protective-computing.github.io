@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>What Software Gets Wrong About Instability — Protective Computing</title>
+<meta name="description" content="How mainstream software fails users in unstable conditions: connectivity assumptions, cloud dependency, and the design patterns that collapse under crisis." />
+<link rel="canonical" href="https://protective-computing.github.io/docs/what-software-gets-wrong-about-instability.html" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Protective Computing" />
+<meta property="og:title" content="What Software Gets Wrong About Instability — Protective Computing" />
+<meta property="og:description" content="How mainstream software fails users in unstable conditions: connectivity assumptions, cloud dependency, and the design patterns that collapse under crisis." />
+<meta property="og:url" content="https://protective-computing.github.io/docs/what-software-gets-wrong-about-instability.html" />
+<meta property="og:image" content="https://protective-computing.github.io/assets/logo.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="What Software Gets Wrong About Instability — Protective Computing" />
+<meta name="twitter:description" content="How mainstream software fails users in unstable conditions: connectivity assumptions, cloud dependency, and the design patterns that collapse under crisis." />
+<meta name="twitter:image" content="https://protective-computing.github.io/assets/logo.png" />
+<link rel="icon" href="../assets/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #070A10;
+    --panel: rgba(255,255,255,0.06);
+    --text: rgba(255,255,255,0.92);
+    --muted: rgba(255,255,255,0.68);
+    --faint: rgba(255,255,255,0.52);
+    --line: rgba(255,255,255,0.10);
+    --shadow: 0 18px 55px rgba(0,0,0,.55);
+  }
+  *{ box-sizing: border-box; }
+  html, body{ height: 100%; }
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(107,123,255,.14), transparent 60%),
+          radial-gradient(1100px 650px at 90% 15%, rgba(87,217,255,.16), transparent 55%),
+                var(--bg);
+    color: var(--text);
+    letter-spacing: -0.015em;
+  }
+  a{ color: #57d9ff; text-decoration: none; }
+  a:hover{ text-decoration: underline; text-underline-offset: 3px; }
+  .wrap{
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 22px 60px;
+  }
+  .back{
+    display: inline-block;
+    padding: 8px 12px;
+    margin-bottom: 20px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .back:hover{ background: rgba(255,255,255,0.04); }
+  h1{
+    font-size: 2.2rem;
+    line-height: 1.1;
+    margin: 0 0 10px;
+    font-weight: 850;
+  }
+  .subtitle{
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+  h2{
+    font-size: 1.6rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    font-weight: 800;
+  }
+  h3{
+    font-size: 1.1rem;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    font-weight: 750;
+    color: var(--text);
+  }
+  p, li{
+    color: var(--muted);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+  ul{
+    margin: 14px 0;
+    padding-left: 20px;
+  }
+  li{ margin: 8px 0; }
+  code{
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--line);
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--text);
+  }
+  .box{
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: 14px;
+    padding: 18px;
+    margin: 20px 0;
+  }
+  .box-title{
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  .failure{
+    border-left: 3px solid rgba(255,90,90,0.5);
+    padding-left: 16px;
+    margin: 16px 0;
+  }
+  .failure h3{ color: rgba(255,150,150,0.9); margin-top: 0; }
+  hr{
+    border: none;
+    height: 1px;
+    background: var(--line);
+    margin: 30px 0;
+  }
+</style>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-_ThpRaAClu8dKUNrYHpiL.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+</head>
+<body>
+<div class="wrap">
+  <a href="../" class="back">← Back to Home</a>
+  <a href="stability-assumption.html" class="back" style="margin-left:8px;">Stability Assumption →</a>
+
+  <h1>What Software Gets Wrong About Instability</h1>
+  <p class="subtitle">Mainstream software is engineered for stable conditions. When those conditions disappear, the design fails — often at the worst possible moment.</p>
+
+  <p>
+    Most software is built under a hidden assumption: that conditions are predictable. The developer has a reliable laptop, a fast connection, a charged battery, and cognitive surplus. Those conditions are encoded into every architectural decision, whether the developer intends it or not.
+  </p>
+  <p>
+    Protective Computing calls this the <a href="stability-assumption.html">Stability Assumption</a>. It is not a bug. It is the default design mode of the industry. And it fails structurally when users do not share those conditions.
+  </p>
+
+  <hr>
+
+  <h2>The Seven Failures</h2>
+
+  <div class="failure">
+    <h3>1. Treating Connectivity as Infrastructure</h3>
+    <p>
+      Cloud-first and API-first architectures treat the network as a guaranteed substrate. Authentication calls a remote server. Data is never written locally. Sync is a background process, not a core design concern.
+    </p>
+    <p>
+      When the network disappears — due to geography, censorship, infrastructure failure, or carrier throttling — these systems go dark. Not partially. Completely. The user is locked out of their own data, in some cases permanently, because the decryption key lives on a server they can no longer reach.
+    </p>
+    <p>
+      <strong>The fix:</strong> <a href="principles/local-authority.html">Local Authority</a> — design for offline operation first. Network sync is an optimization, not a requirement.
+    </p>
+  </div>
+
+  <div class="failure">
+    <h3>2. Assuming Cognitive Surplus</h3>
+    <p>
+      UX research is typically conducted with engaged, rested participants who have agreed to be studied. Real users in crisis are cognitively depleted. They are in pain, under threat, sleep-deprived, or managing multiple simultaneous emergencies.
+    </p>
+    <p>
+      Software that requires users to navigate complex flows, parse legal-language consent dialogs, or remember account credentials under these conditions will fail them. The failure looks like "user error." It is system error.
+    </p>
+    <p>
+      <strong>The fix:</strong> <a href="principles/essential-utility.html">Essential Utility</a> — identify the critical path, strip everything that competes with it, and minimize cognitive load on the path that matters most.
+    </p>
+  </div>
+
+  <div class="failure">
+    <h3>3. Building Irreversibility Into the Default Path</h3>
+    <p>
+      Many systems treat deletion, submission, and sharing as terminal operations with no recovery path. This is a speed optimization for the average case. It is a catastrophe for the degraded case.
+    </p>
+    <p>
+      A user fleeing a violent situation who accidentally submits a form with their location, or permanently deletes the only copy of critical evidence, cannot recover from that loss. The system's "simple" design has introduced irreversible harm.
+    </p>
+    <p>
+      <strong>The fix:</strong> <a href="principles/reversibility.html">Reversibility</a> — undo is not a luxury feature. It is a safety requirement.
+    </p>
+  </div>
+
+  <div class="failure">
+    <h3>4. Maximizing Data Collection as Default</h3>
+    <p>
+      Analytics-driven product culture incentivizes collecting everything. Full behavioral telemetry, location history, device fingerprints, and social graphs are all "free signal." This data is also a liability that compounds with every user added to the system.
+    </p>
+    <p>
+      For vulnerable users, the liability is not abstract. A health system that logs symptom searches, a messaging app that stores social graph metadata, or a housing app that retains eviction inquiry history can expose users to discrimination, prosecution, or physical harm.
+    </p>
+    <p>
+      <strong>The fix:</strong> <a href="principles/exposure-minimization.html">Exposure Minimization</a> — collect only what is operationally necessary. Treat data as a liability, not an asset.
+    </p>
+  </div>
+
+  <div class="failure">
+    <h3>5. Ignoring the Adversarial Access Case</h3>
+    <p>
+      Most systems model security threats as external attackers trying to breach perimeter defenses. They do not model the user as a potential target of institutional coercion, domestic surveillance, or forced device disclosure.
+    </p>
+    <p>
+      A system that cannot be quickly wiped, that requires a cloud account to delete data, or that logs user actions to a server the user does not control, provides no protection when the threat is a coercive actor with physical access to the device — or the ability to subpoena your servers.
+    </p>
+    <p>
+      <strong>The fix:</strong> <a href="principles/coercion-resistance.html">Coercion Resistance</a> — design for the user's ability to protect themselves under duress, not just for your system's ability to resist external attack.
+    </p>
+  </div>
+
+  <div class="failure">
+    <h3>6. Designing Only for Peak-Resource Conditions</h3>
+    <p>
+      Performance budgets, bandwidth assumptions, and minimum device specifications are typically set to match mid-tier devices in wealthy markets. Low-end Android handsets, feature phones, shared tablets, or devices already constrained by dozens of background processes are never in the test suite.
+    </p>
+    <p>
+      The result: software that is unusable for users who most need it. Loading spinners on 2G. Out-of-memory crashes on 512 MB devices. Critical flows that time out before completing because the server assumes fast responses.
+    </p>
+    <p>
+      <strong>The fix:</strong> <a href="principles/degraded-functionality.html">Degraded-Infrastructure Functionality</a> — test on constrained hardware and degraded connections as a first-class requirement, not a post-launch concern.
+    </p>
+  </div>
+
+  <div class="failure">
+    <h3>7. Treating Stability as the Environment, Not the Exception</h3>
+    <p>
+      All six failures above share a root: the design process treats instability as an edge case to be handled, not a condition to be designed for. Testing is done under favorable conditions. QA is done by well-resourced testers. Incident response plans assume the team can respond quickly.
+    </p>
+    <p>
+      This is the Stability Assumption. It is not a mistake any individual developer makes. It is baked into the industry's tooling, hiring, testing culture, and success metrics.
+    </p>
+    <p>
+      <strong>The fix:</strong> Protective Computing — a discipline that inverts the assumption and requires systems to prove they work under instability, not just under favorable conditions.
+    </p>
+  </div>
+
+  <hr>
+
+  <h2>What Instability Actually Looks Like</h2>
+  <p>Instability is not a single condition. It is a cluster of simultaneous constraints that compound each other:</p>
+  <ul>
+    <li><strong>Network:</strong> Absent, intermittent, rate-limited, censored, or hostile (MITM, deep packet inspection)</li>
+    <li><strong>Power:</strong> Low battery, shared charging, unreliable supply, or operating in the dark</li>
+    <li><strong>Device:</strong> Old hardware, limited RAM, shared device, confiscated or monitored</li>
+    <li><strong>Cognitive:</strong> Pain, fear, time pressure, sleep deprivation, unfamiliar interface</li>
+    <li><strong>Social:</strong> Coercive observation, institutional threat, forced disclosure</li>
+    <li><strong>Institutional:</strong> System-level hostility — laws, policies, and enforcement structures that treat users as threats</li>
+  </ul>
+  <p>
+    The users who face this cluster are not edge cases. They are chronically ill people managing health data on old phones. Refugees with intermittent connectivity. Domestic abuse survivors trying to document evidence without being monitored. Journalists protecting sources. Anyone whose operating environment falls below the assumptions baked into the software they depend on.
+  </p>
+
+  <hr>
+
+  <h2>The Protective Computing Response</h2>
+  <p>
+    Protective Computing does not ask developers to solve poverty or geopolitics. It asks for a specific design stance: <strong>assume instability, design for degradation, verify under adversarial conditions</strong>.
+  </p>
+  <div class="box">
+    <div class="box-title">Core replacements for the Stability Assumption</div>
+    <ul>
+      <li>Networks will fail → <strong>Design for offline operation</strong></li>
+      <li>Devices are safe → <strong>Design for coerced or stolen devices</strong></li>
+      <li>Users have cognitive surplus → <strong>Design for cognitive depletion</strong></li>
+      <li>Data is an asset → <strong>Treat data as liability; collect only what's essential</strong></li>
+      <li>Actions are recoverable → <strong>Default to reversibility</strong></li>
+      <li>Conditions are stable → <strong>Test under degraded conditions first</strong></li>
+    </ul>
+  </div>
+
+  <h2>Next Steps</h2>
+  <ul>
+    <li><a href="stability-assumption.html">Stability Assumption</a> — Formal treatment of the stability bias and its failure modes</li>
+    <li><a href="audit-checklist.html">Protective Computing Audit Checklist</a> — Audit your own system against these failures</li>
+    <li><a href="getting-started.html">Getting Started</a> — Practical guide to applying Protective Computing principles</li>
+    <li><a href="spec/v1.0.html">Specification v1.0</a> — Normative standard with RFC 2119 language and compliance levels</li>
+  </ul>
+
+  <hr>
+  <p style="color: var(--faint); font-size: 13px; margin-top: 40px;">
+    Protective Computing — <a href="../">back to home</a>
+  </p>
+</div>
+</body>
+</html>

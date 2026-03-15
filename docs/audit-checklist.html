@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Protective Computing Audit Checklist — Protective Computing</title>
+<meta name="description" content="A practical checklist for auditing software against Protective Computing principles: coercion risk, degraded-mode utility, offline capability, and data exposure." />
+<link rel="canonical" href="https://protective-computing.github.io/docs/audit-checklist.html" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Protective Computing" />
+<meta property="og:title" content="Protective Computing Audit Checklist — Protective Computing" />
+<meta property="og:description" content="A practical checklist for auditing software against Protective Computing principles: coercion risk, degraded-mode utility, offline capability, and data exposure." />
+<meta property="og:url" content="https://protective-computing.github.io/docs/audit-checklist.html" />
+<meta property="og:image" content="https://protective-computing.github.io/assets/logo.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Protective Computing Audit Checklist — Protective Computing" />
+<meta name="twitter:description" content="A practical checklist for auditing software against Protective Computing principles: coercion risk, degraded-mode utility, offline capability, and data exposure." />
+<meta name="twitter:image" content="https://protective-computing.github.io/assets/logo.png" />
+<link rel="icon" href="../assets/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #070A10;
+    --panel: rgba(255,255,255,0.06);
+    --text: rgba(255,255,255,0.92);
+    --muted: rgba(255,255,255,0.68);
+    --faint: rgba(255,255,255,0.52);
+    --line: rgba(255,255,255,0.10);
+    --shadow: 0 18px 55px rgba(0,0,0,.55);
+  }
+  *{ box-sizing: border-box; }
+  html, body{ height: 100%; }
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(107,123,255,.14), transparent 60%),
+          radial-gradient(1100px 650px at 90% 15%, rgba(87,217,255,.16), transparent 55%),
+                var(--bg);
+    color: var(--text);
+    letter-spacing: -0.015em;
+  }
+  a{ color: #57d9ff; text-decoration: none; }
+  a:hover{ text-decoration: underline; text-underline-offset: 3px; }
+  .wrap{
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 22px 60px;
+  }
+  .back{
+    display: inline-block;
+    padding: 8px 12px;
+    margin-bottom: 20px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .back:hover{ background: rgba(255,255,255,0.04); }
+  h1{
+    font-size: 2.2rem;
+    line-height: 1.1;
+    margin: 0 0 10px;
+    font-weight: 850;
+  }
+  .subtitle{
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+  h2{
+    font-size: 1.6rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    font-weight: 800;
+  }
+  h3{
+    font-size: 1.05rem;
+    margin-top: 24px;
+    margin-bottom: 10px;
+    font-weight: 750;
+    color: var(--text);
+  }
+  p, li{
+    color: var(--muted);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+  ul{
+    margin: 14px 0;
+    padding-left: 20px;
+  }
+  li{ margin: 8px 0; }
+  code{
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--line);
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--text);
+  }
+  .box{
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: 14px;
+    padding: 18px;
+    margin: 20px 0;
+  }
+  .box-title{
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  .checklist{
+    list-style: none;
+    padding-left: 0;
+  }
+  .checklist li{ padding-left: 24px; margin: 10px 0; position: relative; }
+  .checklist li:before{ content: "✓"; position: absolute; left: 0; color: #57d9ff; font-weight: bold; }
+  .section-label{
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #57d9ff;
+    background: rgba(87,217,255,0.10);
+    border: 1px solid rgba(87,217,255,0.22);
+    border-radius: 6px;
+    padding: 3px 10px;
+    margin-bottom: 12px;
+  }
+  hr{
+    border: none;
+    height: 1px;
+    background: var(--line);
+    margin: 30px 0;
+  }
+</style>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-_ThpRaAClu8dKUNrYHpiL.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+</head>
+<body>
+<div class="wrap">
+  <a href="../" class="back">← Back to Home</a>
+  <a href="getting-started.html" class="back" style="margin-left:8px;">Getting Started →</a>
+
+  <h1>Protective Computing Audit Checklist</h1>
+  <p class="subtitle">A structured checklist for auditing software against Protective Computing requirements. Use this before launch, during review, or when evaluating a third-party system.</p>
+
+  <p>
+    This checklist maps to the six <a href="principles/">Protective Computing principles</a>. Each section identifies failure modes specific to that principle and asks whether your system addresses them. The goal is not compliance theatre — it is honest pressure-testing against degraded and adversarial conditions.
+  </p>
+  <p>
+    For the normative specification these checks derive from, see the <a href="spec/v1.0.html">Protective Computing Specification v1.0</a>.
+  </p>
+
+  <hr>
+
+  <h2>Before You Start</h2>
+  <p>Identify your threat context:</p>
+  <div class="box">
+    <ul class="checklist">
+      <li>Who are your most vulnerable users? (Users in crisis, under surveillance, with low-resource devices?)</li>
+      <li>What is the worst-case operating environment? (No network, low power, compromised device, coercion?)</li>
+      <li>What is the critical path? (The minimum the user must be able to accomplish to remain safe?)</li>
+      <li>Who could be adversarial? (Abusers, institutions, attackers, or your own infrastructure?)</li>
+    </ul>
+  </div>
+  <p>Answer these first. The checklist below has more weight when mapped to your specific threat context.</p>
+
+  <hr>
+
+  <h2>1. Reversibility</h2>
+  <div class="section-label">Principle 1</div>
+  <p>Can users undo or recover from actions? <a href="principles/reversibility.html">Full reference →</a></p>
+  <div class="box">
+    <ul class="checklist">
+      <li>Destructive actions (delete, send, submit) can be undone within a reasonable window</li>
+      <li>Users are warned before irreversible operations with a clear description of what cannot be recovered</li>
+      <li>Deletion is soft-deleted first; hard deletion is delayed or requires explicit confirmation</li>
+      <li>Export is available so users can retrieve their data before leaving</li>
+      <li>Session loss (crash, power cut, connectivity drop) does not silently discard user work</li>
+      <li>Cascading destructive operations are blocked or require explicit acknowledgement of downstream effects</li>
+    </ul>
+  </div>
+
+  <h2>2. Exposure Minimization</h2>
+  <div class="section-label">Principle 2</div>
+  <p>Is the data surface as small as possible? <a href="principles/exposure-minimization.html">Full reference →</a></p>
+  <div class="box">
+    <ul class="checklist">
+      <li>Data collection is justified field by field — no "collect now, decide later" fields exist</li>
+      <li>Sensitive data is encrypted at rest with user-controlled or per-user keys</li>
+      <li>Data is not retained beyond its operational purpose; retention schedules are enforced, not documented</li>
+      <li>Logs do not capture sensitive payloads (form values, message bodies, health data)</li>
+      <li>Third-party integrations are audited for what they receive; unnecessary sharing is removed</li>
+      <li>Transmission uses TLS; certificates are validated; no plaintext fallbacks exist</li>
+      <li>Aggregate or anonymous data is used in place of identified records wherever possible</li>
+    </ul>
+  </div>
+
+  <h2>3. Local Authority</h2>
+  <div class="section-label">Principle 3</div>
+  <p>Does the user retain control offline and without your infrastructure? <a href="principles/local-authority.html">Full reference →</a></p>
+  <div class="box">
+    <ul class="checklist">
+      <li>Critical user functions work without a network connection</li>
+      <li>Data is cached locally so users are not locked out when your servers are unavailable</li>
+      <li>Authentication does not block access to locally cached content</li>
+      <li>Sync conflicts are surfaced to the user rather than silently resolved by the server</li>
+      <li>Users can export all their data in a portable format without contacting support</li>
+      <li>The system does not require a continuous server heartbeat to remain usable</li>
+    </ul>
+  </div>
+
+  <h2>4. Coercion Resistance</h2>
+  <div class="section-label">Principle 4</div>
+  <p>Can users protect themselves under duress or forced disclosure? <a href="principles/coercion-resistance.html">Full reference →</a></p>
+  <div class="box">
+    <ul class="checklist">
+      <li>Users can delete or wipe sensitive data rapidly, including under duress</li>
+      <li>The system does not store information that could be used to harm the user if extracted</li>
+      <li>Strong authentication options are available (passphrase, hardware key) not just biometrics or SMS</li>
+      <li>There is no hidden recovery backdoor that law enforcement or abusers could exploit</li>
+      <li>The system does not reveal that data has been wiped (plausible deniability where applicable)</li>
+      <li>Security claims in documentation are accurate — no false promises of protection</li>
+    </ul>
+  </div>
+
+  <h2>5. Degraded-Infrastructure Functionality</h2>
+  <div class="section-label">Principle 5</div>
+  <p>Does the system work under low resources? <a href="principles/degraded-functionality.html">Full reference →</a></p>
+  <div class="box">
+    <ul class="checklist">
+      <li>The critical path has been tested on 2G or simulated low-bandwidth connections</li>
+      <li>The system does not assume full battery; power-intensive features are optional, not default</li>
+      <li>Page or screen weights are measured; heavy assets are lazy-loaded or omitted on constrained connections</li>
+      <li>The UI degrades gracefully: core functionality survives without JavaScript, WebSockets, or CDN assets</li>
+      <li>Keyboard-only navigation is supported on all critical flows</li>
+      <li>Low-RAM devices (512 MB or less) can complete core tasks without crashes</li>
+      <li>Animations and background processes are optional or suppress-able to conserve resources</li>
+    </ul>
+  </div>
+
+  <h2>6. Essential Utility</h2>
+  <div class="section-label">Principle 6</div>
+  <p>Is the system optimized for survival tasks, not engagement? <a href="principles/essential-utility.html">Full reference →</a></p>
+  <div class="box">
+    <ul class="checklist">
+      <li>The critical path is documented and is the fastest, most reliable flow in the system</li>
+      <li>Dark patterns (forced continuity, deceptive defaults, guilt-based friction) are absent</li>
+      <li>Notifications and alerts are proportionate to urgency — no engagement-bait prompts</li>
+      <li>Features that compete for user attention without providing utility have been removed or made opt-in</li>
+      <li>Cognitive load on critical flows is minimized: fewer decisions, shorter text, progressive disclosure</li>
+      <li>The system does not require or exploit emotional or cognitive vulnerability to achieve its goals</li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <h2>After the Audit</h2>
+  <p>For each item that fails:</p>
+  <ul>
+    <li><strong>Classify severity:</strong> Does this failure block the critical path, or is it a marginal risk?</li>
+    <li><strong>Assign ownership:</strong> Who is responsible for fixing it?</li>
+    <li><strong>Set a remediation target:</strong> Block launch, fix in next sprint, or track as known debt?</li>
+    <li><strong>Document it:</strong> Undocumented known risks become silent liabilities.</li>
+  </ul>
+
+  <div class="box">
+    <div class="box-title">Formal Compliance Levels</div>
+    <p style="margin:0;">
+      The <a href="spec/v1.0.html">Protective Computing Specification v1.0</a> defines four compliance levels (Level 1–4), with MUST/SHOULD/MUST NOT requirements and formal verification expectations. Use that spec for compliance claims. Use this checklist for practical design review.
+    </p>
+  </div>
+
+  <hr>
+
+  <h2>Related Resources</h2>
+  <ul>
+    <li><a href="spec/v1.0.html">Protective Computing Specification v1.0</a> — Normative standard with RFC 2119 language</li>
+    <li><a href="reference-implementation/paintracker-mapping.html">Reference Implementation: PainTracker Mapping</a> — Real-world compliance example</li>
+    <li><a href="spec/v1.0-must-justifications.html">MUST Justifications Annex</a> — Auditable ledger mapping each requirement to its threat alignment</li>
+    <li><a href="designing-for-coercion-resistance.html">Designing for Coercion Resistance</a> — Deeper treatment of coercion audit patterns</li>
+    <li><a href="degraded-mode-ux-patterns.html">Degraded-Mode UX Patterns</a> — Checklist for low-resource UX design</li>
+  </ul>
+
+  <hr>
+  <p style="color: var(--faint); font-size: 13px; margin-top: 40px;">
+    Protective Computing — <a href="../">back to home</a>
+  </p>
+</div>
+</body>
+</html>
