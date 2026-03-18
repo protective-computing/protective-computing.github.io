@@ -4,17 +4,17 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Protective Computing Audit Checklist — Protective Computing</title>
-<meta name="description" content="A practical checklist for auditing software against Protective Computing principles: coercion risk, degraded-mode utility, offline capability, and data exposure." />
+<meta name="description" content="Audit-ready checklist for Protective Computing: six-principle requirements, test catalogs, MUST traceability, and evidence capture guidance." />
 <link rel="canonical" href="https://protective-computing.github.io/docs/audit-checklist.html" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Protective Computing" />
 <meta property="og:title" content="Protective Computing Audit Checklist — Protective Computing" />
-<meta property="og:description" content="A practical checklist for auditing software against Protective Computing principles: coercion risk, degraded-mode utility, offline capability, and data exposure." />
+<meta property="og:description" content="Audit-ready checklist for Protective Computing: six-principle requirements, test catalogs, MUST traceability, and evidence capture guidance." />
 <meta property="og:url" content="https://protective-computing.github.io/docs/audit-checklist.html" />
 <meta property="og:image" content="https://protective-computing.github.io/assets/logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Protective Computing Audit Checklist — Protective Computing" />
-<meta name="twitter:description" content="A practical checklist for auditing software against Protective Computing principles: coercion risk, degraded-mode utility, offline capability, and data exposure." />
+<meta name="twitter:description" content="Audit-ready checklist for Protective Computing: six-principle requirements, test catalogs, MUST traceability, and evidence capture guidance." />
 <meta name="twitter:image" content="https://protective-computing.github.io/assets/logo.png" />
 <link rel="icon" href="../assets/logo.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,10 +24,15 @@
   :root{
     --bg: #070A10;
     --panel: rgba(255,255,255,0.06);
+    --panel-soft: rgba(255,255,255,0.04);
     --text: rgba(255,255,255,0.92);
-    --muted: rgba(255,255,255,0.68);
+    --muted: rgba(255,255,255,0.72);
     --faint: rgba(255,255,255,0.52);
     --line: rgba(255,255,255,0.10);
+    --brand: #57d9ff;
+    --brand-2: #6b7bff;
+    --warn: #ffc857;
+    --danger: #ff7a7a;
     --shadow: 0 18px 55px rgba(0,0,0,.55);
   }
   *{ box-sizing: border-box; }
@@ -41,10 +46,10 @@
     color: var(--text);
     letter-spacing: -0.015em;
   }
-  a{ color: #57d9ff; text-decoration: none; }
+  a{ color: var(--brand); text-decoration: none; }
   a:hover{ text-decoration: underline; text-underline-offset: 3px; }
   .wrap{
-    max-width: 900px;
+    max-width: 1100px;
     margin: 0 auto;
     padding: 28px 22px 60px;
   }
@@ -52,6 +57,7 @@
     display: inline-block;
     padding: 8px 12px;
     margin-bottom: 20px;
+    margin-right: 8px;
     border: 1px solid var(--line);
     border-radius: 8px;
     color: var(--muted);
@@ -67,20 +73,20 @@
   .subtitle{
     color: var(--muted);
     font-size: 16px;
-    margin-bottom: 30px;
+    margin-bottom: 24px;
+    max-width: 900px;
   }
   h2{
-    font-size: 1.6rem;
-    margin-top: 40px;
+    font-size: 1.55rem;
+    margin-top: 36px;
     margin-bottom: 14px;
     font-weight: 800;
   }
   h3{
-    font-size: 1.05rem;
+    font-size: 1.08rem;
     margin-top: 24px;
     margin-bottom: 10px;
     font-weight: 750;
-    color: var(--text);
   }
   p, li{
     color: var(--muted);
@@ -88,7 +94,7 @@
     font-size: 15px;
   }
   ul{
-    margin: 14px 0;
+    margin: 12px 0;
     padding-left: 20px;
   }
   li{ margin: 8px 0; }
@@ -105,196 +111,789 @@
     background: var(--panel);
     border-radius: 14px;
     padding: 18px;
-    margin: 20px 0;
+    margin: 18px 0;
+    box-shadow: var(--shadow);
   }
+  .box.soft{ background: var(--panel-soft); box-shadow: none; }
   .box-title{
     font-weight: 700;
     margin-bottom: 10px;
     color: var(--text);
   }
-  .checklist{
-    list-style: none;
-    padding-left: 0;
-  }
-  .checklist li{ padding-left: 24px; margin: 10px 0; position: relative; }
-  .checklist li:before{ content: "✓"; position: absolute; left: 0; color: #57d9ff; font-weight: bold; }
   .section-label{
     display: inline-block;
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #57d9ff;
+    color: var(--brand);
     background: rgba(87,217,255,0.10);
     border: 1px solid rgba(87,217,255,0.22);
     border-radius: 6px;
     padding: 3px 10px;
     margin-bottom: 12px;
   }
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+  }
+  table{
+    width:100%;
+    border-collapse: collapse;
+    margin: 16px 0 22px;
+    background: rgba(0,0,0,0.18);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  th, td{
+    border-bottom: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+    padding: 12px;
+    vertical-align: top;
+    text-align: left;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  th:last-child, td:last-child{ border-right: none; }
+  tr:last-child td{ border-bottom: none; }
+  th{
+    background: rgba(255,255,255,0.06);
+    color: var(--text);
+    font-weight: 700;
+  }
+  .test-id{
+    display:inline-block;
+    padding: 2px 8px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255,255,255,0.05);
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .type{
+    display:inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .type.auto{ background: rgba(87,217,255,0.12); color: var(--brand); }
+  .type.manual{ background: rgba(255,200,87,0.12); color: var(--warn); }
+  .type.abuse{ background: rgba(255,122,122,0.12); color: var(--danger); }
+  .muted{ color: var(--faint); }
+  .checklist{ list-style: none; padding-left: 0; }
+  .checklist li{ position: relative; padding-left: 24px; }
+  .checklist li:before{ content: "[ ]"; position: absolute; left: 0; color: var(--brand); }
   hr{
     border: none;
     height: 1px;
     background: var(--line);
     margin: 30px 0;
   }
+  @media (max-width: 820px){
+    table, thead, tbody, th, td, tr{ display:block; }
+    thead{ display:none; }
+    tr{ border-bottom: 1px solid var(--line); }
+    td{
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+      padding: 10px 12px;
+    }
+    tr:last-child td:last-child{ border-bottom: none; }
+  }
 </style>
 <!-- Privacy-friendly analytics by Plausible -->
 <script async src="https://plausible.io/js/pa-_ThpRaAClu8dKUNrYHpiL.js"></script>
 <script>
-  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  globalThis.plausible = globalThis.plausible || function() {
+    plausible.q = plausible.q || [];
+    plausible.q.push(arguments);
+  };
+  plausible.init = plausible.init || function(i) {
+    plausible.o = i || {};
+  };
   plausible.init()
 </script>
 </head>
 <body>
 <div class="wrap">
-  <a href="../" class="back">← Back to Home</a>
-  <a href="getting-started.html" class="back" style="margin-left:8px;">Getting Started →</a>
+  <a href="../" class="back">&larr; Back to Home</a>
+  <a href="audit-this-site.html" class="back">Audit This Site &rarr;</a>
 
   <h1>Protective Computing Audit Checklist</h1>
-  <p class="subtitle">A structured checklist for auditing software against Protective Computing requirements. Use this before launch, during review, or when evaluating a third-party system.</p>
+  <p class="subtitle">An audit-ready verification surface for the six Protective Computing principles. This page turns the normative spec into concrete test catalogs, traceable evidence requirements, and a final checklist suitable for release reviews, external audits, and hostile-environment validation.</p>
 
-  <p>
-    This checklist maps to the six <a href="principles/">Protective Computing principles</a>. Each section identifies failure modes specific to that principle and asks whether your system addresses them. The goal is not compliance theatre — it is honest pressure-testing against degraded and adversarial conditions.
-  </p>
-  <p>
-    For the normative specification these checks derive from, see the <a href="spec/v1.0.html">Protective Computing Specification v1.0</a>.
-  </p>
-
-  <hr>
+  <div class="box">
+    <div class="box-title">How to use this page</div>
+    <ul>
+      <li>Start with the summary table to understand what each principle demands and how auditors should approach it.</li>
+      <li>Use the per-principle test catalog to run automated checks, manual walkthroughs, and abuse tests.</li>
+      <li>Capture evidence as you go. A passing audit is not a claim; it is a set of reproducible artifacts.</li>
+      <li>Use the MUST traceability matrix near the end to confirm every normative requirement is covered by at least one test.</li>
+    </ul>
+    <p style="margin-bottom:0;">Normative source: <a href="spec/v1.0.html">Protective Computing Specification v1.0</a>. Defensibility ledger: <a href="spec/v1.0-must-justifications.html">MUST Justifications Annex</a>.</p>
+  </div>
 
   <h2>Before You Start</h2>
-  <p>Identify your threat context:</p>
-  <div class="box">
-    <ul class="checklist">
-      <li>Who are your most vulnerable users? (Users in crisis, under surveillance, with low-resource devices?)</li>
-      <li>What is the worst-case operating environment? (No network, low power, compromised device, coercion?)</li>
-      <li>What is the critical path? (The minimum the user must be able to accomplish to remain safe?)</li>
-      <li>Who could be adversarial? (Abusers, institutions, attackers, or your own infrastructure?)</li>
+  <div class="box soft">
+    <ul>
+      <li>Identify the highest-risk user: who is harmed first when the system fails?</li>
+      <li>Define essential workflows: what must still work under outage, pressure, low battery, and partial compromise?</li>
+      <li>Fix the operating context for the audit: offline, low RAM, low bandwidth, forced disclosure, device seizure, or hostile admin.</li>
+      <li>Prepare capture channels: screen recording, screenshots, network traces, storage snapshots, logs, exported artifacts, and CI output.</li>
     </ul>
   </div>
-  <p>Answer these first. The checklist below has more weight when mapped to your specific threat context.</p>
+
+  <h2>Six Principles Summary</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Requirement</th>
+        <th>How to test</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Reversibility</strong><br>User actions and system changes must be recoverable within documented boundaries; failures must not become permanent harm.</td>
+        <td>Run destructive-action regression, recovery-window disclosure checks, crash-recovery tests, and adversarial deletion attempts. Verify undo paths, delay windows, and documented irreversibility boundaries.</td>
+      </tr>
+      <tr>
+        <td><strong>Exposure Minimization</strong><br>Collect only essential data, defend it cryptographically, and enforce automatic retention limits.</td>
+        <td>Audit field justification, storage encryption, TLS posture, retention expiry, logs, and data egress. Confirm every field has a purpose and every disclosure path is bounded.</td>
+      </tr>
+      <tr>
+        <td><strong>Local Authority</strong><br>Essential work must remain possible without continuous server reachability or live re-authentication.</td>
+        <td>Execute full essential workflows in airplane mode, under expired tokens, and across interrupted sync. Validate local cache integrity, non-blocking sync, and published offline/online parity.</td>
+      </tr>
+      <tr>
+        <td><strong>Coercion Resistance</strong><br>Users must retain confidentiality and integrity under physical, legal, and administrative pressure.</td>
+        <td>Perform server-side decrypt-failure checks, KDF and passphrase validation, threat-model review, forced-disclosure tabletop exercises, and backdoor hunts.</td>
+      </tr>
+      <tr>
+        <td><strong>Degraded Functionality</strong><br>Core utility must survive constrained bandwidth, power, compute, and input conditions.</td>
+        <td>Throttle to 2G, constrain memory and CPU, audit keyboard-only flows, test non-essential feature shedding, confirm no media autoload, and run WCAG AA checks.</td>
+      </tr>
+      <tr>
+        <td><strong>Essential Utility</strong><br>Features must serve survival and autonomy, not engagement, extraction, or coercive monetization.</td>
+        <td>Run feature-justification review, subtraction drills, dark-pattern probes, metric audits, and paywall checks. Confirm essential workflows stay free of manipulative friction.</td>
+      </tr>
+    </tbody>
+  </table>
 
   <hr>
 
   <h2>1. Reversibility</h2>
   <div class="section-label">Principle 1</div>
-  <p>Can users undo or recover from actions? <a href="principles/reversibility.html">Full reference →</a></p>
-  <div class="box">
-    <ul class="checklist">
-      <li>Destructive actions (delete, send, submit) can be undone within a reasonable window</li>
-      <li>Users are warned before irreversible operations with a clear description of what cannot be recovered</li>
-      <li>Deletion is soft-deleted first; hard deletion is delayed or requires explicit confirmation</li>
-      <li>Export is available so users can retrieve their data before leaving</li>
-      <li>Session loss (crash, power cut, connectivity drop) does not silently discard user work</li>
-      <li>Cascading destructive operations are blocked or require explicit acknowledgement of downstream effects</li>
-    </ul>
+  <p>Full reference: <a href="principles/reversibility.html">Reversibility</a></p>
+  <div class="grid">
+    <div class="box soft">
+      <div class="box-title">Target user risk</div>
+      <p>Accidental deletion, coerced action, panic clicks, crash-driven loss, or misleading flows turn routine mistakes into irreversible harm.</p>
+    </div>
+    <div class="box soft">
+      <div class="box-title">Minimum system guarantees</div>
+      <p>Destructive actions can be undone, recovery windows are visible, permanent deletion is delayed, and the system clearly documents what cannot be recovered.</p>
+    </div>
+    <div class="box soft">
+      <div class="box-title">Measurable acceptance criteria</div>
+      <ul>
+        <li>100% of destructive actions expose an undo or recovery path, or explicitly declare irreversibility.</li>
+        <li>Permanent deletion always requires explicit confirmation and an enforced delay of at least 7 days.</li>
+        <li>Crash or restart does not silently discard in-progress essential work.</li>
+      </ul>
+    </div>
   </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Test</th>
+        <th>Preconditions</th>
+        <th>Steps</th>
+        <th>Expected outcome</th>
+        <th>Evidence to capture</th>
+        <th>MUST coverage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="test-id">REV-A1</span><br><span class="type auto">Automated</span><br>Destructive action undo regression</td>
+        <td>Seeded account or fixture data; destructive flows available; online and offline test modes.</td>
+        <td>Run integration tests for delete, modify, and publish actions. Trigger action, invoke undo, then confirm original state is restored within the documented recovery window.</td>
+        <td>Every destructive action exposes a working undo path or restore flow; no state corruption or hidden residual damage remains.</td>
+        <td>CI logs, before/after snapshots, restored record IDs, recovery-window timestamps.</td>
+        <td><code>NORM-001</code>, <code>NORM-003</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">REV-A2</span><br><span class="type auto">Automated</span><br>Crash and restart recovery</td>
+        <td>Draft/edit flow available; app restart or browser reload scriptable; optional offline mode.</td>
+        <td>Begin editing an essential record, interrupt with crash/reload/power-loss simulation, relaunch, then check draft presence and recovery affordance.</td>
+        <td>Essential work survives interruption or is recoverable through an explicit restoration flow; no silent data discard occurs.</td>
+        <td>Crash logs, local storage snapshot, relaunch video, recovered draft state.</td>
+        <td><code>NORM-001</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">REV-M1</span><br><span class="type manual">Manual</span><br>Recovery-window disclosure walkthrough</td>
+        <td>Device build with production UI; destructive actions reachable from normal navigation.</td>
+        <td>Walk every delete/archive/reset path. Record the exact warning text, recovery window wording, and whether the time boundary is visible before execution.</td>
+        <td>Every destructive flow clearly shows the recovery window duration and the consequence of expiry before the action completes.</td>
+        <td>Screenshots of warnings, screen recording of the flow, UI text inventory.</td>
+        <td><code>NORM-004</code>, <code>NORM-005</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">REV-M2</span><br><span class="type manual">Manual</span><br>Reversibility boundary review</td>
+        <td>Published docs or internal transition inventory available; access to all user-triggerable state transitions.</td>
+        <td>Enumerate create, edit, delete, export, sync, reset, migration, and expiry actions. Mark each as reversible or irreversible, then verify runtime matches the label.</td>
+        <td>No state transition lacks a reversibility label, and no transition behaves differently from its published classification.</td>
+        <td>Action inventory, screenshots, before/after state captures, documentation diff.</td>
+        <td><code>NORM-006</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">REV-U1</span><br><span class="type abuse">Abuse</span><br>Coerced rapid-delete attempt</td>
+        <td>Attacker has brief unlocked-device access; user regains access within recovery window.</td>
+        <td>Attempt immediate deletion of sensitive records, force close the app, then return to the user account and attempt restoration from local UI or documented recovery path.</td>
+        <td>Deletion cannot become instantly irreversible; confirmation and delay controls leave the user a realistic recovery path.</td>
+        <td>Screen recording of attack and restore attempt, deletion timestamps, restore confirmation.</td>
+        <td><code>NORM-005</code>, <code>NORM-001</code></td>
+      </tr>
+    </tbody>
+  </table>
 
   <h2>2. Exposure Minimization</h2>
   <div class="section-label">Principle 2</div>
-  <p>Is the data surface as small as possible? <a href="principles/exposure-minimization.html">Full reference →</a></p>
-  <div class="box">
-    <ul class="checklist">
-      <li>Data collection is justified field by field — no "collect now, decide later" fields exist</li>
-      <li>Sensitive data is encrypted at rest with user-controlled or per-user keys</li>
-      <li>Data is not retained beyond its operational purpose; retention schedules are enforced, not documented</li>
-      <li>Logs do not capture sensitive payloads (form values, message bodies, health data)</li>
-      <li>Third-party integrations are audited for what they receive; unnecessary sharing is removed</li>
-      <li>Transmission uses TLS; certificates are validated; no plaintext fallbacks exist</li>
-      <li>Aggregate or anonymous data is used in place of identified records wherever possible</li>
-    </ul>
+  <p>Full reference: <a href="principles/exposure-minimization.html">Exposure Minimization</a></p>
+  <div class="grid">
+    <div class="box soft">
+      <div class="box-title">Target user risk</div>
+      <p>Over-collection, plaintext storage, long retention, and undisclosed sharing make breach, subpoena, coercion, and analytics leakage materially worse.</p>
+    </div>
+    <div class="box soft">
+      <div class="box-title">Minimum system guarantees</div>
+      <p>Every field is justified, sensitive values are encrypted, transport is hardened, retention is explicit and automatic, and no third-party disclosure occurs without informed opt-in consent.</p>
+    </div>
+    <div class="box soft">
+      <div class="box-title">Measurable acceptance criteria</div>
+      <ul>
+        <li>Every persisted field maps to a documented essential use case.</li>
+        <li>No sensitive data appears in plaintext at rest, in logs, or on the wire.</li>
+        <li>Retention-expired records become inaccessible and leave no application-readable residue.</li>
+      </ul>
+    </div>
   </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Test</th>
+        <th>Preconditions</th>
+        <th>Steps</th>
+        <th>Expected outcome</th>
+        <th>Evidence to capture</th>
+        <th>MUST coverage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="test-id">EXP-A1</span><br><span class="type auto">Automated</span><br>Field-justification ledger gate</td>
+        <td>Schema definition and versioned field inventory available in repo.</td>
+        <td>Diff the current schema against the field-justification ledger. Fail CI if any new or existing stored field lacks necessity, sensitivity class, and retention bound.</td>
+        <td>No persisted field exists without explicit justification and retention metadata.</td>
+        <td>CI artifact showing schema diff, justification ledger, failing/passing rows.</td>
+        <td><code>NORM-007</code>, <code>NORM-010</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">EXP-A2</span><br><span class="type auto">Automated</span><br>At-rest encryption and log scan</td>
+        <td>Access to local storage, database export, and application logs in a test profile containing sensitive data.</td>
+        <td>Seed sensitive records, export local storage and logs, then search for plaintext values and keys. Validate encryption algorithm and key-handling metadata.</td>
+        <td>No sensitive values are readable without decryption material; logs do not contain payload data or secrets.</td>
+        <td>Storage export, grep output, encryption config summary, redacted logs.</td>
+        <td><code>NORM-007</code>, <code>NORM-011</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">EXP-A3</span><br><span class="type auto">Automated</span><br>TLS and outbound egress audit</td>
+        <td>Network inspector or proxy capture; endpoint inventory; consent toggles if present.</td>
+        <td>Run essential workflows, capture outbound requests, scan endpoints for TLS posture, and compare observed egress against documented processor list and consent state.</td>
+        <td>All traffic is TLS-protected, no plaintext endpoint exists, and no data leaves the system outside declared and consented channels.</td>
+        <td>Packet capture, TLS scan reports, endpoint list, consent-state matrix.</td>
+        <td><code>NORM-012</code>, <code>NORM-014</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">EXP-M1</span><br><span class="type manual">Manual</span><br>Retention expiry walkthrough</td>
+        <td>Test configuration with short retention window; ability to inspect data before and after expiry.</td>
+        <td>Create records, wait past the configured retention boundary, then verify UI access, search, export, and recovery paths after expiry.</td>
+        <td>Expired data no longer appears in the UI, exports, or app-level searches, and the retention behavior matches published policy.</td>
+        <td>Screenshots before and after expiry, retention settings, export attempt results.</td>
+        <td><code>NORM-013</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">EXP-U1</span><br><span class="type abuse">Abuse</span><br>Compromised-device extraction attempt</td>
+        <td>Attacker has filesystem access to a seized device or backup image.</td>
+        <td>Attempt to recover records through local DB dumps, crash logs, cached previews, and third-party SDK artifacts without valid user credentials.</td>
+        <td>Only ciphertext or bounded metadata is accessible; no plaintext payload leakage appears through side channels.</td>
+        <td>Filesystem snapshot, extracted files, plaintext scan output, screenshots of failed recovery.</td>
+        <td><code>NORM-007</code>, <code>NORM-011</code>, <code>NORM-013</code>, <code>NORM-014</code></td>
+      </tr>
+    </tbody>
+  </table>
 
   <h2>3. Local Authority</h2>
   <div class="section-label">Principle 3</div>
-  <p>Does the user retain control offline and without your infrastructure? <a href="principles/local-authority.html">Full reference →</a></p>
-  <div class="box">
-    <ul class="checklist">
-      <li>Critical user functions work without a network connection</li>
-      <li>Data is cached locally so users are not locked out when your servers are unavailable</li>
-      <li>Authentication does not block access to locally cached content</li>
-      <li>Sync conflicts are surfaced to the user rather than silently resolved by the server</li>
-      <li>Users can export all their data in a portable format without contacting support</li>
-      <li>The system does not require a continuous server heartbeat to remain usable</li>
-    </ul>
+  <p>Full reference: <a href="principles/local-authority.html">Local Authority</a></p>
+  <div class="grid">
+    <div class="box soft">
+      <div class="box-title">Target user risk</div>
+      <p>Users are locked out by outages, account throttling, censorship, captive portals, or server-side policy decisions exactly when they most need the system.</p>
+    </div>
+    <div class="box soft">
+      <div class="box-title">Minimum system guarantees</div>
+      <p>Essential workflows run offline, essential data remains cached locally, sync is asynchronous and non-blocking, offline access does not require live auth, and parity/sync behavior is documented.</p>
+    </div>
+    <div class="box soft">
+      <div class="box-title">Measurable acceptance criteria</div>
+      <ul>
+        <li>Essential CRUD or equivalent critical tasks complete in airplane mode with zero blocking network dependency.</li>
+        <li>Expired or unavailable server tokens do not prevent offline access to cached essential data.</li>
+        <li>Observed sync and parity behavior matches the published offline/online matrix.</li>
+      </ul>
+    </div>
   </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Test</th>
+        <th>Preconditions</th>
+        <th>Steps</th>
+        <th>Expected outcome</th>
+        <th>Evidence to capture</th>
+        <th>MUST coverage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="test-id">LOC-A1</span><br><span class="type auto">Automated</span><br>Airplane-mode essential workflow suite</td>
+        <td>Seeded local dataset; network disabled at OS level; network inspector enabled.</td>
+        <td>Execute essential create, read, update, and delete flows in airplane mode, including app restart between operations.</td>
+        <td>All essential workflows complete without server reachability and without emitting outbound traffic or blocking prompts.</td>
+        <td>CI or device logs, network trace showing zero outbound requests, state snapshots after restart.</td>
+        <td><code>NORM-015</code>, <code>NORM-017</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">LOC-A2</span><br><span class="type auto">Automated</span><br>Local cache persistence and reload test</td>
+        <td>Previously synced records on device; ability to force reload while offline.</td>
+        <td>Disconnect network, edit a record, reload the app, then inspect whether cached records and recent local edits are still accessible.</td>
+        <td>The user retains a readable, internally consistent local copy with no silent rollback.</td>
+        <td>Storage snapshot, screenshots before/after reload, offline render proof.</td>
+        <td><code>NORM-018</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">LOC-A3</span><br><span class="type auto">Automated</span><br>Asynchronous sync under packet loss</td>
+        <td>Sync-enabled build; simulated latency >= 2000ms and packet loss >= 30%.</td>
+        <td>Perform several writes while the network is unstable, then reconnect and inspect queue replay, conflict handling, and UI responsiveness.</td>
+        <td>Writes persist locally immediately, UI remains usable, and reconciliation occurs without duplication, corruption, or lockup.</td>
+        <td>Queue logs, network trace, conflict-resolution output, before/after record counts.</td>
+        <td><code>NORM-019</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">LOC-M1</span><br><span class="type manual">Manual</span><br>Offline access without live re-authentication</td>
+        <td>Cached data on device; server tokens expired or revoked; network disabled.</td>
+        <td>Close the app, expire credentials, relaunch offline, and attempt access to essential cached records.</td>
+        <td>Essential cached content remains accessible without requiring live auth or support intervention.</td>
+        <td>Video walkthrough, expired-token proof, screenshots of accessible cached content.</td>
+        <td><code>NORM-020</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">LOC-M2</span><br><span class="type manual">Manual</span><br>Parity and sync documentation review</td>
+        <td>Published offline/online feature matrix and sync documentation available.</td>
+        <td>Compare the published parity matrix against observed behavior across offline, intermittent, and online states, including conflict resolution.</td>
+        <td>Feature parity and sync semantics are accurately documented, with no undocumented exposure or behavior differences.</td>
+        <td>Documentation snapshot, comparison notes, screenshots of each mode.</td>
+        <td><code>NORM-021</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">LOC-U1</span><br><span class="type abuse">Abuse</span><br>Account lockout or censorship scenario</td>
+        <td>User account is throttled, region-blocked, or identity provider is unavailable; device remains in user possession.</td>
+        <td>Simulate server-side lockout, then attempt essential local operations and data access entirely offline.</td>
+        <td>Server-side denial does not remove the user's local authority over essential data and workflows.</td>
+        <td>Lockout logs, offline screenshots, attempted server calls, local export artifacts.</td>
+        <td><code>NORM-015</code>, <code>NORM-017</code>, <code>NORM-020</code></td>
+      </tr>
+    </tbody>
+  </table>
 
   <h2>4. Coercion Resistance</h2>
   <div class="section-label">Principle 4</div>
-  <p>Can users protect themselves under duress or forced disclosure? <a href="principles/coercion-resistance.html">Full reference →</a></p>
-  <div class="box">
-    <ul class="checklist">
-      <li>Users can delete or wipe sensitive data rapidly, including under duress</li>
-      <li>The system does not store information that could be used to harm the user if extracted</li>
-      <li>Strong authentication options are available (passphrase, hardware key) not just biometrics or SMS</li>
-      <li>There is no hidden recovery backdoor that law enforcement or abusers could exploit</li>
-      <li>The system does not reveal that data has been wiped (plausible deniability where applicable)</li>
-      <li>Security claims in documentation are accurate — no false promises of protection</li>
-    </ul>
+  <p>Full reference: <a href="principles/coercion-resistance.html">Coercion Resistance</a></p>
+  <div class="grid">
+    <div class="box soft">
+      <div class="box-title">Target user risk</div>
+      <p>Forced unlock, legal compulsion, device seizure, insider access, or master-key architectures convert a protective system into a disclosure mechanism.</p>
+    </div>
+    <div class="box soft">
+      <div class="box-title">Minimum system guarantees</div>
+      <p>Server operators cannot decrypt user content, user-held secrets remain required, passphrases are strong, KDFs are slow, no administrative backdoor exists, and the threat model says what the system cannot protect.</p>
+    </div>
+    <div class="box soft">
+      <div class="box-title">Measurable acceptance criteria</div>
+      <ul>
+        <li>Server-side access alone cannot produce plaintext.</li>
+        <li>Credential policy enforces high-entropy passphrases and modern KDFs.</li>
+        <li>Observed coercion boundaries match documented claims, with no hidden disclosure channels.</li>
+      </ul>
+    </div>
   </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Test</th>
+        <th>Preconditions</th>
+        <th>Steps</th>
+        <th>Expected outcome</th>
+        <th>Evidence to capture</th>
+        <th>MUST coverage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="test-id">COE-A1</span><br><span class="type auto">Automated</span><br>Server-side decrypt failure</td>
+        <td>Encrypted data on server or backup; admin credentials only; no user secret material.</td>
+        <td>Attempt to decrypt or export readable user content from server-side storage using operator privileges alone.</td>
+        <td>Only ciphertext or bounded metadata is obtainable; plaintext remains inaccessible without user-held secrets.</td>
+        <td>Server export artifact, failed decrypt logs, ciphertext samples, admin-only access transcript.</td>
+        <td><code>NORM-022</code>, <code>NORM-023</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">COE-A2</span><br><span class="type auto">Automated</span><br>Passphrase policy and cracking resistance</td>
+        <td>Credential policy visible in code or runtime; test ciphertext or backup available.</td>
+        <td>Validate passphrase rules, generate policy-minimum examples, and run controlled cracking attempts against encrypted fixtures.</td>
+        <td>Weak passphrases are rejected or flagged; minimum accepted passphrases remain infeasible to recover in controlled attack windows.</td>
+        <td>Policy screenshots, cracking benchmark output, accepted/rejected credential logs.</td>
+        <td><code>NORM-024</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">COE-A3</span><br><span class="type auto">Automated</span><br>KDF and backdoor regression</td>
+        <td>Source or binary inspection access; key derivation configuration; recovery flows accessible.</td>
+        <td>Search for hard-coded keys, master secrets, legacy KDFs, privileged decryption endpoints, and recovery flows that bypass user-bound secrets.</td>
+        <td>No administrative backdoor or master key exists; only approved slow KDFs are allowed in build or runtime configuration.</td>
+        <td>Static scan report, config dump, API inventory, failed privileged decryption attempts.</td>
+        <td><code>NORM-025</code>, <code>NORM-026</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">COE-M1</span><br><span class="type manual">Manual</span><br>Threat-model disclosure review</td>
+        <td>Public threat model, privacy claims, or product security documentation available.</td>
+        <td>Read the declared coercion boundary, then compare it against storage, export, cache, and support behavior observed in the product.</td>
+        <td>The product does not over-claim. Documentation clearly states what an attacker can and cannot extract.</td>
+        <td>Threat-model excerpt, screenshots of claims, observed behavior notes.</td>
+        <td><code>NORM-027</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">COE-U1</span><br><span class="type abuse">Abuse</span><br>Forced-unlock tabletop</td>
+        <td>Attacker gains temporary physical control of an unlocked device; user cannot refuse interaction.</td>
+        <td>Walk through shoulder-surf, forced export, and forced navigation to sensitive history while capturing what the UI, exports, and cached views reveal.</td>
+        <td>The system's protective boundary is explicit, bounded, and consistent with documented coercion claims; no surprise disclosure channels appear.</td>
+        <td>Screen recording, exported files, cached preview inspection, disclosure matrix.</td>
+        <td><code>NORM-022</code>, <code>NORM-027</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">COE-U2</span><br><span class="type abuse">Abuse</span><br>Compelled operator disclosure attempt</td>
+        <td>Operator has DB access, admin console access, and legal demand scenario assumptions.</td>
+        <td>Attempt to satisfy a disclosure request using operator access only, including backups, support tooling, and admin exports.</td>
+        <td>Operator can provide only the limited data classes explicitly allowed by architecture, never hidden plaintext or universal decrypt capability.</td>
+        <td>Support export screenshots, admin console output, backup sample, disclosure classification notes.</td>
+        <td><code>NORM-023</code>, <code>NORM-026</code></td>
+      </tr>
+    </tbody>
+  </table>
 
-  <h2>5. Degraded-Infrastructure Functionality</h2>
+  <h2>5. Degraded Functionality</h2>
   <div class="section-label">Principle 5</div>
-  <p>Does the system work under low resources? <a href="principles/degraded-functionality.html">Full reference →</a></p>
-  <div class="box">
-    <ul class="checklist">
-      <li>The critical path has been tested on 2G or simulated low-bandwidth connections</li>
-      <li>The system does not assume full battery; power-intensive features are optional, not default</li>
-      <li>Page or screen weights are measured; heavy assets are lazy-loaded or omitted on constrained connections</li>
-      <li>The UI degrades gracefully: core functionality survives without JavaScript, WebSockets, or CDN assets</li>
-      <li>Keyboard-only navigation is supported on all critical flows</li>
-      <li>Low-RAM devices (512 MB or less) can complete core tasks without crashes</li>
-      <li>Animations and background processes are optional or suppress-able to conserve resources</li>
-    </ul>
+  <p>Full reference: <a href="principles/degraded-functionality.html">Degraded Functionality</a></p>
+  <div class="grid">
+    <div class="box soft">
+      <div class="box-title">Target user risk</div>
+      <p>Critical workflows fail on weak links, old devices, keyboard-only input, screen readers, or battery-constrained conditions, effectively excluding vulnerable users.</p>
+    </div>
+    <div class="box soft">
+      <div class="box-title">Minimum system guarantees</div>
+      <p>The baseline path works on 2G, low-memory devices, and keyboard-only or assistive contexts; non-essential features degrade first; media never autoloads.</p>
+    </div>
+    <div class="box soft">
+      <div class="box-title">Measurable acceptance criteria</div>
+      <ul>
+        <li>Initial HTML payload for the baseline path remains under the declared 2G budget.</li>
+        <li>Core tasks remain operable under constrained CPU, memory, and input conditions.</li>
+        <li>Critical workflows pass keyboard and WCAG 2.1 AA checks.</li>
+      </ul>
+    </div>
   </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Test</th>
+        <th>Preconditions</th>
+        <th>Steps</th>
+        <th>Expected outcome</th>
+        <th>Evidence to capture</th>
+        <th>MUST coverage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="test-id">DEG-A1</span><br><span class="type auto">Automated</span><br>Constrained-resource regression suite</td>
+        <td>Browser/device emulation with CPU throttling, latency, and reduced-memory profiles.</td>
+        <td>Run the essential workflow suite under constrained network, CPU, and memory settings, confirming non-critical features degrade first.</td>
+        <td>Essential workflows remain usable without sync-required prompts or hard failures; feature shedding is predictable and documented.</td>
+        <td>CI performance logs, throttling profiles, workflow completion output, degraded-mode screenshots.</td>
+        <td><code>NORM-028</code>, <code>NORM-032</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">DEG-A2</span><br><span class="type auto">Automated</span><br>2G payload budget check</td>
+        <td>Performance harness able to measure initial HTML and first interaction on simulated 2G.</td>
+        <td>Throttle to 2G, load the baseline path, record initial HTML size and first usable interaction time, and fail the build if the declared budget is exceeded.</td>
+        <td>The baseline path stays within the initial payload budget and remains functionally usable on 2G.</td>
+        <td>HAR file, payload report, Lighthouse or equivalent budget artifact.</td>
+        <td><code>NORM-029</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">DEG-A3</span><br><span class="type auto">Automated</span><br>No media autoload trace</td>
+        <td>Network inspector enabled; pages containing media or attachments reachable.</td>
+        <td>Load the app and navigate baseline flows without explicitly requesting media. Inspect network traffic for image, audio, or video fetches.</td>
+        <td>No media is requested until explicit user action occurs.</td>
+        <td>HAR trace, network waterfall, UI recording of no-click navigation.</td>
+        <td><code>NORM-033</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">DEG-M1</span><br><span class="type manual">Manual</span><br>Low-memory device walkthrough</td>
+        <td>Older or emulated device with less than 512MB RAM target profile.</td>
+        <td>Complete the baseline critical workflow while monitoring crashes, jank, and memory pressure behavior.</td>
+        <td>Core tasks finish without crashes or unusable slowdown on the target RAM floor.</td>
+        <td>Device profile, screen recording, memory graph, crash logs.</td>
+        <td><code>NORM-030</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">DEG-M2</span><br><span class="type manual">Manual</span><br>Keyboard-only workflow walkthrough</td>
+        <td>No mouse or touch input; focus indicators visible; critical flows identified.</td>
+        <td>Navigate all critical flows using keyboard only, including complex widgets such as date pickers, charts, modals, and exports.</td>
+        <td>Every interactive control is reachable and usable without a pointer; focus order remains logical throughout.</td>
+        <td>Screen recording with keypress overlay, focus-order notes, blocked-control screenshots.</td>
+        <td><code>NORM-031</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">DEG-M3</span><br><span class="type manual">Manual</span><br>WCAG AA and screen reader audit</td>
+        <td>Assistive tech enabled; contrast tooling available; essential flows defined.</td>
+        <td>Run contrast, semantics, ARIA, labels, announcements, and screen-reader walkthroughs across all essential workflows.</td>
+        <td>Critical workflows satisfy WCAG 2.1 AA requirements and remain understandable and operable with assistive technology.</td>
+        <td>Accessibility audit report, screen-reader transcript, contrast screenshots, remediation notes.</td>
+        <td><code>NORM-034</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">DEG-U1</span><br><span class="type abuse">Abuse</span><br>Resource-shock and hostile-network test</td>
+        <td>High latency, CPU throttling, low battery mode, and intermittent connectivity active.</td>
+        <td>Force the system into constrained conditions mid-workflow and observe whether it drops non-essential features first or collapses the essential path.</td>
+        <td>The product degrades gracefully, preserving the critical path rather than failing wholesale.</td>
+        <td>Video, performance timeline, network trace, degraded-mode state comparison.</td>
+        <td><code>NORM-028</code>, <code>NORM-032</code></td>
+      </tr>
+    </tbody>
+  </table>
 
   <h2>6. Essential Utility</h2>
   <div class="section-label">Principle 6</div>
-  <p>Is the system optimized for survival tasks, not engagement? <a href="principles/essential-utility.html">Full reference →</a></p>
+  <p>Full reference: <a href="principles/essential-utility.html">Essential Utility</a></p>
+  <div class="grid">
+    <div class="box soft">
+      <div class="box-title">Target user risk</div>
+      <p>Engagement, monetization, and product-growth incentives displace survival-critical outcomes, creating manipulative friction and paywalled safety.</p>
+    </div>
+    <div class="box soft">
+      <div class="box-title">Minimum system guarantees</div>
+      <p>Every feature is tied to an essential use case or protective need, dark patterns are absent, addictive mechanics are excluded, success metrics follow user outcomes, and essential features are never paywalled.</p>
+    </div>
+    <div class="box soft">
+      <div class="box-title">Measurable acceptance criteria</div>
+      <ul>
+        <li>Every shipped feature has a documented justification tied to utility, safety, or accessibility.</li>
+        <li>No essential workflow contains deceptive confirmations, retention nags, streaks, or upsell traps.</li>
+        <li>Primary product metrics evaluate user goal completion, not time-on-app or feature adoption alone.</li>
+      </ul>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Test</th>
+        <th>Preconditions</th>
+        <th>Steps</th>
+        <th>Expected outcome</th>
+        <th>Evidence to capture</th>
+        <th>MUST coverage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="test-id">ESS-A1</span><br><span class="type auto">Automated</span><br>Feature-justification ledger gate</td>
+        <td>Versioned feature inventory and essential workflow ledger available.</td>
+        <td>Diff the current feature inventory against the justification ledger and fail if any feature lacks linkage to an essential workflow, protective requirement, or accessibility/safety obligation.</td>
+        <td>No shipped feature exists without an explicit reason tied to user survival, autonomy, or accessibility.</td>
+        <td>CI diff artifact, feature matrix, missing-link report.</td>
+        <td><code>NORM-035</code>, <code>NORM-037</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">ESS-A2</span><br><span class="type auto">Automated</span><br>Gamification and addictive mechanic scan</td>
+        <td>UI copy inventory, notification catalog, analytics config, feature flags.</td>
+        <td>Search runtime copy, config, and notification templates for streaks, variable rewards, leaderboards, FOMO nudges, and manipulative retention prompts.</td>
+        <td>No addictive mechanic or engagement-maximizing loop appears in the shipped product or dormant flags intended for essential flows.</td>
+        <td>Static scan output, copy inventory, notification diff, feature-flag report.</td>
+        <td><code>NORM-039</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">ESS-A3</span><br><span class="type auto">Automated</span><br>Metric inventory and decision-basis review</td>
+        <td>Access to product metrics, analytics dashboards, roadmap or PRD artifacts from recent releases.</td>
+        <td>Classify all primary and secondary metrics as outcome, engagement, or mixed; verify essential workflows have outcome metrics and roadmap decisions are justified by those outcomes.</td>
+        <td>Primary success metrics are outcome-based; engagement metrics are secondary and not used to justify essential-path changes.</td>
+        <td>Metric inventory, dashboard screenshots, PRD excerpts, decision trace notes.</td>
+        <td><code>NORM-040</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">ESS-M1</span><br><span class="type manual">Manual</span><br>Feature subtraction walkthrough</td>
+        <td>Feature flags or disable paths available; essential workflows enumerated.</td>
+        <td>Disable or hide the top non-essential candidate features, then re-run essential workflows to confirm utility and integrity remain intact.</td>
+        <td>Removing non-essential features does not harm the essential path, proving the product surface is utility-first rather than feature-accumulative.</td>
+        <td>Before/after screenshots, workflow results, disabled-feature list, subtraction notes.</td>
+        <td><code>NORM-035</code>, <code>NORM-037</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">ESS-M2</span><br><span class="type manual">Manual</span><br>Essential free-tier paywall check</td>
+        <td>Fresh free-tier account or unpaid user state; essential workflow list defined.</td>
+        <td>Complete every essential workflow as an unpaid user and attempt deep links directly into critical routes to detect hidden gating.</td>
+        <td>No essential feature is paywalled, rate-limited to unusability, or blocked by entitlement checks.</td>
+        <td>Screen recording, entitlement matrix, API responses, blocked-route screenshots if any.</td>
+        <td><code>NORM-041</code></td>
+      </tr>
+      <tr>
+        <td><span class="test-id">ESS-U1</span><br><span class="type abuse">Abuse</span><br>Dark-pattern adversarial probe</td>
+        <td>Attacker/product-growth perspective; access to onboarding, cancellation, export, deletion, and notification flows.</td>
+        <td>Attempt to coerce the user into continuing, sharing, paying, or disclosing more through deceptive defaults, misleading confirmation copy, or manipulative urgency.</td>
+        <td>No deceptive friction, bait notifications, misleading confirmations, or forced-continuity tactics appear in essential workflows.</td>
+        <td>Screenshots of every prompt, notification samples, flow notes, UX review log.</td>
+        <td><code>NORM-038</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <h2>MUST Traceability Matrix</h2>
+  <p>This matrix is the cross-check that each normative <code>MUST</code> or <code>MUST NOT</code> in the v1.0 spec maps to at least one concrete test on this page.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Spec MUST IDs</th>
+        <th>Mapped tests</th>
+        <th>Coverage note</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>NORM-001</code>, <code>NORM-003</code>, <code>NORM-004</code>, <code>NORM-005</code>, <code>NORM-006</code></td>
+        <td><code>REV-A1</code>, <code>REV-A2</code>, <code>REV-M1</code>, <code>REV-M2</code>, <code>REV-U1</code></td>
+        <td>Reversibility coverage includes undo paths, recovery windows, delayed deletion, and published reversibility boundaries.</td>
+      </tr>
+      <tr>
+        <td><code>NORM-007</code>, <code>NORM-010</code>, <code>NORM-011</code>, <code>NORM-012</code>, <code>NORM-013</code>, <code>NORM-014</code></td>
+        <td><code>EXP-A1</code>, <code>EXP-A2</code>, <code>EXP-A3</code>, <code>EXP-M1</code>, <code>EXP-U1</code></td>
+        <td>Exposure coverage includes field necessity, crypto at rest, TLS in transit, retention expiry, and undisclosed sharing checks.</td>
+      </tr>
+      <tr>
+        <td><code>NORM-015</code>, <code>NORM-017</code>, <code>NORM-018</code>, <code>NORM-019</code>, <code>NORM-020</code>, <code>NORM-021</code></td>
+        <td><code>LOC-A1</code>, <code>LOC-A2</code>, <code>LOC-A3</code>, <code>LOC-M1</code>, <code>LOC-M2</code>, <code>LOC-U1</code></td>
+        <td>Local-authority coverage includes offline operation, local cache integrity, async sync, offline access without auth, and documented parity.</td>
+      </tr>
+      <tr>
+        <td><code>NORM-022</code>, <code>NORM-023</code>, <code>NORM-024</code>, <code>NORM-025</code>, <code>NORM-026</code>, <code>NORM-027</code></td>
+        <td><code>COE-A1</code>, <code>COE-A2</code>, <code>COE-A3</code>, <code>COE-M1</code>, <code>COE-U1</code>, <code>COE-U2</code></td>
+        <td>Coercion coverage includes zero-knowledge boundaries, passphrase and KDF quality, no backdoors, and truthful threat-model disclosure.</td>
+      </tr>
+      <tr>
+        <td><code>NORM-028</code>, <code>NORM-029</code>, <code>NORM-030</code>, <code>NORM-031</code>, <code>NORM-032</code>, <code>NORM-033</code>, <code>NORM-034</code></td>
+        <td><code>DEG-A1</code>, <code>DEG-A2</code>, <code>DEG-A3</code>, <code>DEG-M1</code>, <code>DEG-M2</code>, <code>DEG-M3</code>, <code>DEG-U1</code></td>
+        <td>Degraded-mode coverage includes constrained networks, low memory, keyboard-only operation, media loading, and WCAG AA accessibility.</td>
+      </tr>
+      <tr>
+        <td><code>NORM-035</code>, <code>NORM-037</code>, <code>NORM-038</code>, <code>NORM-039</code>, <code>NORM-040</code>, <code>NORM-041</code></td>
+        <td><code>ESS-A1</code>, <code>ESS-A2</code>, <code>ESS-A3</code>, <code>ESS-M1</code>, <code>ESS-M2</code>, <code>ESS-U1</code></td>
+        <td>Essential-utility coverage includes feature justification, anti-dark-pattern review, anti-addiction review, metric discipline, and paywall checks.</td>
+      </tr>
+      <tr>
+        <td><code>NORM-042</code></td>
+        <td><code>GOV-01</code></td>
+        <td>Global compliance declaration is verified in the final audit-ready checklist below.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Audit-Ready Checklist Version</h2>
+  <p>Use this section as the final release or independent-review signoff sheet. Mark each item only when the evidence artifact exists and is attached to the audit packet.</p>
   <div class="box">
+    <div class="box-title">Core evidence packet</div>
     <ul class="checklist">
-      <li>The critical path is documented and is the fastest, most reliable flow in the system</li>
-      <li>Dark patterns (forced continuity, deceptive defaults, guilt-based friction) are absent</li>
-      <li>Notifications and alerts are proportionate to urgency — no engagement-bait prompts</li>
-      <li>Features that compete for user attention without providing utility have been removed or made opt-in</li>
-      <li>Cognitive load on critical flows is minimized: fewer decisions, shorter text, progressive disclosure</li>
-      <li>The system does not require or exploit emotional or cognitive vulnerability to achieve its goals</li>
+      <li>Stage 1 metadata and sitemap audit passes with zero failures.</li>
+      <li>Stage 2 and Stage 3 semantic gates pass, including <code>WEAK_VERIFICATION_COUNT=0</code>.</li>
+      <li>Essential workflows and threat scenarios for this audit are documented before testing begins.</li>
     </ul>
   </div>
-
-  <hr>
-
-  <h2>After the Audit</h2>
-  <p>For each item that fails:</p>
-  <ul>
-    <li><strong>Classify severity:</strong> Does this failure block the critical path, or is it a marginal risk?</li>
-    <li><strong>Assign ownership:</strong> Who is responsible for fixing it?</li>
-    <li><strong>Set a remediation target:</strong> Block launch, fix in next sprint, or track as known debt?</li>
-    <li><strong>Document it:</strong> Undocumented known risks become silent liabilities.</li>
-  </ul>
-
-  <div class="box">
-    <div class="box-title">Formal Compliance Levels</div>
-    <p style="margin:0;">
-      The <a href="spec/v1.0.html">Protective Computing Specification v1.0</a> defines four compliance levels (Level 1–4), with MUST/SHOULD/MUST NOT requirements and formal verification expectations. Use that spec for compliance claims. Use this checklist for practical design review.
-    </p>
+  <div class="box soft">
+    <div class="box-title">Principle-by-principle signoff</div>
+    <ul class="checklist">
+      <li>Reversibility: destructive actions are recoverable or explicitly irreversible, and recovery windows are visible.</li>
+      <li>Exposure Minimization: every field is justified, encrypted, retention-bounded, and not shared outside consented channels.</li>
+      <li>Local Authority: essential workflows function offline, remain locally cached, and do not require live re-authentication.</li>
+      <li>Coercion Resistance: operators cannot decrypt user content, no backdoor exists, and the published threat model matches observed boundaries.</li>
+      <li>Degraded Functionality: critical workflows pass constrained-network, low-memory, keyboard-only, and accessibility checks.</li>
+      <li>Essential Utility: no dark patterns, addictive mechanics, or essential-feature paywalls are present.</li>
+    </ul>
   </div>
-
-  <hr>
+  <div class="box soft">
+    <div class="box-title">Governance and claim integrity</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Test</th>
+          <th>Preconditions</th>
+          <th>Steps</th>
+          <th>Expected outcome</th>
+          <th>Evidence to capture</th>
+          <th>MUST coverage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="test-id">GOV-01</span><br><span class="type manual">Manual</span><br>Compliance declaration review</td>
+          <td>Published compliance claim or release notes available; per-principle levels documented.</td>
+          <td>Verify the system declares a level for each principle and that overall compliance resolves to the weakest principle rather than an average or marketing summary.</td>
+          <td>Claims are explicit, complete, and do not conceal the weakest principle.</td>
+          <td>Compliance matrix screenshot, release note excerpt, final audit summary.</td>
+          <td><code>NORM-042</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <h2>Related Resources</h2>
   <ul>
-    <li><a href="spec/v1.0.html">Protective Computing Specification v1.0</a> — Normative standard with RFC 2119 language</li>
-    <li><a href="reference-implementation/paintracker-mapping.html">Reference Implementation: PainTracker Mapping</a> — Real-world compliance example</li>
-    <li><a href="spec/v1.0-must-justifications.html">MUST Justifications Annex</a> — Auditable ledger mapping each requirement to its threat alignment</li>
-    <li><a href="designing-for-coercion-resistance.html">Designing for Coercion Resistance</a> — Deeper treatment of coercion audit patterns</li>
-    <li><a href="degraded-mode-ux-patterns.html">Degraded-Mode UX Patterns</a> — Checklist for low-resource UX design</li>
+    <li><a href="spec/v1.0.html">Protective Computing Specification v1.0</a> — normative requirements and compliance model</li>
+    <li><a href="spec/v1.0-must-justifications.html">MUST Justifications Annex</a> — threat alignment and verification methods for each normative requirement</li>
+    <li><a href="audit-this-site.html">Audit This Site</a> — reviewer landing page with reproduction commands and evidence locations</li>
+    <li><a href="reference-implementation/paintracker-mapping.html">Reference Implementation: PainTracker Mapping</a> — example compliance interpretation</li>
+    <li><a href="designing-for-coercion-resistance.html">Designing for Coercion Resistance</a> — deeper adversarial test patterns</li>
+    <li><a href="degraded-mode-ux-patterns.html">Degraded-Mode UX Patterns</a> — low-resource UX checkpoints</li>
   </ul>
 
   <hr>
-  <p style="color: var(--faint); font-size: 13px; margin-top: 40px;">
-    Protective Computing — <a href="../">back to home</a>
-  </p>
+  <p class="muted" style="font-size:13px; margin-top:40px;">Protective Computing — <a href="../">back to home</a></p>
 </div>
 </body>
 </html>
