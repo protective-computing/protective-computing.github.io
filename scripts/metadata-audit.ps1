@@ -9,7 +9,8 @@ $outFile = Join-Path $outDir "metadata-audit-$ts.txt"
 
 $files = Get-ChildItem -Path $root -Recurse -Filter *.html |
     Where-Object {
-        $_.FullName -notlike (Join-Path $outDir '*')
+        $_.FullName -notlike (Join-Path $outDir '*') -and
+        $_.Name -notlike 'google*.html'
     }
 
 function Get-MetaValue {

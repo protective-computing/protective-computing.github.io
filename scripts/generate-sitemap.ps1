@@ -6,6 +6,7 @@ $baseUrl = 'https://protective-computing.github.io'
 $entries = @(
   @{ loc = "$baseUrl/"; file = 'index.html'; changefreq = 'weekly'; priority = '1.0' },
 
+  @{ loc = "$baseUrl/docs/audit-this-site.html"; file = 'docs/audit-this-site.html'; changefreq = 'monthly'; priority = '0.95' },
   @{ loc = "$baseUrl/docs/getting-started.html"; file = 'docs/getting-started.html'; changefreq = 'monthly'; priority = '0.9' },
   @{ loc = "$baseUrl/docs/stability-assumption.html"; file = 'docs/stability-assumption.html'; changefreq = 'monthly'; priority = '0.9' },
   @{ loc = "$baseUrl/docs/offline-first-health-architecture.html"; file = 'docs/offline-first-health-architecture.html'; changefreq = 'monthly'; priority = '0.9' },
@@ -40,10 +41,11 @@ function Get-LastMod([string] $path) {
   }
 
   $value = (git log -1 --format=%cI -- $path 2>$null)
-  if (-not $value) {
-    return $null
+  if ($value) {
+    return $value.Trim()
   }
-  return $value.Trim()
+
+  return (Get-Item -LiteralPath $path).LastWriteTimeUtc.ToString('yyyy-MM-ddTHH:mm:ssZ')
 }
 
 function XmlEscape([string] $value) {

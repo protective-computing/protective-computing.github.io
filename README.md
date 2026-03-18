@@ -19,6 +19,7 @@ Then browse `http://localhost:8080`.
 
 ## Docs Map
 
+- Audit this site: `/docs/audit-this-site.html`
 - Getting started: `/docs/getting-started.html`
 - Specification (v1.0): `/docs/spec/v1.0.html`
 - Principles index folder: `/docs/principles/`

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Audit This Site — Protective Computing</title>
+<meta name="description" content="Direct verification path for Protective Computing site claims, audit commands, evidence artifacts, and canonical review inputs." />
+<link rel="canonical" href="https://protective-computing.github.io/docs/audit-this-site.html" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Protective Computing" />
+<meta property="og:title" content="Audit This Site — Protective Computing" />
+<meta property="og:description" content="Direct verification path for Protective Computing site claims, audit commands, evidence artifacts, and canonical review inputs." />
+<meta property="og:url" content="https://protective-computing.github.io/docs/audit-this-site.html" />
+<meta property="og:image" content="https://protective-computing.github.io/assets/logo.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Audit This Site — Protective Computing" />
+<meta name="twitter:description" content="Direct verification path for Protective Computing site claims, audit commands, evidence artifacts, and canonical review inputs." />
+<meta name="twitter:image" content="https://protective-computing.github.io/assets/logo.png" />
+<link rel="icon" href="../assets/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #070A10;
+    --panel: rgba(255,255,255,0.06);
+    --text: rgba(255,255,255,0.92);
+    --muted: rgba(255,255,255,0.68);
+    --faint: rgba(255,255,255,0.52);
+    --line: rgba(255,255,255,0.10);
+    --shadow: 0 18px 55px rgba(0,0,0,.55);
+  }
+  *{ box-sizing: border-box; }
+  html, body{ height: 100%; }
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(107,123,255,.14), transparent 60%),
+          radial-gradient(1100px 650px at 90% 15%, rgba(87,217,255,.16), transparent 55%),
+                var(--bg);
+    color: var(--text);
+    letter-spacing: -0.015em;
+  }
+  a{ color: #57d9ff; text-decoration: none; }
+  a:hover{ text-decoration: underline; text-underline-offset: 3px; }
+  .wrap{
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 28px 22px 60px;
+  }
+  .back{
+    display: inline-block;
+    padding: 8px 12px;
+    margin-bottom: 20px;
+    margin-right: 8px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .back:hover{ background: rgba(255,255,255,0.04); }
+  h1{
+    font-size: 2.2rem;
+    line-height: 1.1;
+    margin: 0 0 10px;
+    font-weight: 850;
+  }
+  .subtitle{
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+  h2{
+    font-size: 1.55rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    font-weight: 800;
+  }
+  p, li{
+    color: var(--muted);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+  ul, ol{
+    margin: 14px 0;
+    padding-left: 20px;
+  }
+  li{ margin: 8px 0; }
+  code{
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--line);
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--text);
+  }
+  pre{
+    margin: 0;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .box{
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: 14px;
+    padding: 18px;
+    margin: 20px 0;
+    box-shadow: var(--shadow);
+  }
+  .box-title{
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  .button-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin: 18px 0 6px;
+  }
+  .button{
+    display:inline-block;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,0.04);
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .button:hover{
+    background: rgba(255,255,255,0.08);
+    text-decoration:none;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .callout{
+    border-left: 3px solid #57d9ff;
+    padding-left: 14px;
+    margin-top: 10px;
+  }
+</style>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-_ThpRaAClu8dKUNrYHpiL.js"></script>
+<script>
+  globalThis.plausible = globalThis.plausible || function() {
+    plausible.q = plausible.q || [];
+    plausible.q.push(arguments);
+  };
+  plausible.init = plausible.init || function(i) {
+    plausible.o = i || {};
+  };
+  plausible.init()
+</script>
+</head>
+<body>
+<div class="wrap">
+  <a href="../" class="back">← Back to Home</a>
+  <a href="independent-review.html" class="back">Independent Review →</a>
+
+  <h1>Audit This Site</h1>
+  <p class="subtitle">A single verification path for the site’s public claims, normative sources, CI enforcement, and reproducible audit commands.</p>
+
+  <div class="box">
+    <div class="box-title">Start with these anchors</div>
+    <ul>
+      <li>Repository: <a href="https://github.com/protective-computing/protective-computing.github.io">github.com/protective-computing/protective-computing.github.io</a></li>
+      <li>Canonical specification: <a href="spec/v1.0.html">Protective Computing Specification v1.0</a></li>
+      <li>MUST ledger rationale: <a href="spec/v1.0-must-justifications.html">MUST Justifications Ledger</a></li>
+      <li>Independent reviewer path: <a href="independent-review.html">Independent Review &amp; Critique</a></li>
+      <li>Evidence index: <a href="https://github.com/protective-computing/protective-computing.github.io/blob/main/AUDIT_EVIDENCE.md">AUDIT_EVIDENCE.md</a></li>
+      <li>Compliance mapping: <a href="https://github.com/protective-computing/protective-computing.github.io/blob/main/COMPLIANCE_AUDIT_MATRIX.md">COMPLIANCE_AUDIT_MATRIX.md</a></li>
+      <li>CI workflow: <a href="https://github.com/protective-computing/protective-computing.github.io/blob/main/.github/workflows/audit.yml">.github/workflows/audit.yml</a></li>
+    </ul>
+    <div class="button-row">
+      <a class="button" href="https://github.com/protective-computing/protective-computing.github.io">Open Repository</a>
+      <a class="button" href="spec/v1.0.html">Open Normative Spec</a>
+      <a class="button" href="https://protective-computing.github.io/sitemap.xml">Open Sitemap</a>
+      <a class="button" href="https://protective-computing.github.io/robots.txt">Open Robots</a>
+    </div>
+  </div>
+
+  <h2>What to Verify</h2>
+  <div class="grid">
+    <div class="box">
+      <div class="box-title">Stage 1</div>
+      <p>Metadata integrity, canonical URLs, sitemap parity, and robots hygiene.</p>
+      <p class="callout">Expected pass condition: metadata audit exits 0 with no sitemap parity failures.</p>
+    </div>
+    <div class="box">
+      <div class="box-title">Stage 2</div>
+      <p>Completeness of the semantic ledger with no blank threat, failure, or verification fields.</p>
+      <p class="callout">Expected pass condition: <code>Stage 2 gate passed.</code></p>
+    </div>
+    <div class="box">
+      <div class="box-title">Stage 3</div>
+      <p>Verification hardness. Weak methods are counted and CI fails on any non-zero result.</p>
+      <p class="callout">Expected pass condition: <code>WEAK_VERIFICATION_COUNT=0</code> and <code>Stage 3 gate passed.</code></p>
+    </div>
+  </div>
+
+  <h2>Reproduce the Checks</h2>
+  <p>Run these commands from the repository root.</p>
+  <div class="box">
+    <pre><code>powershell -ExecutionPolicy Bypass -File scripts/metadata-audit.ps1
+powershell -ExecutionPolicy Bypass -File scripts/generate-must-ledger.ps1
+powershell -ExecutionPolicy Bypass -File scripts/dedupe-must-ledger.ps1 -CsvPath scripts/audit-output/&lt;latest-must-ledger.csv&gt;
+powershell -ExecutionPolicy Bypass -File scripts/semantic-ledger-audit.ps1 -GateStage2
+powershell -ExecutionPolicy Bypass -File scripts/semantic-ledger-audit.ps1 -GateStage3</code></pre>
+  </div>
+  <p>The CI workflow regenerates the ledger, deduplicates it, fills principle-specific evidence columns, then executes Stage 2 and Stage 3 gates.</p>
+
+  <h2>Evidence Locations</h2>
+  <ul>
+    <li>Human-readable audit instructions: <a href="https://github.com/protective-computing/protective-computing.github.io/blob/main/AUDIT_EVIDENCE.md">AUDIT_EVIDENCE.md</a></li>
+    <li>Generated audit artifacts: <a href="https://github.com/protective-computing/protective-computing.github.io/tree/main/scripts/audit-output">scripts/audit-output/</a></li>
+    <li>Metadata gate implementation: <a href="https://github.com/protective-computing/protective-computing.github.io/blob/main/scripts/metadata-audit.ps1">scripts/metadata-audit.ps1</a></li>
+    <li>Semantic gate implementation: <a href="https://github.com/protective-computing/protective-computing.github.io/blob/main/scripts/semantic-ledger-audit.ps1">scripts/semantic-ledger-audit.ps1</a></li>
+    <li>Independent review checklist: <a href="https://github.com/protective-computing/protective-computing.github.io/blob/main/INDEPENDENT_REVIEW_CHECKLIST.md">INDEPENDENT_REVIEW_CHECKLIST.md</a></li>
+  </ul>
+
+  <h2>Interpret Pass Signals</h2>
+  <div class="box">
+    <div class="box-title">A passing review should be able to point to all of the following</div>
+    <ol>
+      <li>A valid sitemap and robots file that enumerate crawlable public pages.</li>
+      <li>A spec page and MUST justifications page that define the normative claims being audited.</li>
+      <li>A CI workflow showing the three-stage gate sequence.</li>
+      <li>Recent audit artifacts under <code>scripts/audit-output/</code>.</li>
+      <li>Semantic gate output containing <code>WEAK_VERIFICATION_COUNT=0</code>.</li>
+    </ol>
+  </div>
+
+  <h2>Suggested Crawl Entry Points</h2>
+  <ul>
+    <li><a href="../">Homepage</a></li>
+    <li><a href="getting-started.html">Getting Started</a></li>
+    <li><a href="spec/v1.0.html">Specification v1.0</a></li>
+    <li><a href="spec/v1.0-must-justifications.html">MUST Justifications Ledger</a></li>
+    <li><a href="principles/">Principles Index</a></li>
+    <li><a href="reference-implementation/paintracker-mapping.html">Reference Implementation</a></li>
+    <li><a href="independent-review.html">Independent Review</a></li>
+  </ul>
+</div>
+</body>
+</html>
