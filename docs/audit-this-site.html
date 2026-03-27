@@ -212,7 +212,26 @@ powershell -ExecutionPolicy Bypass -File scripts/dedupe-must-ledger.ps1 -CsvPath
 powershell -ExecutionPolicy Bypass -File scripts/semantic-ledger-audit.ps1 -GateStage2
 powershell -ExecutionPolicy Bypass -File scripts/semantic-ledger-audit.ps1 -GateStage3</code></pre>
   </div>
+  <div class="box">
+    <div class="box-title">Cross-platform note</div>
+    <p>These scripts also run under <code>pwsh</code> on Linux and macOS. If you are not on Windows, use:</p>
+    <pre><code>pwsh -File scripts/metadata-audit.ps1
+pwsh -File scripts/generate-must-ledger.ps1
+pwsh -File scripts/dedupe-must-ledger.ps1 -CsvPath scripts/audit-output/&lt;latest-must-ledger.csv&gt;
+pwsh -File scripts/semantic-ledger-audit.ps1 -GateStage2
+pwsh -File scripts/semantic-ledger-audit.ps1 -GateStage3</code></pre>
+  </div>
   <p>The CI workflow regenerates the ledger, deduplicates it, fills principle-specific evidence columns, then executes Stage 2 and Stage 3 gates.</p>
+
+  <h2>Fastest Reviewer Path</h2>
+  <div class="box">
+    <ol>
+      <li>Open the <a href="https://github.com/protective-computing/protective-computing.github.io">repository</a> and inspect the public source for the page you are checking.</li>
+      <li>Run the metadata audit and Stage 2 / Stage 3 semantic gates locally with <code>pwsh</code> or Windows PowerShell.</li>
+      <li>Review the generated evidence under <a href="https://github.com/protective-computing/protective-computing.github.io/tree/main/scripts/audit-output">scripts/audit-output/</a>.</li>
+      <li>Send structured findings through <a href="https://github.com/protective-computing/protective-computing.github.io/issues">GitHub Issues</a> or use <a href="independent-review.html">Independent Review</a> for confidential feedback routing.</li>
+    </ol>
+  </div>
 
   <h2>Evidence Locations</h2>
   <ul>
@@ -222,6 +241,17 @@ powershell -ExecutionPolicy Bypass -File scripts/semantic-ledger-audit.ps1 -Gate
     <li>Semantic gate implementation: <a href="https://github.com/protective-computing/protective-computing.github.io/blob/main/scripts/semantic-ledger-audit.ps1">scripts/semantic-ledger-audit.ps1</a></li>
     <li>Independent review checklist: <a href="https://github.com/protective-computing/protective-computing.github.io/blob/main/INDEPENDENT_REVIEW_CHECKLIST.md">INDEPENDENT_REVIEW_CHECKLIST.md</a></li>
   </ul>
+
+  <h2>Accessibility Contrast Spot-Check</h2>
+  <div class="box">
+    <div class="box-title">2026-03-27 repo-backed contrast audit</div>
+    <ul>
+      <li>Homepage on <code>#070A10</code>: primary body text <code>16.63:1</code>, muted text <code>9.23:1</code>, faint metadata text <code>5.66:1</code>.</li>
+      <li>Independent Review on darkest page background sample <code>#0a0e27</code>: body text <code>10.45:1</code>, secondary text <code>8.18:1</code>, cyan accent text <code>14.60:1</code>.</li>
+      <li>Purple accent text <code>#7c3aed</code> measures <code>3.33:1</code> on the darkest background sample and is currently limited to large-heading use, which clears the WCAG AA large-text threshold.</li>
+    </ul>
+    <p class="callout">Result: no contrast-driven color change is required for the audited homepage and review-page text styles based on this spot-check.</p>
+  </div>
 
   <h2>Interpret Pass Signals</h2>
   <div class="box">
