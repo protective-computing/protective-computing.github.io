@@ -149,8 +149,8 @@
         <td>Undocumented reversibility boundaries cause unsafe assumptions and prevent operators/reviewers from validating recovery guarantees.</td>
         <td>Reversible/irreversible boundaries must be explicit and auditable; implicit behavior invites silent policy drift.</td>
         <td>Environment: Latest release build. Access to state machine documentation (or equivalent state transition inventory), UI flows, API routes, and storage snapshot capability (IndexedDB/app data export). Action: (1) Generate a State Transition Inventory by enumerating all user-triggerable transitions (create, edit, delete, export, retention expiry, sync, reset, account change, device migration). (2) For each transition, classify as Reversible (explicit undo, restore, or rollback path exists) or Irreversible (no undo path). (3) For every Reversible transition: execute transition, execute documented recovery path, and capture before/after storage snapshot and UI state. (4) For every Irreversible transition: execute transition, attempt documented recovery path (if any), and confirm system communicates irreversibility clearly at time of action (UI capture required). (5) Compare observed reversibility behavior against documentation labels. Pass Criteria: Every documented state transition has an explicit reversibility classification. All Reversible transitions demonstrably restore prior state without residual data loss or hidden artifact persistence. All Irreversible transitions are clearly communicated before execution and behave irreversibly in practice. No transition behaves differently from its documented label. Fail Criteria: Any transition lacks classification. A labeled reversible action cannot be restored to its prior state. A labeled irreversible action can be partially undone without disclosure. Documentation and runtime behavior diverge.</td>
-        <td>Partial</td>
-        <td>Reference mapping demonstrates key reversible flows but does not publish a complete action-by-action reversibility matrix. To reach Met: publish a versioned reversibility boundary table for all destructive transitions.</td>
+        <td>Met</td>
+        <td>Reference mapping now publishes a versioned reversibility boundary table for destructive and high-impact transitions, including explicit recovery paths and irreversibility boundaries.</td>
         <td>v1.0</td>
       </tr>
       <tr>
@@ -162,8 +162,8 @@
         <td>Unbounded collection or weak protection increases breach blast radius and exposes longitudinal health patterns.</td>
         <td>Minimization, crypto, and retention controls are baseline harm-reduction controls; optional adoption leaves predictable exploitation paths open.</td>
         <td>Environment: Clean install. Network inspector available. Access to app storage directory (or IndexedDB dump if web). Action: (1) Enumerate all persisted fields (schema + runtime writes) by exporting a storage snapshot after exercising every essential use-case workflow once. (2) For each persisted field, map it to the essential-use-case inventory ledger entry (field -&gt; necessity). (3) Validate encryption by extracting storage artifacts and confirming no plaintext values for sensitive fields are present at rest (string search or structured decode). (4) Validate transport: if any network sync exists, capture outbound requests and confirm TLS-only transport and no sensitive fields appear in request bodies without encryption-at-application-layer where claimed. (5) Run retention test: set retention window to minimal value (test config), create records, wait past window, then snapshot storage and confirm records are absent or cryptographically unrecoverable within application access paths. Pass Criteria: Every persisted field has a necessity mapping; no plaintext sensitive values present at rest; no sensitive values transmitted in clear; records past retention window are not accessible and do not appear in storage snapshots. Fail Criteria: Any persisted field lacks necessity justification; any sensitive value appears in plaintext at rest or in transit; retention-expired records remain accessible or persist in storage.</td>
-        <td>Partial</td>
-        <td>PainTracker states essential-only collection, AES-256 at rest, TLS 1.3 in transit, and no sharing; local retention remains user-controlled and not fully automatic. To reach Met: enforce automatic local retention windows with documented override policy.</td>
+        <td>Met</td>
+        <td>PainTracker now publishes and implements a field-justification ledger, explicit retention table, automatic local-expiry defaults with documented override policy, bounded backup-service metadata retention, and a passing retention-enforcement verification report. The reference implementation states essential-only collection, AES-256 at rest, TLS 1.3 in transit, and no third-party sharing.</td>
         <td>v1.0</td>
       </tr>
       <tr>
@@ -175,8 +175,8 @@
         <td>Unjustified fields enable profiling, secondary inference, and coercive data requests beyond core care needs.</td>
         <td>Without a mandatory per-field justification process, data scope drifts over time and reviewers cannot detect over-collection early.</td>
         <td>Require a versioned field-justification ledger and verify each schema migration includes necessity, sensitivity class, and retention bound.</td>
-        <td>Partial</td>
-        <td>Reference implementation documents essential fields but does not publish a formal per-field minimization audit artifact. To reach Met: publish a versioned field-justification ledger tied to schema migrations.</td>
+        <td>Met</td>
+        <td>Reference implementation now publishes a versioned field-justification ledger covering persisted user-facing fields, backup artifacts, and operator-visible metadata, with essential-use justification, sensitivity class, retention bound, and change-control guidance.</td>
         <td>v1.0</td>
       </tr>
       <tr>
@@ -214,8 +214,8 @@
         <td>Undefined retention increases subpoena/disclosure exposure windows and amplifies harm from delayed compromise.</td>
         <td>Retention limits must be enforceable defaults; guidance-only policies do not constrain operational drift.</td>
         <td>Inspect per-field retention table, verify expiry removes logical references and blocks application-level access, confirm no documented restore path after expiry, and treat physical media destruction as out-of-scope unless explicitly guaranteed.</td>
-        <td>Partial</td>
-        <td>PainTracker specifies one-year auto-delete for server backups but keeps local entries indefinitely by user control, so not all fields have automatic minimal retention. To reach Met: define and enforce per-field local retention defaults with auditable expiry behavior.</td>
+        <td>Met</td>
+        <td>PainTracker now publishes and implements an explicit per-field retention policy, including automatic local-expiry defaults, one-year auto-delete for server backups, and bounded backup-service metadata retention, with passing verification evidence for expiry enforcement and post-expiry inaccessibility behavior.</td>
         <td>v1.0</td>
       </tr>
       <tr>
@@ -240,8 +240,8 @@
         <td>Centralized dependency allows service operators or outages to block essential user workflows and deny access during crises.</td>
         <td>Local control is a core safety property; advisory-only offline posture permits coercive lockout through platform or network control.</td>
         <td>Environment: device in airplane mode with network inspection active (DevTools Network tab or proxy capture). Action: execute full CRUD cycle on a core record (create, read, update, delete), including app restart between operations. Observable result: zero outbound network requests, all changes persist across restart, and no sync-required/blocking prompts appear. Pass criteria: all essential workflows complete with zero network traffic and no blocking UI escalation. Fail criteria: any outbound request occurs, any operation blocks on connectivity, or dependency-escalation messaging appears.</td>
-        <td>Partial</td>
-        <td>PainTracker supports offline core workflows, but backup and some account-linked operations remain server-coupled. To reach Met: provide a fully documented no-server operating profile for all essential functions.</td>
+        <td>Met</td>
+        <td>PainTracker now publishes a versioned no-server operating profile that separates essential local functions from optional server-coupled backup and account operations, making the Local Authority boundary explicit for offline use.</td>
         <td>v1.0</td>
       </tr>
       <tr>
@@ -305,8 +305,8 @@
         <td>Undocumented parity/sync behavior causes users to misjudge exposure and data consistency risks across offline/online transitions.</td>
         <td>Transparency on parity and sync semantics is necessary for informed risk decisions; vague behavior increases accidental disclosure and data loss.</td>
         <td>Environment: Device capable of toggling network (airplane mode). Network inspector enabled. Access to documented offline/online feature matrix and sync specification. Action: (1) Extract documented Offline/Online Feature Matrix from public docs. (2) Execute each essential workflow under fully offline state, intermittent connectivity (toggle mid-action), and fully online state. (3) Record feature availability, data visibility differences, sync trigger timing, and conflict resolution outcome (create/edit same record offline and online). (4) Capture storage snapshot before/after sync. (5) Compare observed behavior to documented sync triggers, conflict rules, and exposure differences. Pass Criteria: All documented offline features operate without server dependency. Observed sync triggers and conflict resolution behavior match documentation. No additional data exposure occurs when transitioning from offline to online beyond documented scope. Feature availability aligns with published matrix. Fail Criteria: Any offline-capable feature requires server reachability. Conflict resolution diverges from documented rules. Sync transmits undocumented data classes. Offline/online exposure differences are undocumented.</td>
-        <td>Partial</td>
-        <td>Core behavior is described in reference mapping, but a formal parity matrix and sync-state disclosure contract are not published. To reach Met: publish and version a parity/sync behavior specification.</td>
+        <td>Met</td>
+        <td>PainTracker now publishes a versioned offline/intermittent/online parity matrix and authoritative sync-behavior specification, including non-blocking queue semantics, reconnect behavior, conflict-resolution contract, and documented exposure differences across connectivity states.</td>
         <td>v1.0</td>
       </tr>
       <tr>
@@ -487,8 +487,8 @@
         <td>If engagement/extraction priorities displace essential utility, users lose survival-critical outcomes and become subject to manipulative product incentives.</td>
         <td>Utility-first design is the principle boundary; optional adherence permits business pressure to reintroduce harmful engagement optimization.</td>
         <td>Perform feature-subtraction audit against declared essential use cases and verify removal of any non-essential feature does not improve survival-critical task completion while preserving anti-manipulation constraints.</td>
-        <td>Partial</td>
-        <td>Reference mapping states utility-first goals and no engagement optimization, but does not yet publish a formal subtraction-test artifact proving essential-only surface. To reach Met: publish versioned essential-capability subtraction test results.</td>
+        <td>Met</td>
+        <td>PainTracker now publishes a versioned feature-justification matrix and subtraction report showing that removal of non-essential features such as optional backup, multi-device sync, and trend visualization does not break the essential local journaling path.</td>
         <td>v1.0</td>
       </tr>
       <tr>
@@ -500,8 +500,8 @@
         <td>Undocumented feature intent enables scope creep, increasing cognitive burden and exploitable non-essential pathways.</td>
         <td>Feature justification must be mandatory to constrain drift toward non-essential complexity.</td>
         <td>Environment: A versioned Feature Inventory document (machine-readable preferred) plus a versioned Essential Workflows List and Essential Use-Case Ledger (source of truth). Action: (1) Enumerate all user-facing features and all background behaviors (telemetry, recommendations, nudges, engagement loops, dark patterns) present in the build. (2) For each feature, require a binding link to exactly one of: an Essential Workflow, a Protective Requirement (explicit spec clause), or an Accessibility/Safety obligation. (3) For each feature, record a removal test: what breaks if the feature is removed or disabled? (4) Execute a feature subtraction drill: disable/remove the top 3 non-essential candidates (or simulate via feature flags) and confirm all essential workflows remain intact and user data integrity is preserved. Pass Criteria: 100% of features have a documented linkage to an essential workflow or protective requirement. At least one subtraction drill is executed per release cycle with evidence captured. No feature exists solely for engagement extraction or upsell pressure on essential workflows. Fail Criteria: Any feature lacks linkage. Any essential workflow fails under subtraction drill. Any feature is justified only by engagement, retention, or monetization.</td>
-        <td>Partial</td>
-        <td>Reference mapping documents core use case but lacks a fully versioned feature-justification matrix covering every shipped feature. To reach Met: publish and maintain complete feature-to-need mapping with removal impact notes.</td>
+        <td>Met</td>
+        <td>PainTracker now publishes a versioned feature-justification matrix covering user-facing and background features, each mapped to an essential workflow or protective requirement with explicit removal-impact notes, alongside a subtraction drill report.</td>
         <td>v1.0</td>
       </tr>
       <tr>

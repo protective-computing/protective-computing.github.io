@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>External Review Packet Template — Protective Computing</title>
+<meta name="description" content="Concrete template and workflow for publishing external Protective Computing review packets with scope, method, evidence, and findings." />
+<link rel="canonical" href="https://protective-computing.github.io/docs/external-review-packet-template.html" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Protective Computing" />
+<meta property="og:title" content="External Review Packet Template — Protective Computing" />
+<meta property="og:description" content="Concrete template and workflow for publishing external Protective Computing review packets with scope, method, evidence, and findings." />
+<meta property="og:url" content="https://protective-computing.github.io/docs/external-review-packet-template.html" />
+<meta property="og:image" content="https://protective-computing.github.io/assets/logo.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="External Review Packet Template — Protective Computing" />
+<meta name="twitter:description" content="Concrete template and workflow for publishing external Protective Computing review packets with scope, method, evidence, and findings." />
+<meta name="twitter:image" content="https://protective-computing.github.io/assets/logo.png" />
+<link rel="icon" href="../assets/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#070A10; --panel:rgba(255,255,255,0.06); --text:rgba(255,255,255,0.92); --muted:rgba(255,255,255,0.68); --line:rgba(255,255,255,0.10); --shadow:0 18px 55px rgba(0,0,0,.55); --accent:#57d9ff; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:radial-gradient(1200px 600px at 10% 10%, rgba(107,123,255,.14), transparent 60%), radial-gradient(1100px 650px at 90% 15%, rgba(87,217,255,.16), transparent 55%), var(--bg); color:var(--text); letter-spacing:-0.015em; }
+  a{ color:var(--accent); text-decoration:none; }
+  a:hover{ text-decoration:underline; text-underline-offset:3px; }
+  .wrap{ max-width:1000px; margin:0 auto; padding:28px 22px 64px; }
+  .back{ display:inline-block; padding:8px 12px; margin:0 8px 20px 0; border:1px solid var(--line); border-radius:8px; color:var(--muted); font-size:13px; }
+  .back:hover{ background:rgba(255,255,255,0.04); text-decoration:none; }
+  h1{ font-size:clamp(2.1rem, 5vw, 3.1rem); line-height:1.03; margin:0 0 12px; font-weight:850; }
+  h2{ font-size:1.45rem; margin:34px 0 14px; font-weight:800; }
+  p, li{ color:var(--muted); line-height:1.72; font-size:15px; }
+  .subtitle{ color:var(--muted); font-size:16px; line-height:1.7; max-width:72ch; margin-bottom:24px; }
+  .box{ border:1px solid var(--line); background:var(--panel); border-radius:18px; padding:18px; box-shadow:var(--shadow); margin:16px 0; }
+  ul, ol{ margin:14px 0; padding-left:20px; }
+  pre{ margin:0; white-space:pre-wrap; word-break:break-word; }
+  code{ background:rgba(255,255,255,0.06); border:1px solid var(--line); padding:2px 6px; border-radius:6px; font-size:13px; color:var(--text); }
+  .template{ border-left:3px solid var(--accent); }
+  .button-row{ display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
+  .button{ display:inline-block; padding:10px 14px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,0.04); color:var(--text); font-size:13px; font-weight:600; }
+  .button:hover{ background:rgba(255,255,255,0.08); text-decoration:none; }
+</style>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-_ThpRaAClu8dKUNrYHpiL.js"></script>
+<script>
+  globalThis.plausible = globalThis.plausible || function() {
+    plausible.q = plausible.q || [];
+    plausible.q.push(arguments);
+  };
+  plausible.init = plausible.init || function(i) {
+    plausible.o = i || {};
+  };
+  plausible.init();
+</script>
+</head>
+<body>
+<div class="wrap">
+  <a href="../" class="back">&larr; Back to Home</a>
+  <a href="independent-review.html" class="back">Independent Review</a>
+  <a href="legitimacy.html" class="back">Legitimacy &amp; Evidence</a>
+
+  <h1>External Review Packet Template</h1>
+  <p class="subtitle">This template turns review from invitation-only discourse into a repeatable packet format. Reviewers can publish confirmatory or critical assessments with bounded scope, evidence, and explicit disagreement.</p>
+
+  <div class="box">
+    <p><strong>Packet naming:</strong> <code>EXTERNAL_REVIEW_0001_[system-or-scope].md</code></p>
+    <p><strong>Recommended publication targets:</strong> GitHub issue, repository discussion, attached document, or linked external report.</p>
+    <p><strong>Minimum standard:</strong> the reviewer must state scope, method, evidence examined, claims confirmed, claims disputed, and what remains unknown.</p>
+  </div>
+
+  <h2>Workflow</h2>
+  <div class="box">
+    <ol>
+      <li>Choose a bounded review target: the specification, a single principle, a reference implementation, or a PLS walkthrough.</li>
+      <li>Collect the normative sources and evidence artifacts you actually inspected.</li>
+      <li>Publish findings using the template below, including disagreements and unresolved questions.</li>
+      <li>Open a GitHub issue or send a linked packet through the review channel.</li>
+    </ol>
+  </div>
+
+  <h2>Copy-Paste Template</h2>
+  <div class="box template">
+<pre><code># External Review 0001: [System or Scope]
+
+## 1. Reviewer Metadata
+- Reviewer name or pseudonym:
+- Affiliation or relevant role:
+- Date:
+- Public attribution allowed: Yes / No
+
+## 2. Review Scope
+- Target reviewed:
+- Version or commit reviewed:
+- Review type: specification / implementation / rubric / audit packet
+- Out-of-scope areas:
+
+## 3. Sources Examined
+- Normative sources:
+- Evidence artifacts:
+- Runtime tests performed:
+- External standards referenced:
+
+## 4. Method
+- What was inspected:
+- What was reproduced:
+- What assumptions were necessary:
+- What could not be verified:
+
+## 5. Findings
+| Severity | Claim or area | Finding | Evidence |
+| --- | --- | --- | --- |
+| Critical / High / Medium / Low |  |  |  |
+
+## 6. Agreement and Divergence
+- Claims confirmed:
+- Claims partially confirmed:
+- Claims disputed:
+- Unknowns that remain:
+
+## 7. Standards Positioning
+- Relevant framework or standard:
+- Where Protective Computing aligns:
+- Where it diverges:
+- Whether the divergence is justified:
+
+## 8. Recommendations
+1. 
+2. 
+3. 
+
+## 9. Publication Notes
+- Can this review be linked publicly from the Protective Computing site: Yes / No
+- Redactions or confidentiality limits:
+</code></pre>
+  </div>
+
+  <h2>Minimum Evidence Checklist</h2>
+  <div class="box">
+    <ul>
+      <li>At least one named target and version or date.</li>
+      <li>At least one concrete artifact inspected.</li>
+      <li>At least one statement of what could not be verified.</li>
+      <li>At least one explicit disagreement or uncertainty when applicable.</li>
+      <li>Recommendations that are tied to the stated scope rather than the whole discipline by default.</li>
+    </ul>
+  </div>
+
+  <h2>Suggested Inputs</h2>
+  <div class="box">
+    <ul>
+      <li><a href="spec/v1.0.html">Specification v1.0</a></li>
+      <li><a href="spec/v1.0-must-justifications.html">MUST justifications ledger</a></li>
+      <li><a href="reference-implementation/paintracker-reference-packet.html">PainTracker reference packet</a></li>
+      <li><a href="reviews/external-review-0001-paintracker-reference-packet.html">External Review 0001 example</a></li>
+      <li><a href="standards-crosswalks.html">Standards crosswalks</a></li>
+    </ul>
+    <div class="button-row">
+      <a class="button" href="https://github.com/protective-computing/protective-computing.github.io/issues/new" target="_blank" rel="noopener noreferrer">Open Review Issue</a>
+      <a class="button" href="independent-review.html">Review Instructions</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

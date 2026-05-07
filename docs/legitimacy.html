@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Legitimacy & Evidence — Protective Computing</title>
+<meta name="description" content="External-facing legitimacy map for Protective Computing: what it is, who can verify it, which standards it maps to, and what proof exists beyond founder claims." />
+<link rel="canonical" href="https://protective-computing.github.io/docs/legitimacy.html" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Protective Computing" />
+<meta property="og:title" content="Legitimacy & Evidence — Protective Computing" />
+<meta property="og:description" content="External-facing legitimacy map for Protective Computing: what it is, who can verify it, which standards it maps to, and what proof exists beyond founder claims." />
+<meta property="og:url" content="https://protective-computing.github.io/docs/legitimacy.html" />
+<meta property="og:image" content="https://protective-computing.github.io/assets/logo.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Legitimacy & Evidence — Protective Computing" />
+<meta name="twitter:description" content="External-facing legitimacy map for Protective Computing: what it is, who can verify it, which standards it maps to, and what proof exists beyond founder claims." />
+<meta name="twitter:image" content="https://protective-computing.github.io/assets/logo.png" />
+<link rel="icon" href="../assets/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #070A10;
+    --panel: rgba(255,255,255,0.06);
+    --text: rgba(255,255,255,0.92);
+    --muted: rgba(255,255,255,0.68);
+    --faint: rgba(255,255,255,0.52);
+    --line: rgba(255,255,255,0.10);
+    --shadow: 0 18px 55px rgba(0,0,0,.55);
+    --accent: #57d9ff;
+    --accent2: #6b7bff;
+    --warn: #ffd166;
+  }
+  *{ box-sizing: border-box; }
+  html, body{ height: 100%; }
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(107,123,255,.14), transparent 60%),
+          radial-gradient(1100px 650px at 90% 15%, rgba(87,217,255,.16), transparent 55%),
+                var(--bg);
+    color: var(--text);
+    letter-spacing: -0.015em;
+  }
+  a{ color: var(--accent); text-decoration: none; }
+  a:hover{ text-decoration: underline; text-underline-offset: 3px; }
+  .wrap{ max-width: 1120px; margin: 0 auto; padding: 28px 22px 64px; }
+  .back{
+    display: inline-block;
+    padding: 8px 12px;
+    margin-bottom: 20px;
+    margin-right: 8px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .back:hover{ background: rgba(255,255,255,0.04); text-decoration: none; }
+  h1{ font-size: clamp(2.2rem, 5vw, 3.3rem); line-height: 1.02; margin: 0 0 12px; font-weight: 850; }
+  .subtitle{ color: var(--muted); font-size: 16px; line-height: 1.7; max-width: 70ch; margin-bottom: 28px; }
+  .hero{
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    margin-bottom: 18px;
+  }
+  .hero-grid{ display:grid; grid-template-columns: 1.25fr .75fr; gap: 18px; }
+  .stack{ display:grid; gap: 12px; }
+  .badge{
+    display:inline-block; padding: 6px 10px; border-radius: 999px; border: 1px solid rgba(87,217,255,.28);
+    background: rgba(87,217,255,.08); color: var(--text); font-size: 12px; font-weight: 700; letter-spacing: 0.04em;
+    text-transform: uppercase; margin-bottom: 12px;
+  }
+  .metric{ border: 1px solid var(--line); border-radius: 16px; background: rgba(255,255,255,0.03); padding: 16px; }
+  .metric-label{ color: var(--faint); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 800; margin-bottom: 8px; }
+  .metric strong{ display:block; font-size: 1.8rem; margin-bottom: 6px; }
+  .cta-row{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 18px; }
+  .button{
+    display:inline-block; padding: 10px 14px; border-radius: 999px; border: 1px solid var(--line);
+    background: rgba(255,255,255,0.04); color: var(--text); font-size: 13px; font-weight: 600;
+  }
+  .button:hover{ background: rgba(255,255,255,0.08); text-decoration:none; }
+  .button.primary{ border-color: rgba(87,217,255,.40); background: linear-gradient(135deg, rgba(87,217,255,.16), rgba(107,123,255,.10)); }
+  h2{ font-size: 1.45rem; margin: 36px 0 14px; font-weight: 800; }
+  p, li{ color: var(--muted); line-height: 1.72; font-size: 15px; }
+  ul, ol{ margin: 14px 0; padding-left: 20px; }
+  li{ margin: 8px 0; }
+  .grid{ display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .box{ border: 1px solid var(--line); background: var(--panel); border-radius: 16px; padding: 18px; box-shadow: var(--shadow); }
+  .box h3{ margin: 0 0 10px; font-size: 1.05rem; }
+  .eyebrow{ color: var(--faint); text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px; font-weight: 800; margin-bottom: 8px; }
+  .note{ border-left: 3px solid var(--warn); padding-left: 14px; margin-top: 10px; }
+  table{ width:100%; border-collapse: collapse; margin: 18px 0; background: rgba(255,255,255,0.03); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  th, td{ padding: 12px 14px; text-align:left; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--muted); font-size: 14px; line-height: 1.6; }
+  th{ color: var(--text); background: rgba(255,255,255,0.05); font-weight: 700; }
+  tr:last-child td{ border-bottom: none; }
+  .footer-nav{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 24px; }
+  @media (max-width: 900px){ .hero-grid, .grid{ grid-template-columns: 1fr; } }
+</style>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-_ThpRaAClu8dKUNrYHpiL.js"></script>
+<script>
+  globalThis.plausible = globalThis.plausible || function() {
+    plausible.q = plausible.q || [];
+    plausible.q.push(arguments);
+  };
+  plausible.init = plausible.init || function(i) {
+    plausible.o = i || {};
+  };
+  plausible.init();
+</script>
+</head>
+<body>
+<div class="wrap">
+  <a href="../" class="back">&larr; Back to Home</a>
+  <a href="audit-this-site.html" class="back">Audit This Site</a>
+  <a href="independent-review.html" class="back">Independent Review</a>
+
+  <div class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="badge">External Compression Layer</div>
+        <h1>Legitimacy &amp; Evidence</h1>
+        <p class="subtitle">Protective Computing is a design discipline for software operating under human vulnerability, coercion, instability, and degraded conditions. This page is the shortest path for outsiders to answer four questions: what this is, what proof exists, how it maps to recognized standards, and how another builder can apply it without adopting the founder narrative first.</p>
+        <div class="cta-row">
+          <a class="button primary" href="spec/v1.0.html">Read the Specification</a>
+          <a class="button" href="reference-implementation/paintracker-mapping.html">Inspect the Reference Implementation</a>
+          <a class="button" href="what-protective-computing-is-not.html">Read the Boundary Page</a>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="metric">
+          <div class="metric-label">Current posture</div>
+          <strong>Foundational, not yet externally hardened</strong>
+          <p>Public canon, normative spec, audit artifacts, and a reference implementation exist. Independent reviews, inter-rater scoring, and formal standards crosswalk depth are the next legitimacy threshold.</p>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Bridge statement</div>
+          <p>Protective Computing does not replace NIST, ISO, SOC 2, or OWASP. It identifies human failure conditions those frameworks often under-specify, then translates them into verifiable architecture, defaults, controls, and evidence.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2>What This Is</h2>
+  <div class="grid">
+    <div class="box">
+      <div class="eyebrow">Discipline</div>
+      <h3>A bounded design standard</h3>
+      <p>Protective Computing defines system behavior when users face coercion, unstable infrastructure, degraded devices, or institutional scrutiny. The normative core is published in the specification, principles index, threat model, and MUST-justifications ledger.</p>
+      <ul>
+        <li><a href="spec/v1.0.html">Specification v1.0</a></li>
+        <li><a href="principles/">Principles index</a></li>
+        <li><a href="spec/v1.0-must-justifications.html">MUST justifications ledger</a></li>
+        <li><a href="../THREAT_MODELS.md">Threat models</a></li>
+      </ul>
+    </div>
+    <div class="box">
+      <div class="eyebrow">Applicability</div>
+      <h3>Usable beyond one worldview or one domain</h3>
+      <p>The pattern language is not limited to health apps, crisis contexts, or one product. Builders can start with a threat model, audit checklist, evidence packet structure, and reference implementation mapping without adopting the full canon first.</p>
+      <ul>
+        <li><a href="getting-started.html">Getting started</a></li>
+        <li><a href="audit-checklist.html">Audit checklist</a></li>
+        <li><a href="reference-implementation/paintracker-mapping.html">PainTracker mapping</a></li>
+        <li><a href="../PLS_RUBRIC_v0_1_DRAFT.md">PLS rubric draft</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Who Can Verify It</h2>
+  <div class="grid">
+    <div class="box">
+      <div class="eyebrow">Independent roles</div>
+      <h3>Reviewers do not need to agree with the discipline to test it</h3>
+      <ul>
+        <li>Privacy engineers validating data-minimization and retention claims</li>
+        <li>Security auditors reviewing control boundaries, egress, and evidence quality</li>
+        <li>Software architects testing degraded-mode survivability and local authority</li>
+        <li>Clinicians, disability advocates, or trauma-informed practitioners checking real-world failure assumptions</li>
+        <li>Researchers or founders applying the rubric to their own systems</li>
+      </ul>
+    </div>
+    <div class="box">
+      <div class="eyebrow">Current public review path</div>
+      <h3>Inspectability is already open</h3>
+      <p>Public review hooks already exist, but they are still lightly populated. The current review entry points are the audit page, evidence index, independent-review invitation, and issue-template planning artifacts.</p>
+      <ul>
+        <li><a href="audit-this-site.html">Audit this site</a></li>
+        <li><a href="independent-review.html">Independent review invitation</a></li>
+        <li><a href="../INDEPENDENT_REVIEW_CHECKLIST.md">Independent review checklist</a></li>
+        <li><a href="../V1_1_ISSUE_TEMPLATES.md">Review-driven process templates</a></li>
+      </ul>
+      <p class="note">Missing proof: named external assessments, reviewer packets, and published disagreement logs.</p>
+    </div>
+  </div>
+
+  <h2>Proof Beyond Founder Claims</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Layer</th>
+        <th>Current proof</th>
+        <th>External anchor</th>
+        <th>Missing proof</th>
+        <th>Next action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Theory</td>
+        <td>Canon, Overton Framework, public specification</td>
+        <td>NIST AI RMF governance structure, NIST Privacy Framework risk language</td>
+        <td>Concise third-party citations or literature positioning</td>
+        <td>Publish a short academic abstract and citation-ready overview</td>
+      </tr>
+      <tr>
+        <td>Engineering</td>
+        <td>Patterns, threat models, MUST ledger, implementation specs</td>
+        <td>OWASP ASVS, ISO/IEC 27001 control expectations</td>
+        <td>Formal crosswalk packet and implementation checklists per standard</td>
+        <td>Expand standard mappings into a dedicated crosswalk artifact set</td>
+      </tr>
+      <tr>
+        <td>Evaluation</td>
+        <td>PLS rubric draft and LaTeX release candidate</td>
+        <td>NIST Measure/Manage patterns, SOC 2-style evidence framing</td>
+        <td>Inter-rater reliability evidence and revision log</td>
+        <td>Run one public scored walkthrough with multiple raters</td>
+      </tr>
+      <tr>
+        <td>Reference systems</td>
+        <td>PainTracker mapping and audit artifacts</td>
+        <td>Application security and privacy review baselines</td>
+        <td>Reference packet with explicit limitations and negative claims</td>
+        <td>Package PainTracker as a versioned reference packet</td>
+      </tr>
+      <tr>
+        <td>Governance</td>
+        <td>Versioned repository, CI audit gates, issue template planning</td>
+        <td>Open RFC and changelog discipline used in mature standards projects</td>
+        <td>Public contribution and review process with acceptance criteria</td>
+        <td>Publish RFC workflow and reviewer-facing governance notes</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Standards Crosswalk Direction</h2>
+  <p>The current repository already includes compliance mapping and audit evidence. The next externalization step is a standards crosswalk set that states, with bounded language, how Protective Computing complements recognized frameworks.</p>
+  <div class="grid">
+    <div class="box">
+      <h3>Existing mapping anchors</h3>
+      <ul>
+        <li><a href="standards-crosswalks.html">Standards crosswalks</a></li>
+        <li><a href="../COMPLIANCE_AUDIT_MATRIX.md">Compliance and audit matrix</a></li>
+        <li><a href="../AUDIT_EVIDENCE.md">Audit evidence index</a></li>
+        <li><a href="reference-implementation/paintracker-mapping.html">PainTracker control mapping</a></li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>Frameworks to crosswalk explicitly</h3>
+      <ul>
+        <li><a href="https://www.nist.gov/privacy-framework">NIST Privacy Framework</a></li>
+        <li><a href="https://www.nist.gov/itl/ai-risk-management-framework">NIST AI Risk Management Framework</a></li>
+        <li><a href="https://www.iso.org/standard/27001">ISO/IEC 27001</a></li>
+        <li><a href="https://www.iso.org/standard/42001">ISO/IEC 42001</a></li>
+        <li><a href="https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2">SOC 2 Trust Services Criteria</a></li>
+        <li><a href="https://owasp.org/www-project-application-security-verification-standard/">OWASP ASVS</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Machine-Readable and Repeatable Proof</h2>
+  <div class="grid">
+    <div class="box">
+      <div class="eyebrow">Already present</div>
+      <h3>Versioned evidence and CI gates</h3>
+      <p>Protective Computing already publishes audit commands, CI gate definitions, generated artifacts, and normative claims. That makes the work inspectable rather than purely rhetorical.</p>
+      <ul>
+        <li><a href="audit-this-site.html">Audit path</a></li>
+        <li><a href="../.github/workflows/audit.yml">CI audit workflow</a></li>
+        <li><a href="../scripts/audit-output/">Generated audit artifacts</a></li>
+      </ul>
+    </div>
+    <div class="box">
+      <div class="eyebrow">Long game</div>
+      <h3>Signed evidence, not just prose</h3>
+      <p>Future conformance claims can move toward signed packets, release-bound trust bundles, and machine-readable disclosures. That path aligns with broader work on verifiable credentials without claiming present-day certification.</p>
+      <ul>
+        <li><a href="https://www.w3.org/TR/vc-data-model-2.0/">W3C Verifiable Credentials 2.0</a></li>
+        <li>Candidate outputs: signed conformance claims, machine-readable PLS disclosures, verifiable audit snapshots</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>What Another Builder Can Reuse Now</h2>
+  <div class="box">
+    <p>Another team should be able to take the discipline and apply it without importing founder biography, commercial services, or the full canon first. The current reusable starter surface is:</p>
+    <ul>
+      <li><a href="getting-started.html">Getting started guide</a></li>
+      <li><a href="audit-checklist.html">Audit checklist</a></li>
+      <li><a href="spec/v1.0.html">Normative specification</a></li>
+      <li><a href="spec/v1.0-must-justifications.html">MUST-justifications ledger</a></li>
+      <li><a href="reference-implementation/paintracker-mapping.html">Reference implementation mapping</a></li>
+      <li><a href="reference-implementation/paintracker-reference-packet.html">PainTracker reference packet</a></li>
+      <li><a href="external-review-packet-template.html">External review packet template</a></li>
+      <li><a href="rfc-process.html">Public RFC process</a></li>
+      <li><a href="release-history.html">Release history</a></li>
+      <li><a href="../PLS_RUBRIC_v0_1_DRAFT.md">PLS scoring rubric draft</a></li>
+    </ul>
+    <p class="note">Still missing: a starter kit and conformance claim template.</p>
+  </div>
+
+  <h2>Boundary Discipline</h2>
+  <div class="box">
+    <p>Legitimacy depends on clear exclusions as much as ambitious claims. Protective Computing is not generic privacy branding, not compliance theater, and not a softness overlay on conventional software. It is design under instability with auditable behavior requirements.</p>
+    <div class="cta-row">
+      <a class="button primary" href="what-protective-computing-is-not.html">Read “What Protective Computing Is Not”</a>
+    </div>
+  </div>
+
+  <div class="footer-nav">
+    <a class="button" href="standards-crosswalks.html">Standards crosswalks</a>
+    <a class="button" href="rfc-process.html">RFC process</a>
+    <a class="button" href="audit-this-site.html">Verification path</a>
+    <a class="button" href="independent-review.html">Review the discipline</a>
+    <a class="button" href="reference-implementation/paintracker-mapping.html">Reference implementation</a>
+  </div>
+</div>
+</body>
+</html>

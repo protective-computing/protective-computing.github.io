@@ -6,6 +6,26 @@ Operational index for repeatable audit evidence collection and verification.
 ## Canonical Inputs
 - Specification: `/docs/spec/v1.0.html`
 - MUST justifications annex: `/docs/spec/v1.0-must-justifications.html`
+- Remediation artifact list: `/REMEDIATION_ARTIFACT_LIST.md`
+- Coercion boundary matrix: `/COERCION_BOUNDARY_MATRIX.md`
+- Coercion-safe mode design brief: `/COERCION_SAFE_MODE_DESIGN_BRIEF.md`
+- Coercion scenario evidence packet: `/COERCION_SCENARIO_EVIDENCE_PACKET.md`
+- Duress mode requirements checklist: `/DURESS_MODE_REQUIREMENTS_CHECKLIST.md`
+- Duress mode implementation spec: `/DURESS_MODE_IMPLEMENTATION_SPEC.md`
+- Duress mode routing design: `/DURESS_MODE_ROUTING_DESIGN.md`
+- Degraded mode remediation matrix: `/DEGRADED_MODE_REMEDIATION_MATRIX.md`
+- Degraded mode requirements checklist: `/DEGRADED_MODE_REQUIREMENTS_CHECKLIST.md`
+- Degraded mode implementation spec: `/DEGRADED_MODE_IMPLEMENTATION_SPEC.md`
+- Local retention default spec: `/LOCAL_RETENTION_DEFAULT_SPEC.md`
+- Backup service metadata retention policy: `/BACKUP_SERVICE_METADATA_RETENTION_POLICY.md`
+- Retention enforcement verification report: `/RETENTION_ENFORCEMENT_VERIFICATION_REPORT.md`
+- Local Authority operating profile: `/LOCAL_AUTHORITY_OPERATING_PROFILE.md`
+- Offline parity and sync spec: `/OFFLINE_PARITY_AND_SYNC_SPEC.md`
+- Reversibility boundary table: `/REVERSIBILITY_BOUNDARY_TABLE.md`
+- Field justification ledger: `/FIELD_JUSTIFICATION_LEDGER.md`
+- Feature justification matrix: `/FEATURE_JUSTIFICATION_MATRIX.md`
+- Essential utility subtraction report: `/ESSENTIAL_UTILITY_SUBTRACTION_REPORT.md`
+- Retention policy table: `/RETENTION_POLICY_TABLE.md`
 - Threat scenarios: `/THREAT_MODELS.md`
 - Implementation blueprints: `/IMPLEMENTATION_PATTERNS.md`
 - Compliance mapping: `/COMPLIANCE_AUDIT_MATRIX.md`

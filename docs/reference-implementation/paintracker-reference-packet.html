@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PainTracker Protective Computing Reference Packet v1.0</title>
+    <meta name="description" content="Formal reference packet for PainTracker: scope, threat model, evidence anchors, known limitations, negative claims, and external review hooks.">
+    <link rel="canonical" href="https://protective-computing.github.io/docs/reference-implementation/paintracker-reference-packet.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Protective Computing">
+    <meta property="og:title" content="PainTracker Protective Computing Reference Packet v1.0">
+    <meta property="og:description" content="Formal reference packet for PainTracker: scope, threat model, evidence anchors, known limitations, negative claims, and external review hooks.">
+    <meta property="og:url" content="https://protective-computing.github.io/docs/reference-implementation/paintracker-reference-packet.html">
+    <meta property="og:image" content="https://protective-computing.github.io/assets/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PainTracker Protective Computing Reference Packet v1.0">
+    <meta name="twitter:description" content="Formal reference packet for PainTracker: scope, threat model, evidence anchors, known limitations, negative claims, and external review hooks.">
+    <meta name="twitter:image" content="https://protective-computing.github.io/assets/logo.png">
+    <link rel="icon" href="/assets/logo.png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+            color: #e0e0e0;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 50%, #0f1628 100%);
+            min-height: 100vh;
+        }
+        header {
+            background: rgba(0, 0, 0, 0.5);
+            border-bottom: 2px solid rgba(0, 255, 200, 0.3);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #00ffc8 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        nav a { color: #00ffc8; text-decoration: none; margin-left: 1.5rem; font-size: 14px; }
+        nav a:hover { color: #7c3aed; }
+        main { max-width: 1080px; margin: 0 auto; padding: 3rem 2rem; }
+        h1 {
+            font-size: 2.6rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #00ffc8 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            border-bottom: 2px solid rgba(0, 255, 200, 0.2);
+            padding-bottom: 1rem;
+        }
+        .subtitle { color: #aaa; font-size: 16px; margin-bottom: 1.5rem; }
+        .breadcrumb { font-size: 13px; color: #666; margin-bottom: 2rem; }
+        .breadcrumb a { color: #00ffc8; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        h2 { font-size: 1.8rem; margin-top: 3rem; margin-bottom: 1.5rem; color: #00ffc8; border-left: 4px solid #7c3aed; padding-left: 1rem; }
+        h3 { font-size: 1.15rem; margin-top: 1.4rem; margin-bottom: 0.8rem; color: #7c3aed; }
+        p { margin-bottom: 1.1rem; color: #c0c0c0; }
+        ul { margin: 1rem 0 1.5rem 2rem; color: #c0c0c0; }
+        li { margin-bottom: 0.8rem; line-height: 1.6; }
+        .box {
+            border-left: 4px solid;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+        .box.summary { border-left-color: #00ffc8; background: rgba(0, 255, 200, 0.08); }
+        .box.warning { border-left-color: #ffc800; background: rgba(255, 200, 0, 0.08); }
+        .box.boundary { border-left-color: #34d3ff; background: rgba(52, 211, 255, 0.08); }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(0, 255, 200, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 255, 200, 0.1);
+            color: #c0c0c0;
+            vertical-align: top;
+        }
+        th { background: rgba(124, 58, 237, 0.15); color: #00ffc8; font-weight: bold; }
+        tr:last-child td { border-bottom: none; }
+        .button-row { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1.5rem 0; }
+        .button {
+            display: inline-block;
+            padding: 12px 18px;
+            background: linear-gradient(135deg, rgba(0, 255, 200, 0.15), rgba(124, 58, 237, 0.15));
+            border: 1px solid rgba(0, 255, 200, 0.3);
+            border-radius: 6px;
+            color: #00ffc8;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .button:hover { text-decoration: none; background: linear-gradient(135deg, rgba(0, 255, 200, 0.25), rgba(124, 58, 237, 0.25)); }
+        code { background: rgba(0, 0, 0, 0.4); padding: 3px 8px; border-radius: 3px; color: #00ffc8; font-size: 14px; }
+        footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(0, 255, 200, 0.1); text-align: center; font-size: 13px; color: #666; }
+        footer a { color: #00ffc8; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+    </style>
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script async src="https://plausible.io/js/pa-_ThpRaAClu8dKUNrYHpiL.js"></script>
+    <script>
+      globalThis.plausible = globalThis.plausible || function() {
+        plausible.q = plausible.q || [];
+        plausible.q.push(arguments);
+      };
+      plausible.init = plausible.init || function(i) {
+        plausible.o = i || {};
+      };
+      plausible.init();
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">◊ Protective Computing</a>
+            <div>
+                <a href="/docs/standards-crosswalks.html">Standards Crosswalks</a>
+                <a href="/docs/reference-implementation/paintracker-mapping.html">Compliance Mapping</a>
+                <a href="/docs/independent-review.html">Independent Review</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/docs/reference-implementation/paintracker-mapping.html">Reference Implementation</a> / <strong>PainTracker Reference Packet</strong>
+        </div>
+
+        <h1>PainTracker Protective Computing Reference Packet v1.0</h1>
+        <p class="subtitle">A versioned proof packet for outsiders: scope, control boundaries, evidence anchors, negative claims, known limitations, and review hooks for the current PainTracker reference implementation.</p>
+
+        <div class="box summary">
+            <p><strong>Packet status:</strong> Public reference packet, not certification.</p>
+            <p><strong>Implementation posture:</strong> Level 2–3 Protective Computing v1.0 with explicit gaps in active-coercion resistance and degraded-functionality accessibility.</p>
+            <p><strong>Primary source mapping:</strong> <a href="/docs/reference-implementation/paintracker-mapping.html">PainTracker compliance mapping</a>.</p>
+        </div>
+
+        <h2>Packet Contents</h2>
+        <table>
+            <tr>
+                <th>Section</th>
+                <th>Current statement</th>
+                <th>Evidence anchor</th>
+            </tr>
+            <tr>
+                <td>Threat model</td>
+                <td>PainTracker resists passive surveillance, data breach, and operator decrypt scenarios better than typical health journaling apps, but does not yet resist active compelled-disclosure scenarios.</td>
+                <td><a href="/THREAT_MODELS.md">Threat models</a>, <a href="/COERCION_BOUNDARY_MATRIX.md">coercion boundary matrix</a>, <a href="/COERCION_SCENARIO_EVIDENCE_PACKET.md">coercion scenario packet</a></td>
+            </tr>
+            <tr>
+                <td>Local-first architecture</td>
+                <td>Essential journaling remains locally authoritative; optional backup and sync are additive rather than required for core use.</td>
+                <td><a href="/LOCAL_AUTHORITY_OPERATING_PROFILE.md">local authority operating profile</a>, <a href="/OFFLINE_PARITY_AND_SYNC_SPEC.md">offline parity and sync spec</a></td>
+            </tr>
+            <tr>
+                <td>Exposure minimization</td>
+                <td>Collection and retention are explicitly bounded, with published field-level justifications and retention defaults.</td>
+                <td><a href="/FIELD_JUSTIFICATION_LEDGER.md">field justification ledger</a>, <a href="/RETENTION_POLICY_TABLE.md">retention policy table</a>, <a href="/LOCAL_RETENTION_DEFAULT_SPEC.md">local retention defaults</a></td>
+            </tr>
+            <tr>
+                <td>Essential utility</td>
+                <td>The essential journaling path remains intact when optional features are removed or degraded.</td>
+                <td><a href="/FEATURE_JUSTIFICATION_MATRIX.md">feature justification matrix</a>, <a href="/ESSENTIAL_UTILITY_SUBTRACTION_REPORT.md">subtraction report</a></td>
+            </tr>
+            <tr>
+                <td>Audit reproducibility</td>
+                <td>Normative claims, evidence indexes, CI gates, and site-level metadata audit are public and reproducible.</td>
+                <td><a href="/docs/audit-this-site.html">audit path</a>, <a href="/AUDIT_EVIDENCE.md">audit evidence index</a>, <a href="/docs/spec/v1.0-must-justifications.html">MUST ledger</a></td>
+            </tr>
+        </table>
+
+        <h2>Threat Model Summary</h2>
+        <div class="box boundary">
+            <p><strong>Resisted well enough for current claim:</strong> plaintext exposure through ordinary operator access, uncontrolled retention growth, loss of connectivity for core use, and non-essential feature removal breaking the primary task.</p>
+            <p><strong>Not resisted well enough for stronger claim:</strong> state interrogation, forced unlock, compelled export, keyboard-only parity failures, and screen-reader-complete degraded-mode use.</p>
+        </div>
+
+        <h2>Architecture and Behavior</h2>
+        <h3>Local-first architecture statement</h3>
+        <p>PainTracker treats the user device as the authority for core journaling actions. Optional server interactions support encrypted backup and synchronization, but core logging, viewing, and editing are designed to remain available without the server.</p>
+
+        <h3>Degraded mode behavior</h3>
+        <p>Current degraded-mode support is partial. Core use survives ordinary mobile and intermittent-network conditions, but the implementation still depends on JavaScript and retains accessibility gaps around keyboard navigation and WCAG AA coverage.</p>
+
+        <h3>Coercion risk notes</h3>
+        <p>PainTracker does not claim deniable panic mode, decoy vault behavior, or a coercion-safe secondary path. The current public posture remains: suitable for passive-surveillance contexts, not suitable for active-coercion scenarios.</p>
+
+        <h3>Export boundary</h3>
+        <p>Export and disclosure behavior must remain bounded by published evidence and user intent. There is no claim that exports are deniable, hidden, or safe under coercion; only that plaintext is not exposed to administrators through a master decrypt capability.</p>
+
+        <h3>Analytics and telemetry position</h3>
+        <p>No claim is made that operator-visible metadata is zero. The current posture is bounded metadata retention with published limits rather than a claim of telemetry elimination.</p>
+
+        <h2>Known Limitations</h2>
+        <ul>
+            <li>Not suitable for active torture, interrogation, or forced-unlock scenarios due to lack of deniability controls.</li>
+            <li>Not yet WCAG AA complete across the essential path.</li>
+            <li>Not yet resilient to non-JavaScript operation or sub-512MB-class degraded-device targets.</li>
+            <li>Optional sync metadata remains visible to operators within published retention bounds.</li>
+        </ul>
+
+        <h2>Partial Standards Mapping</h2>
+        <table>
+            <tr>
+                <th>Framework</th>
+                <th>Current bounded claim</th>
+                <th>Reference anchor</th>
+            </tr>
+            <tr>
+                <td>NIST Privacy Framework</td>
+                <td>Strongest overlap is privacy-by-design via field minimization, retention bounds, and explicit operator non-possession boundaries.</td>
+                <td><a href="/docs/standards-crosswalks.html">standards crosswalks</a>, <a href="/FIELD_JUSTIFICATION_LEDGER.md">field ledger</a></td>
+            </tr>
+            <tr>
+                <td>OWASP ASVS</td>
+                <td>Current packet supports partial mapping on cryptography, data protection, and access boundaries; it does not yet satisfy a published full ASVS control matrix.</td>
+                <td><a href="/docs/standards-crosswalks.html">standards crosswalks</a>, <a href="/docs/reference-implementation/paintracker-mapping.html">compliance mapping</a></td>
+            </tr>
+        </table>
+
+        <h2>PLS Disclosure</h2>
+        <p>PainTracker is a strong candidate for a public PLS walkthrough because it already documents both strengths and disqualifying gaps. This packet does not publish a final multi-rater PLS score; it exists to make that later score inspectable.</p>
+
+        <h2>False Claim Register</h2>
+        <table>
+            <tr>
+                <th>Claim</th>
+                <th>Status</th>
+                <th>Reason</th>
+            </tr>
+            <tr>
+                <td>Deniable panic mode</td>
+                <td>Not claimed</td>
+                <td>Current implementation does not provide a defensible coercion-safe path or decoy behavior.</td>
+            </tr>
+            <tr>
+                <td>HIPAA compliant</td>
+                <td>Not claimed</td>
+                <td>This packet maps engineering controls and evidence, not covered-entity legal compliance.</td>
+            </tr>
+            <tr>
+                <td>Zero-knowledge cloud sync</td>
+                <td>Partially bounded</td>
+                <td>Encrypted backup is claimed; zero operator plaintext access is claimed. Zero metadata visibility is not claimed.</td>
+            </tr>
+            <tr>
+                <td>Accessibility-complete degraded mode</td>
+                <td>Not claimed</td>
+                <td>Keyboard parity and WCAG AA gaps remain public and unresolved.</td>
+            </tr>
+            <tr>
+                <td>Independent certification</td>
+                <td>Not claimed</td>
+                <td>No external certifier or governance body has issued certification.</td>
+            </tr>
+        </table>
+
+        <h2>External Review Hooks</h2>
+        <div class="box warning">
+            <p>This packet is designed to be reviewed, not trusted by default. Use the external review workflow and packet template to confirm, refute, or tighten any claim here.</p>
+            <div class="button-row">
+                <a href="/docs/external-review-packet-template.html" class="button">Use Review Packet Template</a>
+                <a href="/docs/reviews/external-review-0001-paintracker-reference-packet.html" class="button">Read Review Example</a>
+                <a href="/docs/independent-review.html" class="button">Independent Review Path</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p><strong>PainTracker Protective Computing Reference Packet v1.0</strong></p>
+        <p style="margin-top: 1rem; font-size: 12px;"><a href="/docs/reference-implementation/paintracker-mapping.html">← Back to compliance mapping</a></p>
+    </footer>
+</body>
+</html>

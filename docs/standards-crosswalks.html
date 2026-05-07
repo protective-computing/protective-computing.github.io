@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Standards Crosswalks — Protective Computing</title>
+<meta name="description" content="Bounded crosswalks from Protective Computing to NIST Privacy Framework, NIST AI RMF, ISO/IEC 27001, ISO/IEC 42001, SOC 2, and OWASP ASVS." />
+<link rel="canonical" href="https://protective-computing.github.io/docs/standards-crosswalks.html" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Protective Computing" />
+<meta property="og:title" content="Standards Crosswalks — Protective Computing" />
+<meta property="og:description" content="Bounded crosswalks from Protective Computing to NIST Privacy Framework, NIST AI RMF, ISO/IEC 27001, ISO/IEC 42001, SOC 2, and OWASP ASVS." />
+<meta property="og:url" content="https://protective-computing.github.io/docs/standards-crosswalks.html" />
+<meta property="og:image" content="https://protective-computing.github.io/assets/logo.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Standards Crosswalks — Protective Computing" />
+<meta name="twitter:description" content="Bounded crosswalks from Protective Computing to NIST Privacy Framework, NIST AI RMF, ISO/IEC 27001, ISO/IEC 42001, SOC 2, and OWASP ASVS." />
+<meta name="twitter:image" content="https://protective-computing.github.io/assets/logo.png" />
+<link rel="icon" href="../assets/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #070A10;
+    --panel: rgba(255,255,255,0.06);
+    --text: rgba(255,255,255,0.92);
+    --muted: rgba(255,255,255,0.68);
+    --line: rgba(255,255,255,0.10);
+    --shadow: 0 18px 55px rgba(0,0,0,.55);
+    --accent: #57d9ff;
+    --accent2: #6b7bff;
+    --warn: #ffd166;
+  }
+  *{ box-sizing: border-box; }
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(107,123,255,.14), transparent 60%), radial-gradient(1100px 650px at 90% 15%, rgba(87,217,255,.16), transparent 55%), var(--bg);
+    color: var(--text);
+    letter-spacing: -0.015em;
+  }
+  a{ color: var(--accent); text-decoration: none; }
+  a:hover{ text-decoration: underline; text-underline-offset: 3px; }
+  .wrap{ max-width: 1120px; margin: 0 auto; padding: 28px 22px 64px; }
+  .back{ display:inline-block; padding:8px 12px; margin:0 8px 20px 0; border:1px solid var(--line); border-radius:8px; color:var(--muted); font-size:13px; }
+  .back:hover{ background: rgba(255,255,255,0.04); text-decoration:none; }
+  h1{ font-size: clamp(2.1rem, 5vw, 3.2rem); line-height: 1.03; margin:0 0 12px; font-weight:850; }
+  h2{ font-size: 1.45rem; margin: 34px 0 14px; font-weight:800; }
+  h3{ font-size: 1.05rem; margin:0 0 10px; }
+  p, li{ color: var(--muted); line-height:1.72; font-size:15px; }
+  .subtitle{ color: var(--muted); font-size:16px; line-height:1.7; max-width:72ch; margin-bottom:26px; }
+  .box{ border:1px solid var(--line); background: var(--panel); border-radius: 18px; padding:18px; box-shadow: var(--shadow); margin:16px 0; }
+  .grid{ display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:16px; }
+  .eyebrow{ color: rgba(255,255,255,0.52); text-transform: uppercase; letter-spacing:0.08em; font-size:12px; font-weight:800; margin-bottom:8px; }
+  table{ width:100%; border-collapse: collapse; margin:18px 0; background: rgba(255,255,255,0.03); border:1px solid var(--line); }
+  th, td{ padding:12px 14px; text-align:left; vertical-align:top; border-bottom:1px solid var(--line); color:var(--muted); font-size:14px; line-height:1.6; }
+  th{ color: var(--text); background: rgba(255,255,255,0.05); font-weight:700; }
+  tr:last-child td{ border-bottom:none; }
+  ul{ margin: 14px 0; padding-left: 20px; }
+  .note{ border-left: 3px solid var(--warn); padding-left:14px; }
+  .button-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+  .button{ display:inline-block; padding:10px 14px; border-radius:999px; border:1px solid var(--line); background: rgba(255,255,255,0.04); color:var(--text); font-size:13px; font-weight:600; }
+  .button:hover{ background: rgba(255,255,255,0.08); text-decoration:none; }
+  @media (max-width: 900px){ .grid{ grid-template-columns:1fr; } }
+</style>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-_ThpRaAClu8dKUNrYHpiL.js"></script>
+<script>
+  globalThis.plausible = globalThis.plausible || function() {
+    plausible.q = plausible.q || [];
+    plausible.q.push(arguments);
+  };
+  plausible.init = plausible.init || function(i) {
+    plausible.o = i || {};
+  };
+  plausible.init();
+</script>
+</head>
+<body>
+<div class="wrap">
+  <a href="../" class="back">&larr; Back to Home</a>
+  <a href="legitimacy.html" class="back">Legitimacy &amp; Evidence</a>
+  <a href="audit-this-site.html" class="back">Audit This Site</a>
+
+  <h1>Standards Crosswalks</h1>
+  <p class="subtitle">These crosswalks position Protective Computing alongside recognized frameworks without overstating equivalence. They are translation aids for architects, reviewers, and buyers, not certifications and not legal conclusions.</p>
+
+  <div class="box note">
+    <p>Claim boundary: Protective Computing does not replace NIST, ISO, SOC 2, or OWASP. It provides a human-vulnerability design layer that turns coercion, degradation, local authority, and bounded disclosure into auditable engineering requirements those frameworks can consume.</p>
+  </div>
+
+  <h2>Crosswalk Matrix</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Framework</th>
+        <th>What it already covers well</th>
+        <th>Protective Computing delta</th>
+        <th>Current repository anchors</th>
+        <th>Still needed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>NIST Privacy Framework</td>
+        <td>Privacy risk identification, governance, data processing functions, and privacy-by-design language.</td>
+        <td>Sharpens failure analysis around coercion, offline survivability, retention-by-default, and operator non-possession of plaintext.</td>
+        <td><a href="../COMPLIANCE_AUDIT_MATRIX.md">Compliance matrix</a>, <a href="../FIELD_JUSTIFICATION_LEDGER.md">field ledger</a>, <a href="../RETENTION_POLICY_TABLE.md">retention policy table</a></td>
+        <td>Function-by-function mapping to Identify, Govern, Control, Communicate, and Protect.</td>
+      </tr>
+      <tr>
+        <td>NIST AI RMF</td>
+        <td>Govern, Map, Measure, and Manage structure for risk governance and operational monitoring.</td>
+        <td>Adds a concrete model for how AI-assisted or sensitive systems should behave under human vulnerability, institutional pressure, and degraded infrastructure.</td>
+        <td><a href="spec/v1.0.html">Specification</a>, <a href="../THREAT_MODELS.md">threat models</a>, <a href="audit-checklist.html">audit checklist</a></td>
+        <td>AI-specific examples showing how Protective Computing constraints alter system prompts, retention, and operator review paths.</td>
+      </tr>
+      <tr>
+        <td>ISO/IEC 27001</td>
+        <td>Information security management systems, control governance, asset risk treatment, and availability/security discipline.</td>
+        <td>Defines user-protective outcomes that a security program can target: no master keys, reversible actions, local authority, bounded export, and deterministic degradation.</td>
+        <td><a href="../AUDIT_EVIDENCE.md">Audit evidence index</a>, <a href="../REVERSIBILITY_BOUNDARY_TABLE.md">reversibility boundary table</a>, <a href="../LOCAL_AUTHORITY_OPERATING_PROFILE.md">local authority profile</a></td>
+        <td>Annex A style control mapping for each Protective principle.</td>
+      </tr>
+      <tr>
+        <td>ISO/IEC 42001</td>
+        <td>AI management system governance, accountability, oversight, and lifecycle management.</td>
+        <td>Supplies the missing human-instability lens for deployment contexts where AI systems influence care, records, triage, or user-facing decision support.</td>
+        <td><a href="spec/v1.0.html">Specification</a>, <a href="what-protective-computing-is-not.html">boundary page</a>, <a href="independent-review.html">independent review</a></td>
+        <td>Lifecycle examples for AI-assisted systems with coercion and degraded-mode requirements.</td>
+      </tr>
+      <tr>
+        <td>SOC 2 Trust Services Criteria</td>
+        <td>Security, availability, confidentiality, processing integrity, and privacy assurance categories buyers already recognize.</td>
+        <td>Translates those broad categories into product-level failure tests for essential-path continuity, retention minimization, and disclosure boundaries under stress.</td>
+        <td><a href="../COMPLIANCE_AUDIT_MATRIX.md">Compliance matrix</a>, <a href="audit-this-site.html">audit path</a>, <a href="reference-implementation/paintracker-reference-packet.html">PainTracker packet</a></td>
+        <td>A buyer-facing assurance narrative that maps evidence packets to the Trust Services Criteria.</td>
+      </tr>
+      <tr>
+        <td>OWASP ASVS</td>
+        <td>Application security verification requirements for authentication, access control, cryptography, and data protection.</td>
+        <td>Extends secure-by-design posture into human-risk behavior: deniability gaps, coercion boundaries, telemetry minimization, and degraded-path usability.</td>
+        <td><a href="reference-implementation/paintracker-reference-packet.html">PainTracker packet</a>, <a href="../COERCION_BOUNDARY_MATRIX.md">coercion boundary matrix</a>, <a href="../BACKUP_SERVICE_METADATA_RETENTION_POLICY.md">metadata retention policy</a></td>
+        <td>A requirement-by-requirement partial mapping for the reference implementation.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Evidence Handoff</h2>
+  <div class="grid">
+    <div class="box">
+      <div class="eyebrow">Normative anchors</div>
+      <ul>
+        <li><a href="spec/v1.0.html">Protective Computing Specification v1.0</a></li>
+        <li><a href="spec/v1.0-must-justifications.html">MUST justifications ledger</a></li>
+        <li><a href="../THREAT_MODELS.md">Threat models</a></li>
+      </ul>
+    </div>
+    <div class="box">
+      <div class="eyebrow">Operational anchors</div>
+      <ul>
+        <li><a href="../AUDIT_EVIDENCE.md">Audit evidence index</a></li>
+        <li><a href="../.github/workflows/audit.yml">CI workflow</a></li>
+        <li><a href="reference-implementation/paintracker-reference-packet.html">PainTracker reference packet</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Explicit Annexes</h2>
+  <div class="box">
+    <p>The high-level matrix is now backed by framework-specific annexes with explicit control translations and evidence hooks.</p>
+    <div class="button-row">
+      <a class="button" href="standards-crosswalk-annexes.html">Open Crosswalk Annexes</a>
+      <a class="button" href="crosswalks/nist-privacy-framework.html">Open Per-Framework Pages</a>
+    </div>
+  </div>
+
+  <h2>How To Use This Page</h2>
+  <div class="box">
+    <ul>
+      <li>Architects can use the matrix to explain why Protective Computing is complementary rather than competitive.</li>
+      <li>Reviewers can use the “still needed” column to see where claims remain incomplete.</li>
+      <li>Builders can lift the current repository anchors as starting evidence for their own implementations.</li>
+    </ul>
+    <div class="button-row">
+      <a class="button" href="reference-implementation/paintracker-reference-packet.html">Reference packet</a>
+      <a class="button" href="external-review-packet-template.html">Review packet template</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

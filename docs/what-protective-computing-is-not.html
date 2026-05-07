@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>What Protective Computing Is Not</title>
+<meta name="description" content="Boundary page for Protective Computing: what the discipline does not claim, what it excludes, and why those exclusions matter for legitimacy." />
+<link rel="canonical" href="https://protective-computing.github.io/docs/what-protective-computing-is-not.html" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Protective Computing" />
+<meta property="og:title" content="What Protective Computing Is Not" />
+<meta property="og:description" content="Boundary page for Protective Computing: what the discipline does not claim, what it excludes, and why those exclusions matter for legitimacy." />
+<meta property="og:url" content="https://protective-computing.github.io/docs/what-protective-computing-is-not.html" />
+<meta property="og:image" content="https://protective-computing.github.io/assets/logo.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="What Protective Computing Is Not" />
+<meta name="twitter:description" content="Boundary page for Protective Computing: what the discipline does not claim, what it excludes, and why those exclusions matter for legitimacy." />
+<meta name="twitter:image" content="https://protective-computing.github.io/assets/logo.png" />
+<link rel="icon" href="../assets/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #070A10;
+    --panel: rgba(255,255,255,0.06);
+    --text: rgba(255,255,255,0.92);
+    --muted: rgba(255,255,255,0.68);
+    --line: rgba(255,255,255,0.10);
+    --shadow: 0 18px 55px rgba(0,0,0,.55);
+    --accent: #57d9ff;
+    --accent2: #6b7bff;
+  }
+  *{ box-sizing: border-box; }
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(107,123,255,.14), transparent 60%),
+          radial-gradient(1100px 650px at 90% 15%, rgba(87,217,255,.16), transparent 55%),
+                var(--bg);
+    color: var(--text);
+    letter-spacing: -0.015em;
+  }
+  a{ color: var(--accent); text-decoration: none; }
+  a:hover{ text-decoration: underline; text-underline-offset: 3px; }
+  .wrap{ max-width: 920px; margin: 0 auto; padding: 28px 22px 64px; }
+  .back{
+    display: inline-block;
+    padding: 8px 12px;
+    margin-bottom: 20px;
+    margin-right: 8px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .back:hover{ background: rgba(255,255,255,0.04); text-decoration: none; }
+  h1{ font-size: clamp(2.2rem, 5vw, 3.1rem); line-height: 1.04; margin: 0 0 12px; font-weight: 850; }
+  .subtitle{ color: var(--muted); font-size: 16px; line-height: 1.7; margin-bottom: 26px; max-width: 70ch; }
+  .box{ border: 1px solid var(--line); background: var(--panel); border-radius: 18px; padding: 20px; box-shadow: var(--shadow); margin: 18px 0; }
+  h2{ font-size: 1.35rem; margin: 0 0 10px; font-weight: 800; }
+  p, li{ color: var(--muted); line-height: 1.72; font-size: 15px; }
+  ul{ margin: 14px 0 0; padding-left: 20px; }
+  li{ margin: 9px 0; }
+  .statement{ border-left: 3px solid var(--accent2); padding-left: 14px; margin-top: 12px; }
+</style>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-_ThpRaAClu8dKUNrYHpiL.js"></script>
+<script>
+  globalThis.plausible = globalThis.plausible || function() {
+    plausible.q = plausible.q || [];
+    plausible.q.push(arguments);
+  };
+  plausible.init = plausible.init || function(i) {
+    plausible.o = i || {};
+  };
+  plausible.init();
+</script>
+</head>
+<body>
+<div class="wrap">
+  <a href="../" class="back">&larr; Back to Home</a>
+  <a href="legitimacy.html" class="back">Legitimacy &amp; Evidence</a>
+
+  <h1>What Protective Computing Is Not</h1>
+  <p class="subtitle">Protective Computing becomes easier to trust when its exclusions are explicit. This page narrows the boundary so outsiders can tell the difference between the discipline itself and adjacent categories it may overlap with.</p>
+
+  <div class="box">
+    <h2>Not generic privacy</h2>
+    <p>Privacy matters, but Protective Computing is not a synonym for privacy-first software. It is concerned with whether software remains survivable, bounded, and reversible when the user is under pressure, offline, cognitively overloaded, coerced, or operating through degraded hardware.</p>
+  </div>
+
+  <div class="box">
+    <h2>Not cybersecurity branding</h2>
+    <p>Security controls are necessary but insufficient. A system can be cryptographically strong and still fail under forced disclosure, network loss, inaccessible controls, or extraction-oriented business logic. Protective Computing evaluates those failure modes directly.</p>
+  </div>
+
+  <div class="box">
+    <h2>Not trauma aesthetics</h2>
+    <p>The discipline is not a tone, visual style, empathy language layer, or soft UX posture. It requires concrete defaults, verifiable constraints, and evidence-backed claims. If the underlying behavior is unsafe, soft copy does not count.</p>
+  </div>
+
+  <div class="box">
+    <h2>Not wellness software, and not only for health apps</h2>
+    <p>Health is an obvious use case because the harms are legible there, but the discipline applies anywhere systems handle sensitive records, constrained users, coercive environments, or unstable infrastructure. The frame is operational, not sector-specific.</p>
+  </div>
+
+  <div class="box">
+    <h2>Not compliance theater</h2>
+    <p>Protective Computing uses standards crosswalks and audit artifacts, but it does not treat checklists as legitimacy by themselves. A claim is only as strong as the runtime behavior and evidence supporting it.</p>
+  </div>
+
+  <div class="box">
+    <h2>Not a replacement for NIST, ISO, SOC 2, or OWASP</h2>
+    <p>Those frameworks remain important. Protective Computing sits above and across them as a human-failure design lens, then translates that lens into architecture, defaults, evidence, and threat boundaries those frameworks can consume.</p>
+  </div>
+
+  <div class="box">
+    <h2>Not only for “vulnerable users”</h2>
+    <p>The phrase can become patronizing if used carelessly. Protective Computing assumes instability is normal: everyone can lose connectivity, access, cognition, safety, or institutional leverage. The discipline designs for those conditions without requiring users to self-identify into a special class first.</p>
+  </div>
+
+  <div class="box">
+    <h2>What it is instead</h2>
+    <p>Protective Computing is design under instability. It asks whether a system preserves autonomy, bounded disclosure, reversibility, and essential function when ideal conditions fail.</p>
+    <div class="statement">
+      <p>If a product claim cannot survive degraded conditions, coercion scenarios, and reproducible audit review, it is outside the discipline even if it uses the language.</p>
+    </div>
+    <ul>
+      <li><a href="spec/v1.0.html">Read the normative specification</a></li>
+      <li><a href="audit-this-site.html">Follow the audit path</a></li>
+      <li><a href="independent-review.html">Review or critique the discipline</a></li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

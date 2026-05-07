@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RFC Process — Protective Computing</title>
+<meta name="description" content="Public RFC and contribution workflow for Protective Computing changes, including proposal classes, evidence requirements, review states, and acceptance criteria." />
+<link rel="canonical" href="https://protective-computing.github.io/docs/rfc-process.html" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Protective Computing" />
+<meta property="og:title" content="RFC Process — Protective Computing" />
+<meta property="og:description" content="Public RFC and contribution workflow for Protective Computing changes, including proposal classes, evidence requirements, review states, and acceptance criteria." />
+<meta property="og:url" content="https://protective-computing.github.io/docs/rfc-process.html" />
+<meta property="og:image" content="https://protective-computing.github.io/assets/logo.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="RFC Process — Protective Computing" />
+<meta name="twitter:description" content="Public RFC and contribution workflow for Protective Computing changes, including proposal classes, evidence requirements, review states, and acceptance criteria." />
+<meta name="twitter:image" content="https://protective-computing.github.io/assets/logo.png" />
+<link rel="icon" href="../assets/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#070A10; --panel:rgba(255,255,255,0.06); --text:rgba(255,255,255,0.92); --muted:rgba(255,255,255,0.68); --line:rgba(255,255,255,0.10); --shadow:0 18px 55px rgba(0,0,0,.55); --accent:#57d9ff; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:radial-gradient(1200px 600px at 10% 10%, rgba(107,123,255,.14), transparent 60%), radial-gradient(1100px 650px at 90% 15%, rgba(87,217,255,.16), transparent 55%), var(--bg); color:var(--text); letter-spacing:-0.015em; }
+  a{ color:var(--accent); text-decoration:none; }
+  a:hover{ text-decoration:underline; text-underline-offset:3px; }
+  .wrap{ max-width:1060px; margin:0 auto; padding:28px 22px 64px; }
+  .back{ display:inline-block; padding:8px 12px; margin:0 8px 20px 0; border:1px solid var(--line); border-radius:8px; color:var(--muted); font-size:13px; }
+  .back:hover{ background:rgba(255,255,255,0.04); text-decoration:none; }
+  h1{ font-size:clamp(2.1rem, 5vw, 3.1rem); line-height:1.03; margin:0 0 12px; font-weight:850; }
+  h2{ font-size:1.45rem; margin:34px 0 14px; font-weight:800; }
+  p, li{ color:var(--muted); line-height:1.72; font-size:15px; }
+  .subtitle{ color:var(--muted); font-size:16px; line-height:1.7; max-width:74ch; margin-bottom:24px; }
+  .box{ border:1px solid var(--line); background:var(--panel); border-radius:18px; padding:18px; box-shadow:var(--shadow); margin:16px 0; }
+  table{ width:100%; border-collapse:collapse; margin:18px 0; background:rgba(255,255,255,0.03); border:1px solid var(--line); }
+  th, td{ padding:12px 14px; text-align:left; vertical-align:top; border-bottom:1px solid var(--line); color:var(--muted); font-size:14px; line-height:1.6; }
+  th{ color:var(--text); background:rgba(255,255,255,0.05); font-weight:700; }
+  tr:last-child td{ border-bottom:none; }
+  ul, ol{ margin:14px 0; padding-left:20px; }
+  .button-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+  .button{ display:inline-block; padding:10px 14px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,0.04); color:var(--text); font-size:13px; font-weight:600; }
+  .button:hover{ background:rgba(255,255,255,0.08); text-decoration:none; }
+</style>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-_ThpRaAClu8dKUNrYHpiL.js"></script>
+<script>
+  globalThis.plausible = globalThis.plausible || function() {
+    globalThis.plausible.q = globalThis.plausible.q || [];
+    globalThis.plausible.q.push(arguments);
+  };
+  globalThis.plausible.init = globalThis.plausible.init || function(options) {
+    globalThis.plausible.o = options || {};
+  };
+  globalThis.plausible.init();
+</script>
+</head>
+<body>
+<div class="wrap">
+  <a href="../" class="back">&larr; Back to Home</a>
+  <a href="legitimacy.html" class="back">Legitimacy &amp; Evidence</a>
+  <a href="independent-review.html" class="back">Independent Review</a>
+
+  <h1>RFC Process</h1>
+  <p class="subtitle">Protective Computing now has a public process for proposing changes. The purpose is to make disagreements inspectable, evidence-gated, and version-bound rather than founder-routed or ad hoc.</p>
+
+  <div class="box">
+    <h2>What requires an RFC</h2>
+    <ul>
+      <li>Changes to normative wording in the specification.</li>
+      <li>New or revised threat boundaries.</li>
+      <li>Framework-crosswalk changes that materially widen or narrow public claims.</li>
+      <li>PLS rubric changes affecting scoring behavior.</li>
+      <li>Governance changes that alter how review or acceptance works.</li>
+    </ul>
+  </div>
+
+  <h2>Proposal Classes</h2>
+  <table>
+    <thead><tr><th>Class</th><th>Examples</th><th>Minimum evidence</th><th>Version impact</th></tr></thead>
+    <tbody>
+      <tr><td>Documentation clarification</td><td>Sharper wording, better examples, narrower non-claim language</td><td>Confusion source and exact proposed clarification</td><td>Minor or no version bump</td></tr>
+      <tr><td>Threat-boundary correction</td><td>New threat class, out-of-scope correction, evidence correction</td><td>Reproducible scenario or evidence packet</td><td>Usually v1.1+</td></tr>
+      <tr><td>Control or mapping adjustment</td><td>Crosswalk change, audit evidence requirement update, rubric logic refinement</td><td>Artifact diff plus rationale and reviewer impact</td><td>Minor or release-note tracked</td></tr>
+      <tr><td>Normative change</td><td>New MUST/SHOULD behavior, level criteria change, principle-level change</td><td>Strong evidence plus review and dissent handling</td><td>Potential major version impact</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Workflow</h2>
+  <ol>
+    <li>Open an RFC issue using the public template.</li>
+    <li>State proposal class, scope, evidence, and exact affected artifacts.</li>
+    <li>Collect at least one reviewer response or record that none arrived within the stated review window.</li>
+    <li>Close as accepted, rejected, deferred, or superseded with written rationale.</li>
+    <li>Bind accepted RFCs to versioned docs and release notes.</li>
+  </ol>
+
+  <h2>Release Binding</h2>
+  <div class="box">
+    <p>Accepted RFCs are not complete until they are recorded in the public release trail. Every accepted RFC should produce a visible release-history entry or update an existing one.</p>
+    <ul>
+      <li>Use <a href="release-history.html">Release History</a> as the public changelog surface.</li>
+      <li>Record the RFC identifier, the affected artifacts, and the release or date where the change landed.</li>
+      <li>If a proposal is accepted but deferred, note the target release and keep the release-history row pending until it lands.</li>
+    </ul>
+  </div>
+
+  <h2>Review States</h2>
+  <table>
+    <thead><tr><th>State</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td>Draft</td><td>Proposal opened but evidence or scope still incomplete.</td></tr>
+      <tr><td>Review</td><td>Open for external or internal critique.</td></tr>
+      <tr><td>Accepted</td><td>Approved with rationale and bound to a version target.</td></tr>
+      <tr><td>Rejected</td><td>Not accepted; rationale published.</td></tr>
+      <tr><td>Deferred</td><td>Valuable, but postponed to a later cycle.</td></tr>
+      <tr><td>Superseded</td><td>Replaced by a later RFC.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Acceptance Criteria</h2>
+  <div class="box">
+    <ul>
+      <li>Scope is explicit and narrow enough to review.</li>
+      <li>Evidence exists for factual or threat-model claims.</li>
+      <li>Affected files and public claims are named.</li>
+      <li>Dissent or uncertainty is recorded, not silently removed.</li>
+      <li>The change can be tied to a release note, changelog line, or versioned artifact update.</li>
+    </ul>
+  </div>
+
+  <h2>Evidence Sources</h2>
+  <ul>
+    <li><a href="spec/v1.0.html">Specification v1.0</a></li>
+    <li><a href="../THREAT_MODELS.md">Threat models</a></li>
+    <li><a href="audit-this-site.html">Audit path</a></li>
+    <li><a href="external-review-packet-template.html">External review packet template</a></li>
+    <li><a href="release-history.html">Release history</a></li>
+    <li><a href="../V1_1_ISSUE_TEMPLATES.md">v1.1 planning issue templates</a></li>
+  </ul>
+
+  <div class="button-row">
+    <a class="button" href="https://github.com/protective-computing/protective-computing.github.io/issues/new?template=rfc-proposal.md" target="_blank" rel="noopener noreferrer">Open RFC Proposal</a>
+    <a class="button" href="release-history.html">Release History</a>
+    <a class="button" href="external-review-packet-template.html">Review Template</a>
+  </div>
+</div>
+</body>
+</html>
