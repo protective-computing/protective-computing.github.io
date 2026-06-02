@@ -1,1 +1,99 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>ISO/IEC 27001 Crosswalk — Protective Computing</title><meta name="description" content="Framework-specific crosswalk from Protective Computing to ISO/IEC 27001." /><link rel="canonical" href="https://protective-computing.github.io/docs/crosswalks/iso-27001.html" /><meta property="og:type" content="website" /><meta property="og:site_name" content="Protective Computing" /><meta property="og:title" content="ISO/IEC 27001 Crosswalk — Protective Computing" /><meta property="og:description" content="Framework-specific crosswalk from Protective Computing to ISO/IEC 27001." /><meta property="og:url" content="https://protective-computing.github.io/docs/crosswalks/iso-27001.html" /><meta property="og:image" content="https://protective-computing.github.io/assets/logo.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="ISO/IEC 27001 Crosswalk — Protective Computing" /><meta name="twitter:description" content="Framework-specific crosswalk from Protective Computing to ISO/IEC 27001." /><meta name="twitter:image" content="https://protective-computing.github.io/assets/logo.png" /><link rel="icon" href="../../assets/logo.png" type="image/png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>:root{--bg:#070A10;--panel:rgba(255,255,255,0.06);--text:rgba(255,255,255,0.92);--muted:rgba(255,255,255,0.68);--line:rgba(255,255,255,0.10);--shadow:0 18px 55px rgba(0,0,0,.55);--accent:#57d9ff;}*{box-sizing:border-box;}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(1200px 600px at 10% 10%, rgba(107,123,255,.14), transparent 60%),radial-gradient(1100px 650px at 90% 15%, rgba(87,217,255,.16), transparent 55%),var(--bg);color:var(--text);letter-spacing:-0.015em;}a{color:var(--accent);text-decoration:none;}a:hover{text-decoration:underline;text-underline-offset:3px;}.wrap{max-width:980px;margin:0 auto;padding:28px 22px 64px;}.back{display:inline-block;padding:8px 12px;margin:0 8px 20px 0;border:1px solid var(--line);border-radius:8px;color:var(--muted);font-size:13px;}.back:hover{background:rgba(255,255,255,0.04);text-decoration:none;}h1{font-size:clamp(2rem,5vw,3rem);line-height:1.03;margin:0 0 12px;font-weight:850;}p{color:var(--muted);line-height:1.72;font-size:15px;}.subtitle{color:var(--muted);font-size:16px;line-height:1.7;margin-bottom:24px;}table{width:100%;border-collapse:collapse;margin:18px 0;background:rgba(255,255,255,0.03);border:1px solid var(--line);}th,td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);color:var(--muted);font-size:14px;line-height:1.6;}th{color:var(--text);background:rgba(255,255,255,0.05);font-weight:700;}tr:last-child td{border-bottom:none;}</style><script async src="https://plausible.io/js/pa-_ThpRaAClu8dKUNrYHpiL.js"></script><script>globalThis.plausible=globalThis.plausible||function(){globalThis.plausible.q=globalThis.plausible.q||[];globalThis.plausible.q.push(arguments);};globalThis.plausible.init=globalThis.plausible.init||function(options){globalThis.plausible.o=options||{};};globalThis.plausible.init();</script></head><body><div class="wrap"><a href="../standards-crosswalk-annexes.html" class="back">&larr; Back to Annexes</a><a href="../standards-crosswalks.html" class="back">Crosswalk Overview</a><h1>ISO/IEC 27001 Crosswalk</h1><p class="subtitle">Protective Computing complements ISO/IEC 27001 by turning high-level security and availability goals into user-protective behavior claims with explicit boundaries.</p><table><thead><tr><th>Protective control</th><th>ISO 27001 area</th><th>Translation</th><th>Evidence</th></tr></thead><tbody><tr><td>No master keys / operator non-possession</td><td>Cryptography and access control</td><td>Requires public declaration that operators cannot decrypt user content through a hidden administrative path.</td><td><a href="../reference-implementation/paintracker-reference-packet.html">reference packet</a></td></tr><tr><td>Reversibility</td><td>Integrity and recoverability</td><td>Adds user-facing restore and bounded destructive actions to standard recoverability posture.</td><td><a href="../../REVERSIBILITY_BOUNDARY_TABLE.md">reversibility boundary table</a></td></tr><tr><td>Degraded Functionality</td><td>Availability and continuity</td><td>Narrows availability to essential-path survival under bandwidth, power, and input constraints.</td><td><a href="../../DEGRADED_MODE_REMEDIATION_MATRIX.md">degraded mode matrix</a></td></tr></tbody></table></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ISO/IEC 27001 Crosswalk — Protective Computing</title>
+<meta name="description" content="Framework-specific crosswalk from Protective Computing to ISO/IEC 27001." />
+<link rel="canonical" href="https://protective-computing.github.io/docs/crosswalks/iso-27001.html" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Protective Computing" />
+<meta property="og:title" content="ISO/IEC 27001 Crosswalk — Protective Computing" />
+<meta property="og:description" content="Framework-specific crosswalk from Protective Computing to ISO/IEC 27001." />
+<meta property="og:url" content="https://protective-computing.github.io/docs/crosswalks/iso-27001.html" />
+<meta property="og:image" content="https://protective-computing.github.io/assets/logo.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="ISO/IEC 27001 Crosswalk — Protective Computing" />
+<meta name="twitter:description" content="Framework-specific crosswalk from Protective Computing to ISO/IEC 27001." />
+<meta name="twitter:image" content="https://protective-computing.github.io/assets/logo.png" />
+<link rel="icon" href="../../assets/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+	:root{--bg:#070A10;--panel:rgba(255,255,255,0.06);--text:rgba(255,255,255,0.92);--muted:rgba(255,255,255,0.68);--line:rgba(255,255,255,0.10);--shadow:0 18px 55px rgba(0,0,0,.55);--accent:#57d9ff;}
+	*{box-sizing:border-box;}
+	body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(1200px 600px at 10% 10%, rgba(107,123,255,.14), transparent 60%),radial-gradient(1100px 650px at 90% 15%, rgba(87,217,255,.16), transparent 55%),var(--bg);color:var(--text);letter-spacing:-0.015em;}
+	a{color:var(--accent);text-decoration:none;}
+	a:hover{text-decoration:underline;text-underline-offset:3px;}
+	.wrap{max-width:980px;margin:0 auto;padding:28px 22px 64px;}
+	.back{display:inline-block;padding:8px 12px;margin:0 8px 20px 0;border:1px solid var(--line);border-radius:8px;color:var(--muted);font-size:13px;}
+	.back:hover{background:rgba(255,255,255,0.04);text-decoration:none;}
+	h1{font-size:clamp(2rem,5vw,3rem);line-height:1.03;margin:0 0 12px;font-weight:850;}
+	p,li{color:var(--muted);line-height:1.72;font-size:15px;}
+	.subtitle{color:var(--muted);font-size:16px;line-height:1.7;margin-bottom:24px;}
+	.box{border:1px solid var(--line);background:var(--panel);border-radius:18px;padding:18px;box-shadow:var(--shadow);margin:16px 0;}
+	table{width:100%;border-collapse:collapse;margin:18px 0;background:rgba(255,255,255,0.03);border:1px solid var(--line);}
+	th,td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);color:var(--muted);font-size:14px;line-height:1.6;}
+	th{color:var(--text);background:rgba(255,255,255,0.05);font-weight:700;}
+	tr:last-child td{border-bottom:none;}
+</style>
+<script async src="https://plausible.io/js/pa-_ThpRaAClu8dKUNrYHpiL.js"></script>
+<script>
+	globalThis.plausible=globalThis.plausible||function(){globalThis.plausible.q=globalThis.plausible.q||[];globalThis.plausible.q.push(arguments);};
+	globalThis.plausible.init=globalThis.plausible.init||function(options){globalThis.plausible.o=options||{};};
+	globalThis.plausible.init();
+</script>
+</head>
+<body>
+<div class="wrap">
+	<a href="../standards-crosswalk-annexes.html" class="back">&larr; Back to Annexes</a>
+	<a href="../standards-crosswalks.html" class="back">Crosswalk Overview</a>
+
+	<h1>ISO/IEC 27001 Crosswalk</h1>
+	<p class="subtitle">Protective Computing complements ISO/IEC 27001 by turning high-level security and availability goals into user-protective behavior claims with explicit boundaries.</p>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Protective control</th>
+				<th>ISO 27001 area</th>
+				<th>Translation</th>
+				<th>Evidence</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>No master keys / operator non-possession</td>
+				<td>Cryptography and access control</td>
+				<td>Requires public declaration that operators cannot decrypt user content through a hidden administrative path.</td>
+				<td><a href="../reference-implementation/paintracker-reference-packet.html">reference packet</a></td>
+			</tr>
+			<tr>
+				<td>Reversibility</td>
+				<td>Integrity and recoverability</td>
+				<td>Adds user-facing restore and bounded destructive actions to standard recoverability posture.</td>
+				<td><a href="../../REVERSIBILITY_BOUNDARY_TABLE.md">reversibility boundary table</a></td>
+			</tr>
+			<tr>
+				<td>Degraded Functionality</td>
+				<td>Availability and continuity</td>
+				<td>Narrows availability to essential-path survival under bandwidth, power, and input constraints.</td>
+				<td><a href="../../DEGRADED_MODE_REMEDIATION_MATRIX.md">degraded mode matrix</a></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div class="box">
+		<h2>Evidence Bundle for This Crosswalk</h2>
+		<ul>
+			<li><a href="../reference-implementation/paintracker-reference-packet.html">PainTracker Reference Packet</a> and <a href="../reference-implementation/paintracker-mapping.html">PainTracker Mapping</a> — operator-boundary and implementation evidence</li>
+			<li><a href="../../REVERSIBILITY_BOUNDARY_TABLE.md">Reversibility Boundary Table</a> — bounded destructive-action and recovery evidence</li>
+			<li><a href="../../DEGRADED_MODE_REMEDIATION_MATRIX.md">Degraded Mode Remediation Matrix</a> and <a href="../../DEGRADED_MODE_REQUIREMENTS_CHECKLIST.md">Degraded Mode Requirements Checklist</a> — continuity evidence under constrained conditions</li>
+			<li><a href="../../OFFLINE_PARITY_AND_SYNC_SPEC.md">Offline Parity and Sync Spec</a> — service continuity framing for essential workflows</li>
+			<li><a href="../audit-checklist.html">Audit Checklist</a> — reviewer path for recoverability and degraded-availability checks</li>
+		</ul>
+	</div>
+</div>
+</body>
+</html>

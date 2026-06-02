@@ -1,1 +1,99 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>NIST AI RMF Crosswalk — Protective Computing</title><meta name="description" content="Framework-specific crosswalk from Protective Computing to the NIST AI Risk Management Framework." /><link rel="canonical" href="https://protective-computing.github.io/docs/crosswalks/nist-ai-rmf.html" /><meta property="og:type" content="website" /><meta property="og:site_name" content="Protective Computing" /><meta property="og:title" content="NIST AI RMF Crosswalk — Protective Computing" /><meta property="og:description" content="Framework-specific crosswalk from Protective Computing to the NIST AI Risk Management Framework." /><meta property="og:url" content="https://protective-computing.github.io/docs/crosswalks/nist-ai-rmf.html" /><meta property="og:image" content="https://protective-computing.github.io/assets/logo.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="NIST AI RMF Crosswalk — Protective Computing" /><meta name="twitter:description" content="Framework-specific crosswalk from Protective Computing to the NIST AI Risk Management Framework." /><meta name="twitter:image" content="https://protective-computing.github.io/assets/logo.png" /><link rel="icon" href="../../assets/logo.png" type="image/png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>:root{--bg:#070A10;--panel:rgba(255,255,255,0.06);--text:rgba(255,255,255,0.92);--muted:rgba(255,255,255,0.68);--line:rgba(255,255,255,0.10);--shadow:0 18px 55px rgba(0,0,0,.55);--accent:#57d9ff;}*{box-sizing:border-box;}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(1200px 600px at 10% 10%, rgba(107,123,255,.14), transparent 60%),radial-gradient(1100px 650px at 90% 15%, rgba(87,217,255,.16), transparent 55%),var(--bg);color:var(--text);letter-spacing:-0.015em;}a{color:var(--accent);text-decoration:none;}a:hover{text-decoration:underline;text-underline-offset:3px;}.wrap{max-width:980px;margin:0 auto;padding:28px 22px 64px;}.back{display:inline-block;padding:8px 12px;margin:0 8px 20px 0;border:1px solid var(--line);border-radius:8px;color:var(--muted);font-size:13px;}.back:hover{background:rgba(255,255,255,0.04);text-decoration:none;}h1{font-size:clamp(2rem,5vw,3rem);line-height:1.03;margin:0 0 12px;font-weight:850;}p,li{color:var(--muted);line-height:1.72;font-size:15px;}.subtitle{color:var(--muted);font-size:16px;line-height:1.7;margin-bottom:24px;}.box{border:1px solid var(--line);background:var(--panel);border-radius:18px;padding:18px;box-shadow:var(--shadow);margin:16px 0;}table{width:100%;border-collapse:collapse;margin:18px 0;background:rgba(255,255,255,0.03);border:1px solid var(--line);}th,td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);color:var(--muted);font-size:14px;line-height:1.6;}th{color:var(--text);background:rgba(255,255,255,0.05);font-weight:700;}tr:last-child td{border-bottom:none;}</style><script async src="https://plausible.io/js/pa-_ThpRaAClu8dKUNrYHpiL.js"></script><script>globalThis.plausible=globalThis.plausible||function(){globalThis.plausible.q=globalThis.plausible.q||[];globalThis.plausible.q.push(arguments);};globalThis.plausible.init=globalThis.plausible.init||function(options){globalThis.plausible.o=options||{};};globalThis.plausible.init();</script></head><body><div class="wrap"><a href="../standards-crosswalk-annexes.html" class="back">&larr; Back to Annexes</a><a href="../standards-crosswalks.html" class="back">Crosswalk Overview</a><h1>NIST AI RMF Crosswalk</h1><p class="subtitle">Protective Computing can function as a contextual harm and governance layer for AI-assisted systems operating under vulnerability, instability, and coercive conditions.</p><table><thead><tr><th>Protective control</th><th>AI RMF function</th><th>Translation</th><th>Evidence</th></tr></thead><tbody><tr><td>Threat boundaries</td><td>Map</td><td>Provides contextual harm boundaries for sensitive records, triage, and institutional pressure scenarios.</td><td><a href="../spec/v1.0.html">specification</a>, <a href="../../THREAT_MODELS.md">threat models</a></td></tr><tr><td>Repeatable audits</td><td>Measure</td><td>Links behavior to reproducible evidence packets and audit gates.</td><td><a href="../audit-checklist.html">audit checklist</a>, <a href="../audit-this-site.html">audit path</a></td></tr><tr><td>Negative claims</td><td>Govern / Manage</td><td>Prevents unsafe AI overstatement by requiring explicit non-claims and known limitations.</td><td><a href="../what-protective-computing-is-not.html">boundary page</a>, <a href="../reference-implementation/paintracker-reference-packet.html">reference packet</a></td></tr></tbody></table></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NIST AI RMF Crosswalk — Protective Computing</title>
+<meta name="description" content="Framework-specific crosswalk from Protective Computing to the NIST AI Risk Management Framework." />
+<link rel="canonical" href="https://protective-computing.github.io/docs/crosswalks/nist-ai-rmf.html" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Protective Computing" />
+<meta property="og:title" content="NIST AI RMF Crosswalk — Protective Computing" />
+<meta property="og:description" content="Framework-specific crosswalk from Protective Computing to the NIST AI Risk Management Framework." />
+<meta property="og:url" content="https://protective-computing.github.io/docs/crosswalks/nist-ai-rmf.html" />
+<meta property="og:image" content="https://protective-computing.github.io/assets/logo.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="NIST AI RMF Crosswalk — Protective Computing" />
+<meta name="twitter:description" content="Framework-specific crosswalk from Protective Computing to the NIST AI Risk Management Framework." />
+<meta name="twitter:image" content="https://protective-computing.github.io/assets/logo.png" />
+<link rel="icon" href="../../assets/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+	:root{--bg:#070A10;--panel:rgba(255,255,255,0.06);--text:rgba(255,255,255,0.92);--muted:rgba(255,255,255,0.68);--line:rgba(255,255,255,0.10);--shadow:0 18px 55px rgba(0,0,0,.55);--accent:#57d9ff;}
+	*{box-sizing:border-box;}
+	body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(1200px 600px at 10% 10%, rgba(107,123,255,.14), transparent 60%),radial-gradient(1100px 650px at 90% 15%, rgba(87,217,255,.16), transparent 55%),var(--bg);color:var(--text);letter-spacing:-0.015em;}
+	a{color:var(--accent);text-decoration:none;}
+	a:hover{text-decoration:underline;text-underline-offset:3px;}
+	.wrap{max-width:980px;margin:0 auto;padding:28px 22px 64px;}
+	.back{display:inline-block;padding:8px 12px;margin:0 8px 20px 0;border:1px solid var(--line);border-radius:8px;color:var(--muted);font-size:13px;}
+	.back:hover{background:rgba(255,255,255,0.04);text-decoration:none;}
+	h1{font-size:clamp(2rem,5vw,3rem);line-height:1.03;margin:0 0 12px;font-weight:850;}
+	p,li{color:var(--muted);line-height:1.72;font-size:15px;}
+	.subtitle{color:var(--muted);font-size:16px;line-height:1.7;margin-bottom:24px;}
+	.box{border:1px solid var(--line);background:var(--panel);border-radius:18px;padding:18px;box-shadow:var(--shadow);margin:16px 0;}
+	table{width:100%;border-collapse:collapse;margin:18px 0;background:rgba(255,255,255,0.03);border:1px solid var(--line);}
+	th,td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);color:var(--muted);font-size:14px;line-height:1.6;}
+	th{color:var(--text);background:rgba(255,255,255,0.05);font-weight:700;}
+	tr:last-child td{border-bottom:none;}
+</style>
+<script async src="https://plausible.io/js/pa-_ThpRaAClu8dKUNrYHpiL.js"></script>
+<script>
+	globalThis.plausible=globalThis.plausible||function(){globalThis.plausible.q=globalThis.plausible.q||[];globalThis.plausible.q.push(arguments);};
+	globalThis.plausible.init=globalThis.plausible.init||function(options){globalThis.plausible.o=options||{};};
+	globalThis.plausible.init();
+</script>
+</head>
+<body>
+<div class="wrap">
+	<a href="../standards-crosswalk-annexes.html" class="back">&larr; Back to Annexes</a>
+	<a href="../standards-crosswalks.html" class="back">Crosswalk Overview</a>
+
+	<h1>NIST AI RMF Crosswalk</h1>
+	<p class="subtitle">Protective Computing can function as a contextual harm and governance layer for AI-assisted systems operating under vulnerability, instability, and coercive conditions.</p>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Protective control</th>
+				<th>AI RMF function</th>
+				<th>Translation</th>
+				<th>Evidence</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Threat boundaries</td>
+				<td>Map</td>
+				<td>Provides contextual harm boundaries for sensitive records, triage, and institutional pressure scenarios.</td>
+				<td><a href="../spec/v1.0.html">specification</a>, <a href="../../THREAT_MODELS.md">threat models</a></td>
+			</tr>
+			<tr>
+				<td>Repeatable audits</td>
+				<td>Measure</td>
+				<td>Links behavior to reproducible evidence packets and audit gates.</td>
+				<td><a href="../audit-checklist.html">audit checklist</a>, <a href="../audit-this-site.html">audit path</a></td>
+			</tr>
+			<tr>
+				<td>Negative claims</td>
+				<td>Govern / Manage</td>
+				<td>Prevents unsafe AI overstatement by requiring explicit non-claims and known limitations.</td>
+				<td><a href="../what-protective-computing-is-not.html">boundary page</a>, <a href="../reference-implementation/paintracker-reference-packet.html">reference packet</a></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div class="box">
+		<h2>Evidence Bundle for This Crosswalk</h2>
+		<ul>
+			<li><a href="../spec/v1.0.html">Protective Computing Specification v1.0</a> and <a href="../../THREAT_MODELS.md">Threat Models</a> — context and harm-boundary anchors for AI deployment claims</li>
+			<li><a href="../audit-checklist.html">Audit Checklist</a> and <a href="../audit-this-site.html">Audit This Site</a> — repeatable measurement and reviewer workflow surfaces</li>
+			<li><a href="../what-protective-computing-is-not.html">What Protective Computing Is Not</a> — negative-claims boundary for unsafe overstatement control</li>
+			<li><a href="../reference-implementation/paintracker-reference-packet.html">PainTracker Reference Packet</a> — release-bound evidence packet for implementation-level review</li>
+			<li><a href="../independent-review.html">Independent Review</a> — external critique route for AI governance and risk claims</li>
+		</ul>
+	</div>
+</div>
+</body>
+</html>
